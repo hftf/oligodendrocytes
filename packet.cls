@@ -35,8 +35,7 @@
 
 %%% SEMANTICS
 \newcounter{question}
-\renewcommand{\thequestion}{\thesection.\arabic{question}}
-\def\claim{\par\medskip\noindent\refstepcounter{question}%\hbox{\textbf{question \arabic{question}.} \textit{#1}}\quad%
+\def\claim{\par\medskip\noindent\refstepcounter{question}%
 \hspace{-10mm}\makebox[10mm][r]{\arabic{question}. }%
 }
 \def\endclaim{\par\medskip}
@@ -54,12 +53,6 @@
 \newcommand{\subtitle}{}
 
 \newcommand{\packet}{Packet}
-
-%\setlength{\headheight}{48pt}
-%\setlength{\headsep}{0pt}
-%\lhead{
-%\rhead{\today}
-%\thispagestyle{fancy}
 
 \linespread{1.15}
 \widowpenalties 1 10000
