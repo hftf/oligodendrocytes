@@ -20,12 +20,12 @@ all: $(PDFS)
 %.html: %.native %.md transformers/wrap.template
 	pandoc -o $@ $< -f native -t html --template=transformers/wrap.template
 
-%.qbml: %.html transformers/html-to-qbml.xsl
+%.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh
 	xsltproc --timing -o $@ transformers/html-to-qbml.xsl $<
+	./transformers/fix-qbml.sh < $@ > temp
+	mv temp $@
 
-%.tex: %.qbml transformers/qbml-to-latex.xsl transformers/fix-qbml.sh
-	./transformers/fix-qbml.sh < $< > temp
-	mv temp $<
+%.tex: %.qbml transformers/qbml-to-latex.xsl
 	xsltproc --timing -o $@ transformers/qbml-to-latex.xsl $<
 
 %.pdf: %.tex packet.cls
