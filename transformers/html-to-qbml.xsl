@@ -64,7 +64,6 @@
 					<boni>
 						<xsl:apply-templates select="p[text()='Bonuses']" />
 					</boni>
-					<!-- <xsl:apply-templates select="p[position() > 3]" /> -->
 				</packet>
 			</packets>
 		</tournament>
@@ -116,9 +115,6 @@
 						</answer>
 					</part>
 				</xsl:for-each>
-				<!-- <part><xsl:apply-templates select="following-sibling::p[1]" /></part> -->
-				<!-- <answer><xsl:apply-templates select="following-sibling::p[2]" /></answer> -->
-				<!-- <answer><xsl:apply-templates select="following-sibling::p[3]" /></answer> -->
 			</bonus>
 		</xsl:for-each>
 	</xsl:template>
