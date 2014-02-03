@@ -1,23 +1,8 @@
 .PRECIOUS: %.orig.html %.native %.md %.html %.qbml %.tex
 DIR=O
-PACKETS=\
-	01 \
-	02 \
-	03 \
-	04 \
-	05 \
-	06 \
-	07 \
-	08 \
-	09 \
-	10 \
-	11 \
-	E1 \
-	E2 \
-	E3 \
-	E4
-PDFS=$(patsubst %, $(DIR)/%.pdf, $(PACKETS))
-#MDS=$(patsubst %, $(DIR)/%.md, $(PACKETS))
+PACKETS=$(wildcard $(DIR)/*.docx)
+PDFS=$(patsubst %.docx, %.pdf, $(PACKETS))
+#MDS=$(patsubst %.docx, %.md,  $(PACKETS))
 
 all: $(PDFS)
 
