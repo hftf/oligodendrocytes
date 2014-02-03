@@ -109,9 +109,8 @@
 	<xsl:template name="author2">[<abbr title="{/qpdb/authors/author[@id=current()/../@author-id]/name}"><xsl:value-of select="/qpdb/authors/author[@id=current()/../@author-id]/initials" /></abbr>]</xsl:template>
 
 	<xsl:template match="lining">{\lf <xsl:apply-templates />}</xsl:template>
-	<xsl:template match="sup">{\supf <xsl:apply-templates />}</xsl:template>
-	<xsl:template match="sub">{\subf <xsl:apply-templates />}</xsl:template>
-	<xsl:template match="sinf">{\sinf <xsl:apply-templates />}</xsl:template>
+	<xsl:template match="sup">\textsuperscript{<xsl:apply-templates />}</xsl:template>
+	<xsl:template match="sub">\textsubscript{<xsl:apply-templates />}</xsl:template>
 	<xsl:template match="sc">\textsc{<xsl:apply-templates />}</xsl:template>
 
 <!--Tournament:    <p><xsl:choose><xsl:when test="@url"><a href="{@url}" target="_blank"><xsl:value-of select="@summary" /></a></xsl:when><xsl:otherwise><xsl:value-of select="@summary" /></xsl:otherwise></xsl:choose>: <xsl:value-of select="@location" />, <xsl:value-of select="@date" /></p>-->

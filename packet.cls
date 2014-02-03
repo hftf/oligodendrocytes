@@ -29,10 +29,6 @@
 \newcommand{\myfont}{Brill}
 \setmainfont[Ligatures={Common}]{\myfont}
 
-\newcommand{\supf}[1]{\fontspec[VerticalPosition={Superior}]{\myfont} #1}
-\newcommand{\subf}[1]{\fontspec[VerticalPosition={Inferior}]{\myfont} #1}
-\newcommand{\sinf}[1]{\fontspec[VerticalPosition={ScientificInferior}]{\myfont} #1}
-
 %%% SEMANTICS
 \newcounter{question}
 \def\claim{\par\medskip\noindent\refstepcounter{question}%
