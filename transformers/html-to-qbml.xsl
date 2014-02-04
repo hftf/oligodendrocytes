@@ -74,8 +74,6 @@
 </qpdb>
 	</xsl:template>
 
-	<xsl:key name="b" match="br" use="." />
-
 	<xsl:template match="p[text()='Tossups']">
 		<xsl:for-each select="following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]">
 			<tossup id="{substring-before(text(), '.')}">
