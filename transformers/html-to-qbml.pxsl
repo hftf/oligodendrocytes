@@ -7,6 +7,8 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   preserve-space *
 
   template html
+    param packet <<Packet >>
+    param by <<by >>
     qpdb -version=0.2
       tournaments
         # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
@@ -19,10 +21,10 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
               choose
                 when contains(p[2],'Editors')
                   text <<Editors >>
-                  value-of -select=<{substring-after(p[2], 'Packet ')}>
+                  value-of substring-after(p[2],$packet)
                 otherwise
-                  value-of -select=<{substring-after(p[2], 'by ')}>
-            packet -name={$packet-name} -authors=<<{substring-after(p[3], 'by ')}>>
+                  value-of substring-after(p[2],$by)
+            packet -name={$packet-name} -authors={substring-after(p[3],$by)}
               tossups
                 apply-templates p[text()='Tossups']
               boni
@@ -46,8 +48,8 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
         stem
           call-template strip
             with-param p .
-        for-each -select=<{following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]}>
             with-param s <<. >>
+        for-each -select=<<following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]>>
           part -value=10
             question
               call-template strip
