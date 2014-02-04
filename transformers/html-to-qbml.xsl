@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:param name="indent">no</xsl:param>
+	<!-- See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done -->
+	<!-- <xsl:param name="indent">no</xsl:param> -->
 	<xsl:output method="xml" indent="yes" encoding="UTF-8" />
 	<xsl:preserve-space elements="*" />
 	<xsl:template match="html">
