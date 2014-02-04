@@ -29,6 +29,8 @@
 
 	Notice that the components of tossups and bonuses are determined by their position relative to the
 	preceding <p><br /></p>.
+
+	TODO: Wrap all substring-after() with if starts-with() 
 -->
 <qpdb version="0.2">
 	<tournaments>
