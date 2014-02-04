@@ -1,8 +1,6 @@
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
-  # See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done
-  param indent <<no>>
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
 
@@ -74,13 +72,6 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     call-template strip
       with-param p $p
       with-param s <<ANSWER: >>
-    # When using <xsl:output indent="yes" />, elements containing mixed content (both children and non-whitespace
-    # child text nodes) are not indented, which is the behavior we want. Otherwise, they are indented, introducing
-    # whitespace that interferes with LaTeX (and possibly other things that may use the resulting QBML).
-    #
-    # (This could probably be limited to non-mixed content answers easily, but this works fine because answers
-    # usually end paragraphs. We do not need this for questions because they always have text nodes.)
-    # text << >>
 
   template p
     apply-templates
