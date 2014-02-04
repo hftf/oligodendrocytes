@@ -38,12 +38,11 @@
 		<!-- TODO: Take this hardcoding out of the stylesheet -->
 		<tournament
 			id="1"
-			summary="SUBMIT 2014: “sometimes referred to as Groper[citation needed]”"
-			date="February 1, 2014"
-			location="University of Maryland"
-
 			name="SUBMIT"
 			year="2014"
+			date="February 1, 2014"
+			location="University of Maryland"
+			summary="SUBMIT 2014: “sometimes referred to as Groper[citation needed]”"
 			subtitle="“sometimes referred to as Groper[citation needed]”"
 		>
 			<packets>
