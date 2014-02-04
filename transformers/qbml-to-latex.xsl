@@ -2,26 +2,14 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="text" encoding="UTF-8" />
 	<xsl:preserve-space elements="*" />
-	<xsl:template match="/">
-		<xsl:apply-templates select="qpdb" />
-	</xsl:template>
 	
 <xsl:template match="qpdb">% !TEX TS-program = XeLaTeX
 \documentclass[10pt]{packet}
 
-\newwrite\tempfile
+\input{\jobname.edges}
+
 \begin{document}
 <xsl:apply-templates select="tournaments" />
-
-<!-- \newcommand\filename{\jobname.edges}
-\immediate\openout\tempfile=\filename
-\immediate\write\tempfile{
-	<xsl:apply-templates select="normalize-space(//tossup[1]/answer)" />
-}
-\immediate\write\tempfile{
-	<xsl:apply-templates select="//tossup[20]/answer/node()" />}
-}
-\immediate\closeout\tempfile -->
 \end{document}
 </xsl:template>
 

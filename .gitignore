@@ -1,3 +1,5 @@
+.deps.mk
+order.txt
 *.acn
 *.acr
 *.alg

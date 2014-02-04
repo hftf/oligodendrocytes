@@ -59,4 +59,6 @@
 \textbf{%{\packet{}} {\packetnumber{}} --- {
 \packetname}\\
 by \authors{}
+\par\medskip\noindent
+☞ Please verify that the last packet was \textit{\lastpacketname}, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}.
 \par}

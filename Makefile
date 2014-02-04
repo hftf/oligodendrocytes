@@ -1,10 +1,14 @@
-.PRECIOUS: %.orig.html %.native %.md %.html %.qbml %.tex
+.PRECIOUS: %.orig.html %.native %.md %.html %.qbml %.edges %.tex
 DIR=O
 PACKETS=$(wildcard $(DIR)/*.docx)
-PDFS=$(patsubst %.docx, %.pdf, $(PACKETS))
-#MDS=$(patsubst %.docx, %.md,  $(PACKETS))
+PDFS=$(PACKETS:.docx=.pdf)
 
 all: $(PDFS)
+
+-include .deps.mk
+
+.deps.mk: mk-deps.sh order.txt
+	./mk-deps.sh > $@
 
 %.orig.html: %.docx
 	textutil -convert html $< -stdout | \
@@ -25,7 +29,10 @@ all: $(PDFS)
 	./transformers/fix-qbml.sh < $@ > temp
 	mv temp $@
 
-%.tex: %.qbml transformers/qbml-to-latex.xsl
+%.edges: transformers/this-qbml-to-prev-edges.sh
+	./transformers/this-qbml-to-prev-edges.sh $@
+
+%.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc --timing -o $@ transformers/qbml-to-latex.xsl $<
 
 %.pdf: %.tex packet.cls
