@@ -1,7 +1,7 @@
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
-  -- See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done
+  # See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done
   param indent <<no>>
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
@@ -9,12 +9,11 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template html
     qpdb -version=0.2
       tournaments
-        -- TODO: Take this hardcoding out of the stylesheet
+        # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
         tournament \
           -id=1 -name=SUBMIT -year=2014 -date=<<February 1, 2014>> -location=<<University of Maryland>> \
           -summary=<<SUBMIT 2014: &#x201c;sometimes referred to as Groper[citation needed]&#x201d;>> \
           -subtitle=<<&#x201c;sometimes referred to as Groper[citation needed]&#x201d;>>
-          -- UTF-8 does not work
           packets
             variable packet-name
               choose
@@ -65,13 +64,20 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     apply-templates $p/*|$p/text()[not(position()=1)]
 
   template -name=strip-answer
+    # Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be lucky enough
+    # that the actual answer starts with a tag (instead of more text) that it cancels out.
     param p
     variable temp
       apply-templates $p/text()[1]
-    -- Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be
-    -- lucky enough that the actual answer starts with a tag (instead of more text) that it cancels out.
     value-of -select=<{substring-after($temp, 'ANSWER: ')}>
     apply-templates $p/*|$p/text()[not(position()=1)]
+    # When using <xsl:output indent="yes" />, elements containing mixed content (both children and non-whitespace
+    # child text nodes) are not indented, which is the behavior we want. Otherwise, they are indented, introducing
+    # whitespace that interferes with LaTeX (and possibly other things that may use the resulting QBML).
+    #
+    # (This could probably be limited to non-mixed content answers easily, but this works fine because answers
+    # usually end paragraphs. We do not need this for questions because they always have text nodes.)
+    # text << >>
 
   template p
     apply-templates
