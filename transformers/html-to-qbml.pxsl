@@ -32,8 +32,9 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     for-each -select=<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>
       tossup -id={substring-before(text(),'.')}
         question
-          call-template strip-number
+          call-template strip
             with-param p .
+            with-param s <<. >>
         answer
           call-template strip-answer
             with-param p following-sibling::p[1]
@@ -43,34 +44,34 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       bonus -id={substring-before(text(),'.')}
         variable cur generate-id(preceding::br[1])
         stem
-          call-template strip-number
+          call-template strip
             with-param p .
         for-each -select=<{following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]}>
+            with-param s <<. >>
           part -value=10
             question
-              variable temp
-                apply-templates text()[1]
-              value-of -select=<{substring-after($temp, '[10] ')}>
-              apply-templates *|text()[not(position()=1)]
+              call-template strip
+                with-param p .
+                with-param s <<[10] >>
             answer
               call-template strip-answer
                 with-param p following-sibling::p[1]
 
-  template -name=strip-number
+  template -name=strip
     param p
+    param s
     variable temp
       apply-templates $p/text()[1]
-    value-of -select=<{substring-after($temp, '. ')}>
+    value-of substring-after($temp,$s)
     apply-templates $p/*|$p/text()[not(position()=1)]
 
   template -name=strip-answer
     # Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be lucky enough
     # that the actual answer starts with a tag (instead of more text) that it cancels out.
     param p
-    variable temp
-      apply-templates $p/text()[1]
-    value-of -select=<{substring-after($temp, 'ANSWER: ')}>
-    apply-templates $p/*|$p/text()[not(position()=1)]
+    call-template strip
+      with-param p $p
+      with-param s <<ANSWER: >>
     # When using <xsl:output indent="yes" />, elements containing mixed content (both children and non-whitespace
     # child text nodes) are not indented, which is the behavior we want. Otherwise, they are indented, introducing
     # whitespace that interferes with LaTeX (and possibly other things that may use the resulting QBML).
