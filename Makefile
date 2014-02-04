@@ -29,8 +29,8 @@ all: $(PDFS)
 	./transformers/fix-qbml.sh < $@ > temp
 	mv temp $@
 
-%.edges: transformers/this-qbml-to-prev-edges.sh
-	./transformers/this-qbml-to-prev-edges.sh $@
+%.edges: transformers/prev-qbml-to-this-edges.sh
+	./transformers/prev-qbml-to-this-edges.sh $@
 
 %.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc --timing -o $@ transformers/qbml-to-latex.xsl $<
