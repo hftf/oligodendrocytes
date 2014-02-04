@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<!-- See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done -->
 	<!-- <xsl:param name="indent">no</xsl:param> -->
-	<xsl:output method="xml" indent="yes" encoding="UTF-8" />
+	<xsl:output method="xml" indent="no" encoding="UTF-8" />
 	<xsl:preserve-space elements="*" />
 	<xsl:template match="html">
 <!--
@@ -153,9 +153,9 @@
 			that may use the resulting QBML).
 
 			(This could probably be limited to non-mixed content answers easily, but this works fine because
-			answers . We don't need this for questions because they always have text nodes.)
+			answers usually end paragraphs. We don't need this for questions because they always have text nodes.)
 		-->
-		<xsl:text> </xsl:text>
+		<!-- <xsl:text> </xsl:text> -->
 	</xsl:template>
 
 	<xsl:template match="p">
