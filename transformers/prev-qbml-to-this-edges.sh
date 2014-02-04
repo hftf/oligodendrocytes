@@ -3,7 +3,7 @@ THIS=${1%.edges}
 #QBML=$THIS.qbml
 THIS=${THIS##*/}
 #NEXT=$(awk "/$THIS/ { if (getline); print }" order.txt)
-PREV=$(awk "/$THIS/ { print line; } { line = \$0 } " order.txt)
+PREV=$(awk "/$THIS/ { print (NR == 1) ? \"first\" : line; } { line = \$0 } " order.txt)
 PREV_QBML=$DIR/$PREV.qbml
 THIS_EDGES=$1
 # echo $DIR
@@ -18,7 +18,9 @@ SED='sed s/\\answer//g'
 TR="tr -d '\n'"
 
 if [ -z "$PREV" ]; then
-    > $THIS_EDGES
+    printf '\\nolastpackettrue\\renewcommand\lastpacketname{none}\n' > $THIS_EDGES
+elif [ "$PREV" = "first" ]; then
+    printf '\\firstpackettrue\\renewcommand\lastpacketname{first}\n' > $THIS_EDGES
 else
     printf '\\renewcommand\lastpacketname{'                                       > $THIS_EDGES
     xpath "$PREV_QBML" "string(//packet/@name)" 2>/dev/null | $TR                >> $THIS_EDGES

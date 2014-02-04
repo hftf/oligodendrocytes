@@ -50,6 +50,8 @@
 
 \newcommand{\packet}{Packet}
 
+\newif\iffirstpacket\firstpacketfalse
+\newif\ifnolastpacket\nolastpacketfalse
 \newcommand{\lastpacketname}{}
 \newcommand{\lastpacketone}{}
 \newcommand{\lastpackettwenty}{}
@@ -64,5 +66,8 @@
 \packetname}\\
 by \authors{}
 \par\medskip\noindent
-☞ Please verify that the last packet was \textit{\lastpacketname}, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}.
+☞ Please verify that the last packet was \textit{\lastpacketname}%
+\iffirstpacket\else
+\ifnolastpacket\else, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}%
+\fi\fi.
 \par}
