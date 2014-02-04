@@ -1,3 +1,9 @@
+,strip el =
+  call-template strip
+    with-param p <(,el)>
+    with-param s
+      ,BODY
+
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
@@ -32,9 +38,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     for-each -select=<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>
       tossup -id={substring-before(text(),'.')}
         question
-          call-template strip
-            with-param p .
-            with-param s <<. >>
+          ,strip . <<. >>
         answer
           call-template strip-answer
             with-param p following-sibling::p[1]
@@ -44,15 +48,11 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       bonus -id={substring-before(text(),'.')}
         variable cur generate-id(preceding::br[1])
         stem
-          call-template strip
-            with-param p .
-            with-param s <<. >>
+          ,strip . <<. >>
         for-each -select=<<following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]>>
           part -value=10
             question
-              call-template strip
-                with-param p .
-                with-param s <<[10] >>
+              ,strip . <<[10] >>
             answer
               call-template strip-answer
                 with-param p following-sibling::p[1]
@@ -69,9 +69,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     # Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be lucky enough
     # that the actual answer starts with a tag (instead of more text) that it cancels out.
     param p
-    call-template strip
-      with-param p $p
-      with-param s <<ANSWER: >>
+    ,strip $p <<ANSWER: >>
 
   template p
     apply-templates
