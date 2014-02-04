@@ -1,0 +1,93 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+  -- See first note at http://www.w3.org/TR/xslt#attribute-value-templates for why this can't be done
+  param indent <<no>>
+  output -method=xml -indent=no -encoding=UTF-8
+  preserve-space *
+
+  template html
+    qpdb -version=0.2
+      tournaments
+        -- TODO: Take this hardcoding out of the stylesheet
+        tournament \
+          -id=1 -name=SUBMIT -year=2014 -date=<<February 1, 2014>> -location=<<University of Maryland>> \
+          -summary=<<SUBMIT 2014: &#x201c;sometimes referred to as Groper[citation needed]&#x201d;>> \
+          -subtitle=<<&#x201c;sometimes referred to as Groper[citation needed]&#x201d;>>
+          -- UTF-8 does not work
+          packets
+            variable packet-name
+              choose
+                when contains(p[2],'Editors')
+                  text <<Editors >>
+                  value-of -select=<{substring-after(p[2], 'Packet ')}>
+                otherwise
+                  value-of -select=<{substring-after(p[2], 'by ')}>
+            packet -name={$packet-name} -authors=<<{substring-after(p[3], 'by ')}>>
+              tossups
+                apply-templates p[text()='Tossups']
+              boni
+                apply-templates p[text()='Bonuses']
+
+  template p[text()='Tossups']
+    for-each -select=<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>
+      tossup -id={substring-before(text(),'.')}
+        question
+          call-template strip-number
+            with-param p .
+        answer
+          call-template strip-answer
+            with-param p following-sibling::p[1]
+
+  template p[text()='Bonuses']
+    for-each following-sibling::p[(preceding-sibling::p[1])[br]]
+      bonus -id={substring-before(text(),'.')}
+        variable cur generate-id(preceding::br[1])
+        stem
+          call-template strip-number
+            with-param p .
+        for-each -select=<{following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]}>
+          part -value=10
+            question
+              variable temp
+                apply-templates text()[1]
+              value-of -select=<{substring-after($temp, '[10] ')}>
+              apply-templates *|text()[not(position()=1)]
+            answer
+              call-template strip-answer
+                with-param p following-sibling::p[1]
+
+  template -name=strip-number
+    param p
+    variable temp
+      apply-templates $p/text()[1]
+    value-of -select=<{substring-after($temp, '. ')}>
+    apply-templates $p/*|$p/text()[not(position()=1)]
+
+  template -name=strip-answer
+    param p
+    variable temp
+      apply-templates $p/text()[1]
+    -- Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be
+    -- lucky enough that the actual answer starts with a tag (instead of more text) that it cancels out.
+    value-of -select=<{substring-after($temp, 'ANSWER: ')}>
+    apply-templates $p/*|$p/text()[not(position()=1)]
+
+  template p
+    apply-templates
+
+  template strong
+    req
+      apply-templates
+
+  template em
+    title
+      apply-templates
+
+  template sup
+    sup
+      apply-templates
+
+  template sub
+    sub
+      apply-templates
