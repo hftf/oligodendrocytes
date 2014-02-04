@@ -50,6 +50,10 @@
 
 \newcommand{\packet}{Packet}
 
+\newcommand{\lastpacketname}{}
+\newcommand{\lastpacketone}{}
+\newcommand{\lastpackettwenty}{}
+
 \linespread{1.15}
 \widowpenalties 1 10000
 \raggedbottom
