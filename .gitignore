@@ -1,6 +1,7 @@
 .deps.mk
 order.txt
 old/
+transformers/html-to-qbml.xsl
 *.acn
 *.acr
 *.alg
