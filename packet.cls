@@ -14,9 +14,9 @@
 
 % LAYOUT
 \RequirePackage[hmargin=0.75in,vmargin=0.75in]{geometry}
-\RequirePackage{fancyhdr}
 \RequirePackage{enumerate}
 \RequirePackage{enumitem}
+\RequirePackage{hyperref}
 
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}

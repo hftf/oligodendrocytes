@@ -49,7 +49,7 @@
 </xsl:template>
 
 <xsl:template match="tossup">
-	\item
+	\item\hyperdef{tossup}{\arabic{enumi}}{}
 		<xsl:apply-templates select="question" />\\
 		<xsl:apply-templates select="answer" /><!--  <xsl:call-template name="author" /> -->
 	
@@ -63,7 +63,7 @@
 </xsl:template>
 
 <xsl:template match="bonus">
-	\item
+	\item\hyperdef{bonus}{\arabic{enumi}}{}
 	\begin{minipage}[t]{\linewidth}
 		<xsl:apply-templates select="stem" />
 		<xsl:apply-templates select="part" />
