@@ -4,6 +4,11 @@
     with-param s
       ,BODY
 
+,tag source result =
+  template <(,source)>
+    element <(,result)>
+      apply-templates
+
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
@@ -74,18 +79,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template p
     apply-templates
 
-  template strong
-    req
-      apply-templates
-
-  template em
-    title
-      apply-templates
-
-  template sup
-    sup
-      apply-templates
-
-  template sub
-    sub
-      apply-templates
+  ,tag strong req
+  ,tag em title
+  ,tag sup sup
+  ,tag sub sub
