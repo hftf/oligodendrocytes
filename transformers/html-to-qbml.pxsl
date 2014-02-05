@@ -1,3 +1,5 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
 # The expected format of the HTML document is basically this, where every line is contained in a <p>,
 # and empty lines are just <p><br /></p>.
 #
@@ -35,8 +37,6 @@
   template <(,source)>
     element <(,result)>
       apply-templates
-
-<<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=xml -indent=no -encoding=UTF-8
