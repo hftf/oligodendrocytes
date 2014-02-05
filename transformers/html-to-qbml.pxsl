@@ -1,3 +1,30 @@
+# The expected format of the HTML document is basically this, where every line is contained in a <p>,
+# and empty lines are just <p><br /></p>.
+#
+#   Tournament name and year: Subtitle (TODO)
+#   Packet by <Packet name>
+#   Questions/Edited by <Authors>
+#
+#   Tossups
+#
+#   1. Blah blah.
+#   ANSWER: Blah blah.
+#
+#   Bonuses
+#
+#   1. Blah blah.
+#   [10] Blah blah.
+#   ANSWER: Blah blah.
+#   [10] Blah blah.
+#   ANSWER: Blah blah.
+#   [10] Blah blah.
+#   ANSWER: Blah blah.
+#
+# Notice that the components of tossups and bonuses are determined by their position relative to the
+# preceding <p><br /></p>.
+#
+# TODO: Wrap all substring-after() with if starts-with() 
+
 ,strip el =
   call-template strip
     with-param p <(,el)>
