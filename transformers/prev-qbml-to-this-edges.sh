@@ -14,6 +14,14 @@ THIS_EDGES=$1
 
 # TODO fix whitepsace
 #XPATH="xpath"
+
+# xmllint --noent doesn't work with --xpath:
+# $ echo "<å>å</å>" | xmllint --encode UTF-8 --noent -
+# <?xml version="1.0" encoding="UTF-8"?>
+# <å>å</å>
+# $ echo "<å>å</å>" | xmllint --encode UTF-8 --noent --xpath / -
+# <?xml version="1.0"?>
+# <å>&#xE5;</å>
 XPATH="xmllint --xpath"
 XSLT="xsltproc transformers/qbml-to-latex.xsl -"
 SED='sed s/\\answer//g'
