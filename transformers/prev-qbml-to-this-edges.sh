@@ -13,6 +13,8 @@ THIS_EDGES=$1
 # echo $THIS_EDGES
 
 # TODO fix whitepsace
+#XPATH="xpath"
+XPATH="xmllint --xpath"
 XSLT="xsltproc transformers/qbml-to-latex.xsl -"
 SED='sed s/\\answer//g'
 TR="tr -d '\n'"
@@ -22,11 +24,11 @@ if [ -z "$PREV" ]; then
 elif [ "$PREV" = "first" ]; then
     printf '\\firstpackettrue\\renewcommand\lastpacketname{first}\n' > $THIS_EDGES
 else
-    printf '\\renewcommand\lastpacketname{'                                       > $THIS_EDGES
-    xpath "$PREV_QBML" "string(//packet/@name)" 2>/dev/null | $TR                >> $THIS_EDGES
-    printf '}\n\\renewcommand\lastpacketone{'                                    >> $THIS_EDGES
-    xpath "$PREV_QBML" "//tossup[1]/answer"  2>/dev/null | $XSLT | $SED | $TR    >> $THIS_EDGES
-    printf '}\n\\renewcommand\lastpackettwenty{'                                 >> $THIS_EDGES
-    xpath "$PREV_QBML" "//tossup[20]/answer" 2>/dev/null | $XSLT | $SED | $TR    >> $THIS_EDGES
-    printf '}\n'                                                                 >> $THIS_EDGES
+    printf '\\renewcommand\lastpacketname{'                            > $THIS_EDGES
+    $XPATH "string(//packet/@name)" "$PREV_QBML" | $TR                >> $THIS_EDGES
+    printf '}\n\\renewcommand\lastpacketone{'                         >> $THIS_EDGES
+    $XPATH "//tossup[1]/answer"     "$PREV_QBML" | $XSLT | $SED | $TR >> $THIS_EDGES
+    printf '}\n\\renewcommand\lastpackettwenty{'                      >> $THIS_EDGES
+    $XPATH "//tossup[20]/answer"    "$PREV_QBML" | $XSLT | $SED | $TR >> $THIS_EDGES
+    printf '}\n'                                                      >> $THIS_EDGES
 fi
