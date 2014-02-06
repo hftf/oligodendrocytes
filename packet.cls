@@ -34,7 +34,7 @@
 \def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
 \def\endclaim{\par\medskip}
 \newenvironment{lb}{\claim}{\endclaim}
-\newenvironment{question}{\begin{lb}{\refstepcounter{question}\arabic{question}.}}{\end{lb}}
+\newenvironment{question}{\begin{lb}{\refstepcounter{question}\arabic{question}.\hyperdef{tossup}{\arabic{question}}{}}}{\end{lb}}
 
 \newcommand{\power}[1]{{\textbf{#1}}}
 \newcommand{\req}[1]{{\textbf{\uline{#1}}}}

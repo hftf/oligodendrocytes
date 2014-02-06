@@ -48,7 +48,6 @@
 
 <xsl:template match="tossup">
 	\begin{question}%
-		\hyperdef{tossup}{\arabic{question}}{}%
 		<xsl:apply-templates select="question" />\\
 		<xsl:apply-templates select="answer" /><!--  <xsl:call-template name="author" /> -->
 	\end{question}
