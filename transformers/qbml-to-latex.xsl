@@ -43,15 +43,15 @@
 
 <xsl:template match="tossups">
 	\subsection*{Tossups}
-	\begin{enumerate}[leftmargin=0pt]
 	<xsl:apply-templates select="tossup" />
-	\end{enumerate}
 </xsl:template>
 
 <xsl:template match="tossup">
-	\item\hyperdef{tossup}{\arabic{enumi}}{}
+	\begin{question}%
+		\hyperdef{tossup}{\arabic{question}}{}%
 		<xsl:apply-templates select="question" />\\
 		<xsl:apply-templates select="answer" /><!--  <xsl:call-template name="author" /> -->
+	\end{question}
 	
 </xsl:template>
 

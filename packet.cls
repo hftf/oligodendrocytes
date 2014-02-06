@@ -31,11 +31,10 @@
 
 %%% SEMANTICS
 \newcounter{question}
-\def\claim{\par\medskip\noindent\refstepcounter{question}%
-\hspace{-10mm}\makebox[10mm][r]{\arabic{question}. }%
-}
+\def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
 \def\endclaim{\par\medskip}
-\newenvironment{question}{\claim}{\endclaim}
+\newenvironment{lb}{\claim}{\endclaim}
+\newenvironment{question}{\begin{lb}{\refstepcounter{question}\arabic{question}.}}{\end{lb}}
 
 \newcommand{\power}[1]{{\textbf{#1}}}
 \newcommand{\req}[1]{{\textbf{\uline{#1}}}}
@@ -65,9 +64,12 @@
 \textbf{%{\packet{}} {\packetnumber{}} --- {
 \packetname}\\
 by \authors{}
-\par\medskip\noindent
-☞ Please verify that the last packet was \textit{\lastpacketname}%
+
+\medskip
+\begin{lb}{☞}
+Please verify that the last packet was \textit{\lastpacketname}%
 \iffirstpacket\else
 \ifnolastpacket\else, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}%
 \fi\fi.
-\par}
+\end{lb}
+}
