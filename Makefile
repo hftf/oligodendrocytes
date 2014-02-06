@@ -28,7 +28,7 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 	pxslcc -hx $< > $@
 
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh
-	xsltproc --timing -o $@ transformers/html-to-qbml.xsl $<
+	xsltproc -o $@ transformers/html-to-qbml.xsl $<
 	./transformers/fix-qbml.sh < $@ > temp
 	mv temp $@
 
@@ -39,7 +39,7 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 	xsltproc --timing -o $@ transformers/qbml-to-latex.xsl $<
 
 %.pdf: %.tex packet.cls
-	xelatex -output-directory $(DIR) $< # -interaction=batchmode
+	xelatex -output-directory $(DIR) $< -interaction=batchmode
 
 # %.tex: %.md packet.template
 # 	pandoc \
