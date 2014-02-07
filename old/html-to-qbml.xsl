@@ -43,8 +43,8 @@
 			date="February 1, 2014"
 			location="University of Maryland"
 			summary="SUBMIT 2014: “sometimes referred to as Groper[citation needed]”"
-			subtitle="“sometimes referred to as Groper[citation needed]”"
 		>
+			<subtitle>“sometimes referred to as Groper<sup><title>(citation needed)</title></sup>”</subtitle>
 			<packets>
 				<xsl:variable name="packet-name">
 					<xsl:choose>

@@ -50,8 +50,12 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
         # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
         tournament \
           -id=1 -name=SUBMIT -year=2014 -date=<<February 1, 2014>> -location=<<University of Maryland>> \
-          -summary=<<SUBMIT 2014: &#x201c;sometimes referred to as Groper[citation needed]&#x201d;>> \
-          -subtitle=<<&#x201c;sometimes referred to as Groper[citation needed]&#x201d;>>
+          -summary=<<SUBMIT 2014: &#x201c;sometimes referred to as Groper[citation needed]&#x201d;>>
+          subtitle
+            text <<&#x201c;sometimes referred to as Groper>>
+            sup
+              title <<(citation needed)>>
+            text <<&#x201d;>>
           packets
             variable packet-name
               choose

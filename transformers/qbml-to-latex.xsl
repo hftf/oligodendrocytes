@@ -18,10 +18,7 @@
 <xsl:template match="tournament">
 	\renewcommand{\tournamentname}{<xsl:value-of select="@name" />}
 	\renewcommand{\tournamentyear}{<xsl:value-of select="@year" />}
-%	\renewcommand{\subtitle}{<xsl:value-of select="@subtitle" />}
-<!-- TODO remove hardcoded subtitle -->
-	\renewcommand{\subtitle}{“sometimes referred to as Groper\textsuperscript{\textit{(citation needed)}}”}
-
+	\renewcommand{\subtitle}{<xsl:apply-templates select="subtitle" />}
 	<xsl:apply-templates select="packets" />
 </xsl:template>
 
