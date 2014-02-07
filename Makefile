@@ -36,7 +36,7 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 	./transformers/prev-qbml-to-this-edges.sh $@
 
 %.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
-	xsltproc --timing -o $@ transformers/qbml-to-latex.xsl $<
+	xsltproc -o $@ transformers/qbml-to-latex.xsl $<
 
 %.pdf: %.tex packet.cls
 	xelatex -output-directory $(DIR) $< -interaction=batchmode
