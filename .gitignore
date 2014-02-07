@@ -2,6 +2,7 @@
 order.txt
 old/
 transformers/html-to-qbml.xsl
+transformers/qbml-to-latex.xsl
 *.acn
 *.acr
 *.alg
