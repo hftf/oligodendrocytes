@@ -29,8 +29,8 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh
 	xsltproc -o $@ transformers/html-to-qbml.xsl $<
-	./transformers/fix-qbml.sh < $@ > temp
-	mv temp $@
+	./transformers/fix-qbml.sh < $@ > $@.temp
+	mv $@.temp $@
 
 %.edges: transformers/prev-qbml-to-this-edges.sh
 	./transformers/prev-qbml-to-this-edges.sh $@
