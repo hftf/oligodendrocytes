@@ -1,4 +1,4 @@
-.PRECIOUS: %.orig.html %.native %.md %.html %.qbml %.edges %.tex
+.PRECIOUS: %.o.html %.native %.md %.html %.qbml %.edges %.tex
 DIR=O
 PACKETS=$(wildcard $(DIR)/*.docx)
 PDFS=$(PACKETS:.docx=.pdf)
@@ -10,14 +10,14 @@ all: $(PDFS)
 .deps.mk: mk-deps.sh order.txt
 	./mk-deps.sh > $@
 
-%.orig.html: %.docx
+%.o.html: %.docx
 	textutil -convert html $< -stdout | \
 	sed "s/ \(<\/[^>]*>\)/\1 /g" | sed "s/\(<[^/][^>]*>\) / \1/g" > $@
 
-%.native: %.orig.html
+%.native: %.o.html
 	pandoc -o $@ $< -f html -t native
 
-%.md: %.orig.html
+%.md: %.o.html
 	pandoc -o $@ $< -f html -t markdown
 
 # does not actually depend on %.md
