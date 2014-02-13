@@ -29,7 +29,7 @@
 \newcommand{\myfont}{Brill}
 \setmainfont[Ligatures={Common}]{\myfont}
 
-%%% SEMANTICS
+% SEMANTICS
 \newcounter{question}
 \def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
 \def\endclaim{\par\medskip}
@@ -40,9 +40,8 @@
 \newcommand{\req}[1]{{\textbf{\uline{#1}}}}
 \newcommand{\answer}[1]{{\textsc{answer}: #1}}
 \newcommand{\partvalue}[1]{{[#1]}}
-%%% END SEMANTICS
 
-
+% STRINGS
 \newcommand{\tournamentname}{}
 \newcommand{\tournamentyear}{}
 \newcommand{\subtitle}{}
@@ -55,10 +54,12 @@
 \newcommand{\lastpacketone}{}
 \newcommand{\lastpackettwenty}{}
 
+% LEADING, WIDOWS
 \linespread{1.15}
 \widowpenalties 1 10000
 \raggedbottom
 
+% HEADER
 \renewcommand{\maketitle}{\noindent
 \tournamentname{} \tournamentyear{}: \subtitle{}\\
 \textbf{%{\packet{}} {\packetnumber{}} --- {
