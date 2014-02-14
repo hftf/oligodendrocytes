@@ -19,16 +19,18 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       for-each-group $content -group-starting-with=t
         copy-of self::t/node()
         variable cur current-group()[not(self::t)]
-        # <w> contains word characters
-        w -i={position()}
-          choose
-            # TODO: Learn how to check if current-group is a text node
-            when count($cur/node())!=0
-              copy-of $cur
-              #call-template split
-              #  with-param p $cur
-            otherwise
-              copy-of $cur
+        
+        if -test=<<position()!=last() and string-length($cur)!=0>>
+          # <w> contains word characters
+          w -i={position()}
+            choose
+              # TODO: Learn how to check if current-group is a text node
+              when count($cur/node())!=0
+                copy-of $cur
+                #call-template split
+                #  with-param p $cur
+              otherwise
+                copy-of $cur
 
   template text() -mode=translate -priority=1
     # These characters will be "part of" the word
