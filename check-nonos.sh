@@ -15,5 +15,9 @@ echo "****"
 for i in $@/*.md; do grep --color -EiHn "\*\*\*\*" $i || :; done
 
 echo
+echo "* *"
+for i in $@/*.md; do grep --color=always -EiHn "..\* \*.." $i | grep -v ANSWER || :; done
+
+echo
 echo "\\answer{}"
 for i in $@/*.tex; do grep --color -EC 4 '\\answer\{\}' $i || :; done
