@@ -40,6 +40,23 @@
 \newcommand{\req}[1]{{\textbf{\uline{#1}}}}
 \newcommand{\answer}[1]{{\textsc{answer}: #1}}
 \newcommand{\partvalue}[1]{{[#1]}}
+\newcommand{\w}[2]{\tooltip{#1}{#2}}
+
+% TOOLTIP
+\newcommand\tooltip[2]{%
+\special{pdf:bann
+  <<
+  /Type /Annot
+  /Subtype /Widget
+  /FT /Btn
+  /Ff 65536
+  /H /N
+  /TU (#2)
+  >>
+}%
+#1%
+\special{pdf:eann}%
+}
 
 % STRINGS
 \newcommand{\tournamentname}{}

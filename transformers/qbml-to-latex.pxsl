@@ -126,3 +126,11 @@ stylesheet -version=1.0 -xmlns:xml=http://www.w3.org/XML/1998/namespace -xmlns:x
   ,tag sup textsuperscript
   ,tag sub textsubscript
   ,tag sc textsc
+
+  template w
+    text <<\w{>>
+    apply-templates
+    text <<}{>>
+    value-of @i
+    text <<}>>
+
