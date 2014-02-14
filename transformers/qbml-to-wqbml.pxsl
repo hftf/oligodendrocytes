@@ -5,7 +5,7 @@
 
 stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
-  template //question
+  template //tossup/question
     call-template split
       with-param p .
 
