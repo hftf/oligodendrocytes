@@ -38,10 +38,13 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 transformers/qbml-to-wqbml.xsl: transformers/qbml-to-wqbml.pxsl transformers/xslt2.edf
 	pxslcc -hx --add=transformers/xslt2.edf $< > $@
 
+%.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
+	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
+
 transformers/qbml-to-latex.xsl: transformers/qbml-to-latex.pxsl
 	pxslcc -hx $< > $@
 
-%.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
+%.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ transformers/qbml-to-latex.xsl $<
 
 %.pdf: %.tex packet.cls
