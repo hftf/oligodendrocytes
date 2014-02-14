@@ -35,6 +35,9 @@ transformers/html-to-qbml.xsl: transformers/html-to-qbml.pxsl
 %.edges: transformers/prev-qbml-to-this-edges.sh
 	./transformers/prev-qbml-to-this-edges.sh $@
 
+transformers/qbml-to-wqbml.xsl: transformers/qbml-to-wqbml.pxsl transformers/xslt2.edf
+	pxslcc -hx --add=transformers/xslt2.edf $< > $@
+
 transformers/qbml-to-latex.xsl: transformers/qbml-to-latex.pxsl
 	pxslcc -hx $< > $@
 

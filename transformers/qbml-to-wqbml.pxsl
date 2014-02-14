@@ -1,0 +1,48 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+# http://stackoverflow.com/questions/7484569/wrapping-words-from-html-using-xsl
+# http://www.biglist.com/lists/lists.mulberrytech.com/xsl-list/archives/201004/msg00152.html
+
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+
+  template //question
+    call-template split
+      with-param p .
+
+  template -name=split
+    param p
+
+    copy
+      copy-of @*
+      variable content -as=node()*
+        apply-templates -mode=translate
+      for-each-group $content -group-starting-with=t
+        copy-of self::t/node()
+        variable cur current-group()[not(self::t)]
+        # <w> contains word characters
+        w -position={position()}
+          choose
+            # TODO: Learn how to check if current-group is a text node
+            when count($cur/node())!=0
+              copy-of $cur
+              #call-template split
+              #  with-param p $cur
+            otherwise
+              copy-of $cur
+
+  template text() -mode=translate -priority=1
+    # These characters will be "part of" the word
+    param word
+      <{\w&#;\[\]<>/'!}>
+      <<&#x2018;&#x2019;->>
+    analyze-string . [^{$word}]+
+      matching-substring
+        # <t> contains interword characters
+        t
+          value-of .
+      non-matching-substring
+        value-of .
+
+  template @*|node() -mode=<{#default translate}>
+    copy
+      apply-templates @*|node()

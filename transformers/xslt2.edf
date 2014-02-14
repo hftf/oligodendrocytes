@@ -1,0 +1,4 @@
+for-each-group         = xsl:for-each-group select
+analyze-string         = xsl:analyze-string select regex
+matching-substring     = xsl:matching-substring
+non-matching-substring = xsl:non-matching-substring

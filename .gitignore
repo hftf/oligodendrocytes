@@ -3,6 +3,7 @@ order.txt
 old/
 transformers/html-to-qbml.xsl
 transformers/qbml-to-latex.xsl
+transformers/qbml-to-wqbml.xsl
 *.acn
 *.acr
 *.alg
