@@ -20,7 +20,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
         copy-of self::t/node()
         variable cur current-group()[not(self::t)]
         # <w> contains word characters
-        w -position={position()}
+        w -i={position()}
           choose
             # TODO: Learn how to check if current-group is a text node
             when count($cur/node())!=0
