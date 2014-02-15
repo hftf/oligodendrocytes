@@ -1,3 +1,5 @@
+export LC_ALL=C
+
 # Remove hardcoding
 NONOS="or ten point| each, [^BPn]| each\.|[^0-9]--|\.\.| \.| ,|”’|‘“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”| |  |'|\"| \[[^tho]|\.\*\* \(|ANSWER:\S|ANSWER[^:]|ANWER|\\[^*\n$]| "
 grep --color -EHn "$NONOS" $@/*.md
@@ -8,7 +10,7 @@ grep --color -EiHno '.....\(\\\*\)\S.....' $@/*.md || :
 
 echo
 echo "space after newline"
-grep --color -EiHnc "^\s" $@/*.md || :
+grep --color -EiHnc "^(​|\s)" $@/*.md || :
 
 echo
 echo "****"
