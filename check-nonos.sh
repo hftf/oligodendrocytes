@@ -4,20 +4,20 @@ grep --color -EHn "$NONOS" $@/*.md
 
 echo
 echo "(\*)"
-for i in $@/*.md; do grep --color -EiHno '.....\(\\\*\)\S.....' "$i" || :; done
+grep --color -EiHno '.....\(\\\*\)\S.....' $@/*.md || :
 
 echo
 echo "space after newline"
-for i in $@/*.md; do grep --color -EiHnc "^\s" $i || :; done
+grep --color -EiHnc "^\s" $@/*.md || :
 
 echo
 echo "****"
-for i in $@/*.md; do grep --color -EiHn "\*\*\*\*" $i || :; done
+grep --color -EiHn "\*\*\*\*" $@/*.md || :
 
 echo
 echo "* *"
-for i in $@/*.md; do grep --color=always -EiHn "..\* \*.." $i | grep -v ANSWER || :; done
+grep --color=always -EiHn "..\* \*.." $@/*.md | grep -v ANSWER || :
 
 echo
 echo "\\answer{}"
-for i in $@/*.tex; do grep --color -EC 4 '\\answer\{\}' $i || :; done
+grep --color -EC 4 '\\answer\{\}' $@/*.tex || :
