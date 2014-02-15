@@ -1,5 +1,5 @@
 # Remove hardcoding
-NONOS="or ten point| each, [^BPn]| each\.|[^0-9]--|\.\.| \.| \,|”’|‘“|“ |‘ | ’| ”|’\.|[^!]’\,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”| |  |'|\"| \[[^tho]|\.\*\* \(|ANSWER:\S|ANSWER[^:]|ANWER|\\[^*\n$]| "
+NONOS="or ten point| each, [^BPn]| each\.|[^0-9]--|\.\.| \.| ,|”’|‘“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”| |  |'|\"| \[[^tho]|\.\*\* \(|ANSWER:\S|ANSWER[^:]|ANWER|\\[^*\n$]| "
 grep --color -EHn "$NONOS" $@/*.md
 
 echo
