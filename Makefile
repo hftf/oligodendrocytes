@@ -1,4 +1,4 @@
-.PRECIOUS: %.o.html %.native %.md %.html %.qbml %.edges %.tex
+.PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 DIR=O
 PACKETS=$(wildcard $(DIR)/*.docx)
 PDFS=$(PACKETS:.docx=.pdf)
