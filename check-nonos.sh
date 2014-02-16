@@ -23,3 +23,5 @@ grep --color=always -EiHn "..\* \*.." $@/*.md | grep -v ANSWER || :
 echo
 echo "\\answer{}"
 grep --color -EC 4 '\\answer\{\}' $@/*.tex || :
+
+#grep -Eo '}[^}]+\\w{[^}0-9A-Za-z]+}{[^}]+}[^}]+}' $@/*.tex
