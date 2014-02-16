@@ -3,7 +3,7 @@
 %
 % 2013-03-22
 % Ophir Lifshitz
-% hangfromthefloor@gmail.com
+% quizbowl@ophir.li
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{packet}[2013/03/22 Typesets quizbowl packets]
