@@ -40,9 +40,13 @@
 \newcommand{\req}[1]{{\textbf{\uline{#1}}}}
 \newcommand{\answer}[1]{{\textsc{answer}: #1}}
 \newcommand{\partvalue}[1]{{[#1]}}
-\newcommand{\w}[2]{\tooltip{#1}{#2}}
+\newcommand{\w}[2]{\tooltip{#1}{#2}\kernright{#1}}
 
 % TOOLTIP
+% Source: http://tex.stackexchange.com/questions/31078/kerning-between-bold-and-non-bold-text
+% TODO: kernleft (this will restore the kerning between “ and A, T, or similar letters the most)
+\newcommand\kernright[1]{\def\hltext{#1}\futurelet\hlnext\hldokern}
+\def\hldokern{\sbox0{\mbox\hltext\mbox\hlnext}\sbox2{\hltext\hlnext}\kern\dimexpr\wd2-\wd0\relax}
 \newcommand\tooltip[2]{%
 \special{pdf:bann
   <<
