@@ -7,8 +7,8 @@ all: $(PDFS)
 
 -include .deps.mk
 
-.deps.mk: mk-deps.sh order.txt
-	./mk-deps.sh > $@
+.deps.mk: mk-deps.awk order.txt
+	awk -f mk-deps.awk order.txt > $@
 
 %.o.html: %.docx
 	textutil -convert html $< -stdout | \
