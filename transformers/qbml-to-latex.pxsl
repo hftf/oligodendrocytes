@@ -127,6 +127,8 @@ stylesheet -version=1.0 -xmlns:xml=http://www.w3.org/XML/1998/namespace -xmlns:x
   ,tag sub textsubscript
   ,tag sc textsc
 
+  template br <<\\>>
+
   template w
     text <<\w{>>
     apply-templates
