@@ -20,6 +20,8 @@ all: $(PDFS)
 %.md: %.o.html
 	pandoc -o $@ $< -f html -t markdown
 
+-include x.mk
+
 # does not actually depend on %.md
 %.html: %.native %.md transformers/wrap.template
 	pandoc -o $@ $< -f native -t html --template=transformers/wrap.template

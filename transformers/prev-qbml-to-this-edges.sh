@@ -1,13 +1,16 @@
 DIR=${1%/*}
+THIS_EDGES=$1
 THIS=${1%.edges}
-#QBML=$THIS.qbml
 THIS=${THIS##*/}
+[[ $THIS =~ \..* ]]
+INFIX=$BASH_REMATCH
+THIS=${THIS%.*}
 #NEXT=$(awk "/$THIS/ { if (getline); print }" order.txt)
 PREV=$(awk "/$THIS/ { print (NR == 1) ? \"first\" : line; } { line = \$0 } " order.txt)
-PREV_QBML=$DIR/$PREV.qbml
-THIS_EDGES=$1
+PREV_QBML=$DIR/$PREV$INFIX.qbml
 # echo $DIR
 # echo $THIS
+# echo $INFIX
 # echo $PREV_QBML
 # echo $PREV
 # echo $THIS_EDGES
