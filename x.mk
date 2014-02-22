@@ -5,4 +5,6 @@
 
 %.x.html: %.x.md
 	pandoc -o $@ $< -f markdown -t html --template=transformers/wrap.template
+#	$ echo '[Para [Str "A"],Para[LineBreak],Para[Str "A"]]' | pandoc -f native -t markdown | pandoc -f markdown -t native
+#	[Para [Str "A"],Para [LineBreak,Space,Str "A"]]
 	sed -Ei bak 's/<p><br \/> ​?/<p><br \/><\/p><p>/g' $@
