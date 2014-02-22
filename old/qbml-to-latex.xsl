@@ -74,8 +74,8 @@
 	<xsl:template match="power"><span class="power"><xsl:apply-templates /><xsl:text> (*) </xsl:text></span></xsl:template>
 	<xsl:template match="intro"><xsl:apply-templates /><xsl:text> </xsl:text></xsl:template>
 	<xsl:template match="answer">\answer{<xsl:apply-templates />}</xsl:template>
-	<xsl:template match="req">\req{<xsl:apply-templates />}</xsl:template>
-	<xsl:template match="question/req">\power{<xsl:apply-templates />}</xsl:template>
+	<xsl:template match="answer//req">\req{<xsl:apply-templates />}</xsl:template>
+	<xsl:template match="req">\power{<xsl:apply-templates />}</xsl:template>
 	<xsl:template match="title">\textit{<xsl:apply-templates />}</xsl:template>
 	<xsl:template match="i"><i><xsl:apply-templates /></i></xsl:template>
 	<xsl:template match="pronunciation"><xsl:value-of select="grapheme" /> [<span class="phoneme" title="Representation in {phoneme/@notation}"><xsl:value-of select="phoneme" /></span>]</xsl:template>
@@ -91,6 +91,8 @@
 	<xsl:template match="sub">\textsubscript{<xsl:apply-templates />}</xsl:template>
 	<xsl:template match="sc">\textsc{<xsl:apply-templates />}</xsl:template>
 	<xsl:template match="br">\\</xsl:template>
+
+	<xsl:template match="w">\w{<xsl:apply-templates />}{<xsl:value-of select="@i" />}</xsl:template>
 
 <!--Tournament:    <p><xsl:choose><xsl:when test="@url"><a href="{@url}" target="_blank"><xsl:value-of select="@summary" /></a></xsl:when><xsl:otherwise><xsl:value-of select="@summary" /></xsl:otherwise></xsl:choose>: <xsl:value-of select="@location" />, <xsl:value-of select="@date" /></p>-->
 <!--Packet round:  <xsl:value-of select="/qpdb/tournaments/tournament[@id=//@tournament-id]/@summary" /><xsl:text> </xsl:text>-->
