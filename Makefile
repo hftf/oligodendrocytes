@@ -1,4 +1,5 @@
 .PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
+SHELL=bash
 DIR=O
 PACKETS=$(wildcard $(DIR)/*.docx)
 PDFS=$(PACKETS:.docx=.pdf)
@@ -33,6 +34,12 @@ clean:
 	xsltproc -o $@ transformers/html-to-qbml.xsl $<
 	./transformers/fix-qbml.sh < $@ > $@.temp
 	mv $@.temp $@
+ifdef DIFF
+	xsltproc -o $@o         old/html-to-qbml.xsl $<
+	./transformers/fix-qbml.sh < $@o > $@o.temp
+	mv $@o.temp $@o
+	diff <(xmllint --format $@) <(xmllint --format $@o)
+endif
 
 %.edges: transformers/prev-qbml-to-this-edges.sh
 	./transformers/prev-qbml-to-this-edges.sh $@
@@ -43,8 +50,15 @@ clean:
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
 	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
 
+tests/qbml-to-wqbml.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml.xsl
+	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
+
 %.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ transformers/qbml-to-latex.xsl $<
+ifdef DIFF
+	xsltproc -o $@o         old/qbml-to-latex.xsl $<
+	diff $@ $@o
+endif
 
 %.pdf: %.tex packet.cls
 	xelatex -output-directory $(DIR) $< -interaction=batchmode
