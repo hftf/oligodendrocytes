@@ -120,8 +120,8 @@ stylesheet -version=1.0 -xmlns:xml=http://www.w3.org/XML/1998/namespace -xmlns:x
 
 
   ,tag answer answer
-  ,tag req req
-  ,tag question//req power
+  ,tag answer//req req
+  ,tag req power
   ,tag title textit
   ,tag sup textsuperscript
   ,tag sub textsubscript
