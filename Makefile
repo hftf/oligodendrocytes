@@ -5,6 +5,9 @@ PDFS=$(PACKETS:.docx=.pdf)
 
 all: $(PDFS)
 
+clean:
+	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
+
 -include .deps.mk
 
 .deps.mk: mk-deps.awk order.txt
