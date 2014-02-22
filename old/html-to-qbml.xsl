@@ -90,15 +90,15 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="p[text()='Bonuses']">
-		<xsl:for-each select="following-sibling::p[(preceding-sibling::p[1])[br]]">
+		<xsl:for-each select="following-sibling::p[(preceding-sibling::p[1])[br and not(text())]]">
 			<bonus id="{substring-before(text(), '.')}">
-				<xsl:variable name="cur" select="generate-id(preceding::br[1])" />
+				<xsl:variable name="cur" select="generate-id(preceding::br[ancestor::p[1][not(text())]][1])" />
 				<stem>
 					<xsl:call-template name="strip-number">
 						<xsl:with-param name="p" select="." />
 					</xsl:call-template>
 				</stem>
-				<xsl:for-each select="following-sibling::p[generate-id(preceding::br[1]) = $cur and starts-with(text(), '[10]')]">
+				<xsl:for-each select="following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(text())]][1]) = $cur and starts-with(text(), '[10]')]">
 					<part value="10">
 						<question>
 							<xsl:variable name="temp">
@@ -163,4 +163,5 @@
 	<xsl:template match="em"><title><xsl:apply-templates /></title></xsl:template>
 	<xsl:template match="sup"><sup><xsl:apply-templates /></sup></xsl:template>
 	<xsl:template match="sub"><sub><xsl:apply-templates /></sub></xsl:template>
+	<xsl:template match="br"><br /></xsl:template>
 </xsl:stylesheet>
