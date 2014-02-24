@@ -21,11 +21,8 @@
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}
 
-\RequirePackage{mathspec}
-\RequirePackage{xltxtra}
-\RequirePackage{xunicode}
-\defaultfontfeatures{Mapping=tex-text}
 \RequirePackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
 \newcommand{\myfont}{Brill}
 \setmainfont[Ligatures={Common}]{\myfont}
 
