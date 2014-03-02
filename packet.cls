@@ -22,6 +22,7 @@
 \RequirePackage[normalem]{ulem}
 
 \RequirePackage[log-declarations=false]{xparse}
+\RequirePackage{realscripts}
 \RequirePackage{fontspec}
 \defaultfontfeatures{Mapping=tex-text}
 \newcommand{\myfont}{Brill}
