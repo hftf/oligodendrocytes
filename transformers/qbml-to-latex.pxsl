@@ -9,7 +9,7 @@
     apply-templates
     text <<}>>
 
-stylesheet -version=1.0 -xmlns:xml=http://www.w3.org/XML/1998/namespace -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=text -encoding=UTF-8
   preserve-space -elements=*
 
