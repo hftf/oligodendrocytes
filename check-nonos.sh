@@ -13,6 +13,12 @@ echo "space after newline"
 grep --color -EiHnc "^(​|\s)" $@/*.md || :
 
 echo
+echo -e "\t  tossups bonuses   parts"
+for i in $@/*.qbml; do
+echo -e "$i`grep -o '<tossup ' $i | wc -l``grep -o '<bonus ' $i | wc -l``grep -o '<part ' $i | wc -l`"
+done
+
+echo
 echo "****"
 grep --color -EiHn "\*\*\*\*" $@/*.md || :
 
