@@ -8,12 +8,12 @@ THIS=${THIS%.*}
 #NEXT=$(awk "/$THIS/ { if (getline); print }" order.txt)
 PREV=$(awk "/$THIS/ { print (NR == 1) ? \"first\" : line; } { line = \$0 } " order.txt)
 PREV_QBML=$DIR/$PREV$INFIX.qbml
-# echo $DIR
-# echo $THIS
-# echo $INFIX
-# echo $PREV_QBML
-# echo $PREV
-# echo $THIS_EDGES
+# echo $THIS_EDGES      O/01.edges   O/01.x.edges
+# echo $DIR             O            O
+# echo $THIS              01           01
+# echo $INFIX                            .x
+# echo $PREV_QBML       O/11.qbml    O/11.x.qbml
+# echo $PREV              11           11
 
 # TODO fix whitepsace
 #XPATH="xpath"
