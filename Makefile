@@ -41,8 +41,8 @@ ifdef DIFF
 	diff <(xmllint --format $@) <(xmllint --format $@o)
 endif
 
-%.edges: transformers/prev-qbml-to-this-edges.sh
-	./transformers/prev-qbml-to-this-edges.sh $@
+%.edges: transformers/prev-qbml-to-this-edges.sh order.txt
+	./transformers/prev-qbml-to-this-edges.sh $@ order.txt
 
 %.xsl: %.pxsl transformers/xslt2.edf
 	pxslcc -hx --add=transformers/xslt2.edf $< > $@

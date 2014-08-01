@@ -5,8 +5,9 @@ THIS=${THIS##*/}
 [[ $THIS =~ \..* ]]
 INFIX=$BASH_REMATCH
 THIS=${THIS%.*}
+ORDER=$2
 #NEXT=$(awk "/$THIS/ { if (getline); print }" order.txt)
-PREV=$(awk "/$THIS/ { print (NR == 1) ? \"first\" : line; } { line = \$0 } " order.txt)
+PREV=$(awk "/$THIS/ { print (NR == 1) ? \"first\" : line; } { line = \$0 } " $ORDER)
 PREV_QBML=$DIR/$PREV$INFIX.qbml
 # echo $THIS_EDGES      O/01.edges   O/01.x.edges
 # echo $DIR             O            O
