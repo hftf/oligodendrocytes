@@ -1,6 +1,7 @@
 .PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 SHELL=bash
 DIR=O
+ORDER=order.txt
 PACKETS=$(wildcard $(DIR)/*.docx)
 PDFS=$(PACKETS:.docx=.pdf)
 
@@ -11,8 +12,8 @@ clean:
 
 -include .deps.mk
 
-.deps.mk: mk-deps.awk order.txt
-	awk -f mk-deps.awk order.txt > $@
+.deps.mk: $(ORDER) mk-deps.awk
+	awk -f mk-deps.awk $< > $@
 
 %.o.html: %.docx
 	textutil -convert html $< -stdout | \
@@ -41,8 +42,8 @@ ifdef DIFF
 	diff <(xmllint --format $@) <(xmllint --format $@o)
 endif
 
-%.edges: transformers/prev-qbml-to-this-edges.sh order.txt
-	./transformers/prev-qbml-to-this-edges.sh $@ order.txt
+%.edges: $(ORDER) transformers/prev-qbml-to-this-edges.sh
+	./transformers/prev-qbml-to-this-edges.sh $@ $<
 
 %.xsl: %.pxsl transformers/xslt2.edf
 	pxslcc -hx --add=transformers/xslt2.edf $< > $@
