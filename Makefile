@@ -7,11 +7,12 @@ FORMATS=$(PACKETS:.docx=.$(1))
 PDFS:=$(call FORMATS,pdf)
 TEXS:=$(call FORMATS,tex)
 
-all: $(PDFS)
+all: texs
 
 texs: $(TEXS)
 pdfs: $(PDFS)
 formats: $(call FORMATS,$(EXT))
+# usage: `make formats EXT=html`
 
 clean:
 	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
