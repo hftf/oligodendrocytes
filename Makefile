@@ -5,9 +5,12 @@ ORDER=order.txt
 PACKETS=$(wildcard $(DIR)/*.docx)
 FORMATS=$(PACKETS:.docx=.$(1))
 PDFS:=$(call FORMATS,pdf)
+TEXS:=$(call FORMATS,tex)
 
 all: $(PDFS)
 
+texs: $(TEXS)
+pdfs: $(PDFS)
 formats: $(call FORMATS,$(EXT))
 
 clean:
