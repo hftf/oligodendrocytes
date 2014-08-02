@@ -3,9 +3,12 @@ SHELL=bash
 DIR=O
 ORDER=order.txt
 PACKETS=$(wildcard $(DIR)/*.docx)
-PDFS=$(PACKETS:.docx=.pdf)
+FORMATS=$(PACKETS:.docx=.$(1))
+PDFS:=$(call FORMATS,pdf)
 
 all: $(PDFS)
+
+formats: $(call FORMATS,$(EXT))
 
 clean:
 	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
