@@ -17,6 +17,11 @@ formats: $(call FORMATS,$(EXT))
 clean:
 	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
 
+reset:
+	-rm $(DIR)/*.docx
+	./dl-gdocs.sh $(DIR)
+
+
 -include .deps.mk
 
 .deps.mk: $(ORDER) mk-deps.awk
