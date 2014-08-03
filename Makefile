@@ -37,6 +37,9 @@ reset:
 %.md: %.o.html
 	pandoc -o $@ $< -f html -t markdown
 
+%.md.nowrap: %.o.html
+	pandoc -o $@ $< -f html -t markdown --no-wrap
+
 -include x.mk
 
 # does not actually depend on %.md
