@@ -16,6 +16,12 @@ formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
 
 
+-include .deps.mk
+
+.deps.mk: $(ORDER) mk-deps.awk
+	awk -f mk-deps.awk $< > $@
+
+
 %.xml: %.pxml
 	pxslcc -h $< > $@
 
@@ -30,11 +36,6 @@ reset:
 	-rm $(DIR)/*.docx
 	./dl-gdocs.sh $(DIR)
 
-
--include .deps.mk
-
-.deps.mk: $(ORDER) mk-deps.awk
-	awk -f mk-deps.awk $< > $@
 
 %.o.html: %.docx
 	textutil -convert html $< -stdout | \
@@ -70,10 +71,10 @@ endif
 	./transformers/prev-qbml-to-this-edges.sh $@ $<
 
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
-	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
+	saxon -o:$@ $^
 
 tests/qbml-to-wqbml.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml.xsl
-	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
+	saxon -o:$@ $^
 
 %.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ transformers/qbml-to-latex.xsl $<
