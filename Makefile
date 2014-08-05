@@ -2,17 +2,26 @@
 SHELL=bash
 DIR=O
 ORDER=order.txt
+
+
 PACKETS=$(wildcard $(DIR)/*.docx)
 FORMATS=$(PACKETS:.docx=.$(1))
-PDFS:=$(call FORMATS,pdf)
 TEXS:=$(call FORMATS,tex)
+PDFS:=$(call FORMATS,pdf)
 
 all: texs
-
 texs: $(TEXS)
 pdfs: $(PDFS)
 formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
+
+
+%.xml: %.pxml
+	pxslcc -h $< > $@
+
+%.xsl: %.pxsl transformers/xslt2.edf
+	pxslcc -hx --add=transformers/xslt2.edf $< > $@
+
 
 clean:
 	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
@@ -59,9 +68,6 @@ endif
 
 %.edges: $(ORDER) transformers/prev-qbml-to-this-edges.sh
 	./transformers/prev-qbml-to-this-edges.sh $@ $<
-
-%.xsl: %.pxsl transformers/xslt2.edf
-	pxslcc -hx --add=transformers/xslt2.edf $< > $@
 
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
 	saxon -o:$@ $< transformers/qbml-to-wqbml.xsl
