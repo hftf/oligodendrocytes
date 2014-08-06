@@ -24,10 +24,9 @@ CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
 
 $(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(CURR_DIR)$(SETTINGS_XML)
 	xsltproc -o $@ $^
+	echo "-include $(CURR_DIR)deps.mk" >> $@
 
--include .deps.mk
-
-.deps.mk: $(ORDER) mk-deps.awk
+$(CURR_DIR)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR)vars.mk
 	awk -f mk-deps.awk $< > $@
 
 
