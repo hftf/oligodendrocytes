@@ -1,7 +1,5 @@
 .PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 SHELL=bash
-DIR=O
-ORDER=order.txt
 
 
 PACKETS=$(wildcard $(DIR)/*.docx)
@@ -15,6 +13,17 @@ pdfs: $(PDFS)
 formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
 
+
+SETTINGS_DIR=settings/
+SETTINGS_XML=settings.xml
+CURR_FILE:=$(SETTINGS_DIR)current.txt
+CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
+
+
+-include $(CURR_DIR)vars.mk
+
+$(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(CURR_DIR)$(SETTINGS_XML)
+	xsltproc -o $@ $^
 
 -include .deps.mk
 

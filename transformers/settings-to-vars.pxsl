@@ -1,0 +1,19 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:out=d
+  output -method=text -encoding=UTF-8
+
+  template /
+    apply-templates set/io
+
+  template io
+    ,line k p v =
+      text
+        ,k
+        <<:=>>
+        ,p
+      value-of <(,v)>
+      text <<&#xa;>>
+
+    ,line ORDER $(CURR_DIR) in/order
+    ,line DIR <()> out/dir
