@@ -42,20 +42,16 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
 
+  include ../settings/metadata.xsl
+
   template html
     param packet <<Packet >>
     param by <<by >>
     qpdb -version=0.2
       tournaments
         # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
-        tournament \
-          -id=1 -name=SUBMIT -year=2014 -date=<<February 1, 2014>> -location=<<University of Maryland>> \
-          -summary=<<SUBMIT 2014: &#x201c;sometimes referred to as Groper[citation needed]&#x201d;>>
-          subtitle
-            text <<&#x201c;sometimes referred to as Groper>>
-            sup
-              title <<(citation needed)>>
-            text <<&#x201d;>>
+        tournament
+          call-template metadata
           packets
             variable packet-name
               choose

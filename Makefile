@@ -29,6 +29,12 @@ $(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(CURR_DIR)$(SETTINGS_XML)
 $(CURR_DIR)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR)vars.mk
 	awk -f mk-deps.awk $< > $@
 
+$(CURR_DIR)metadata.xsl: $(CURR_DIR)$(SETTINGS_XML) transformers/settings-to-metadata.xsl
+	saxon -o:$@ $^
+
+$(SETTINGS_DIR)metadata.xsl: $(CURR_DIR)metadata.xsl
+	cp $< $@
+
 
 %.xml: %.pxml
 	pxslcc -h $< > $@
@@ -64,7 +70,7 @@ reset:
 %.html: %.native %.md transformers/wrap.template
 	pandoc -o $@ $< -f native -t html --template=transformers/wrap.template
 
-%.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh
+%.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(SETTINGS_DIR)metadata.xsl
 	xsltproc -o $@ transformers/html-to-qbml.xsl $<
 	./transformers/fix-qbml.sh < $@ > $@.temp
 	mv $@.temp $@

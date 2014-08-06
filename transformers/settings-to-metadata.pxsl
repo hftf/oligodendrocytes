@@ -1,0 +1,23 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:out=d
+  output -method=xml -indent=yes -encoding=UTF-8
+  namespace-alias -stylesheet-prefix=out -result-prefix=xsl
+
+  template /
+    apply-templates set/metadata
+
+  template metadata
+    out:stylesheet -version=1.0
+      out:template -name=metadata
+        for-each *
+          variable type
+            choose
+              when name()='subtitle'
+                <<xsl:element>>
+              otherwise
+                <<xsl:attribute>>
+          element {$type}
+            attribute name
+              value-of name()
+            apply-templates
