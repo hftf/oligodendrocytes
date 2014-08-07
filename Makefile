@@ -20,7 +20,14 @@ CURR_FILE:=$(SETTINGS_DIR)current.txt
 CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
 
 
+ifneq ($(MAKECMDGOALS),clean-meta)
 -include $(CURR_DIR)vars.mk
+endif
+
+META:=$(addprefix $(CURR_DIR),vars.mk deps.mk metadata.xsl) $(SETTINGS_DIR)metadata.xsl
+meta: $(META)
+clean-meta:
+	rm -vf $(META)
 
 $(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(CURR_DIR)$(SETTINGS_XML)
 	xsltproc -o $@ $^
