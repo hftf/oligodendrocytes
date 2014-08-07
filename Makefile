@@ -3,32 +3,35 @@ SHELL=bash
 
 
 TOURNAMENTS_DIR=tournaments/
+CACHE=_cache/
 CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
 CURR_DIR:=$(TOURNAMENTS_DIR)$(shell cat $(CURR_FILE))/
+CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 
 
 ifneq ($(MAKECMDGOALS),clean-meta)
--include $(CURR_DIR)vars.mk
+-include $(CURR_DIR_CACHE)vars.mk
 endif
 
-META:=$(addprefix $(CURR_DIR),vars.mk deps.mk metadata.xsl) $(METADATA_XSL)
+META:=$(addprefix $(CURR_DIR_CACHE),vars.mk deps.mk metadata.xsl) $(METADATA_XSL)
 meta: $(META)
 clean-meta:
 	rm -vf $(META)
 
-$(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
+$(CURR_DIR_CACHE)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
 	xsltproc -o $@ $^
-	echo "-include $(CURR_DIR)deps.mk" >> $@
+	echo "-include $(CURR_DIR_CACHE)deps.mk" >> $@
 
-$(CURR_DIR)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR)vars.mk
+$(CURR_DIR_CACHE)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR_CACHE)vars.mk
 	awk -f mk-deps.awk $< > $@
 
-$(CURR_DIR)metadata.xsl: $(SETTINGS_XML) transformers/settings-to-metadata.xsl
+$(CURR_DIR_CACHE)metadata.xsl: $(SETTINGS_XML) transformers/settings-to-metadata.xsl
 	saxon -o:$@ $^
 
-$(METADATA_XSL): $(CURR_DIR)metadata.xsl
+$(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
+	mkdir -p $(dir $@)
 	cp $< $@
 
 
