@@ -3,10 +3,10 @@ SHELL=bash
 
 
 SETTINGS_DIR=settings/
-SETTINGS_XML=settings.xml
 CURR_FILE:=$(SETTINGS_DIR)current.txt
 CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
 METADATA_XSL=$(SETTINGS_DIR)metadata.xsl
+SETTINGS_XML=$(CURR_DIR)settings.xml
 
 
 ifneq ($(MAKECMDGOALS),clean-meta)
@@ -18,14 +18,14 @@ meta: $(META)
 clean-meta:
 	rm -vf $(META)
 
-$(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(CURR_DIR)$(SETTINGS_XML)
+$(CURR_DIR)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
 	xsltproc -o $@ $^
 	echo "-include $(CURR_DIR)deps.mk" >> $@
 
 $(CURR_DIR)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR)vars.mk
 	awk -f mk-deps.awk $< > $@
 
-$(CURR_DIR)metadata.xsl: $(CURR_DIR)$(SETTINGS_XML) transformers/settings-to-metadata.xsl
+$(CURR_DIR)metadata.xsl: $(SETTINGS_XML) transformers/settings-to-metadata.xsl
 	saxon -o:$@ $^
 
 $(METADATA_XSL): $(CURR_DIR)metadata.xsl
