@@ -6,13 +6,14 @@ SETTINGS_DIR=settings/
 SETTINGS_XML=settings.xml
 CURR_FILE:=$(SETTINGS_DIR)current.txt
 CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
+METADATA_XSL=$(SETTINGS_DIR)metadata.xsl
 
 
 ifneq ($(MAKECMDGOALS),clean-meta)
 -include $(CURR_DIR)vars.mk
 endif
 
-META:=$(addprefix $(CURR_DIR),vars.mk deps.mk metadata.xsl) $(SETTINGS_DIR)metadata.xsl
+META:=$(addprefix $(CURR_DIR),vars.mk deps.mk metadata.xsl) $(METADATA_XSL)
 meta: $(META)
 clean-meta:
 	rm -vf $(META)
@@ -27,7 +28,7 @@ $(CURR_DIR)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR)vars.mk
 $(CURR_DIR)metadata.xsl: $(CURR_DIR)$(SETTINGS_XML) transformers/settings-to-metadata.xsl
 	saxon -o:$@ $^
 
-$(SETTINGS_DIR)metadata.xsl: $(CURR_DIR)metadata.xsl
+$(METADATA_XSL): $(CURR_DIR)metadata.xsl
 	cp $< $@
 
 
@@ -77,7 +78,7 @@ reset:
 %.html: %.native %.md transformers/wrap.template
 	pandoc -o $@ $< -f native -t html --template=transformers/wrap.template
 
-%.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(SETTINGS_DIR)metadata.xsl
+%.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(METADATA_XSL)
 	xsltproc -o $@ transformers/html-to-qbml.xsl $<
 	./transformers/fix-qbml.sh < $@ > $@.temp
 	mv $@.temp $@
