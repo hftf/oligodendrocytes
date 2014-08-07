@@ -42,7 +42,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
 
-  include ../settings/metadata.xsl
+  include ../tournaments/metadata.xsl
 
   template html
     param packet <<Packet >>

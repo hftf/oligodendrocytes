@@ -2,10 +2,10 @@
 SHELL=bash
 
 
-SETTINGS_DIR=settings/
-CURR_FILE:=$(SETTINGS_DIR)current.txt
-CURR_DIR:=$(SETTINGS_DIR)$(shell cat $(CURR_FILE))/
-METADATA_XSL=$(SETTINGS_DIR)metadata.xsl
+TOURNAMENTS_DIR=tournaments/
+CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
+CURR_DIR:=$(TOURNAMENTS_DIR)$(shell cat $(CURR_FILE))/
+METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 
 
