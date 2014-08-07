@@ -2,18 +2,6 @@
 SHELL=bash
 
 
-PACKETS=$(wildcard $(DIR)/*.docx)
-FORMATS=$(PACKETS:.docx=.$(1))
-TEXS:=$(call FORMATS,tex)
-PDFS:=$(call FORMATS,pdf)
-
-all: texs
-texs: $(TEXS)
-pdfs: $(PDFS)
-formats: $(call FORMATS,$(EXT))
-# usage: `make formats EXT=html`
-
-
 SETTINGS_DIR=settings/
 SETTINGS_XML=settings.xml
 CURR_FILE:=$(SETTINGS_DIR)current.txt
@@ -48,6 +36,18 @@ $(SETTINGS_DIR)metadata.xsl: $(CURR_DIR)metadata.xsl
 
 %.xsl: %.pxsl transformers/xslt2.edf
 	pxslcc -hx --add=transformers/xslt2.edf $< > $@
+
+
+PACKETS=$(wildcard $(DIR)/*.docx)
+FORMATS=$(PACKETS:.docx=.$(1))
+TEXS:=$(call FORMATS,tex)
+PDFS:=$(call FORMATS,pdf)
+
+all: texs
+texs: $(TEXS)
+pdfs: $(PDFS)
+formats: $(call FORMATS,$(EXT))
+# usage: `make formats EXT=html`
 
 
 clean:
