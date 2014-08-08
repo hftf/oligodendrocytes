@@ -59,7 +59,7 @@ clean:
 
 reset:
 	-rm $(DIR)/*.docx
-	./dl-gdocs.sh $(DIR)
+	./dl-gdocs.sh $(DIR) $(DL_GDOCS_ARGS)
 
 
 %.o.html: %.docx
