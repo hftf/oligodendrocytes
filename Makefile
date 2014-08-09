@@ -4,9 +4,11 @@ SHELL=bash
 
 TOURNAMENTS_DIR=tournaments/
 CACHE=_cache/
+PACKETS=packets/
 CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
 CURR_DIR:=$(TOURNAMENTS_DIR)$(shell cat $(CURR_FILE))/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
+PACKETS_DIR:=$(CURR_DIR)$(PACKETS)
 METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 
@@ -42,7 +44,7 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 	pxslcc -hx --add=transformers/xslt2.edf $< > $@
 
 
-PACKETS=$(wildcard $(DIR)/*.docx)
+PACKETS=$(wildcard $(PACKETS_DIR)*.docx)
 FORMATS=$(PACKETS:.docx=.$(1))
 TEXS:=$(call FORMATS,tex)
 PDFS:=$(call FORMATS,pdf)
@@ -55,11 +57,11 @@ formats: $(call FORMATS,$(EXT))
 
 
 clean:
-	cd $(DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
+	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
 
 reset:
-	-rm $(DIR)/*.docx
-	./dl-gdocs.sh $(DIR) $(DL_GDOCS_ARGS)
+	-rm $(PACKETS_DIR)*.docx
+	./dl-gdocs.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 
 %.o.html: %.docx
@@ -109,7 +111,7 @@ ifdef DIFF
 endif
 
 %.pdf: %.tex packet.cls
-	xelatex -output-directory $(DIR) $< -interaction=batchmode
+	xelatex -output-directory $(PACKETS_DIR) $< -interaction=batchmode
 
 # %.tex: %.md packet.template
 # 	pandoc \
