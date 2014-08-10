@@ -20,4 +20,4 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
           element {$type}
             attribute name
               value-of name()
-            apply-templates
+            copy-of node()
