@@ -11,7 +11,7 @@
 
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=text -encoding=UTF-8
-  preserve-space -elements=*
+  preserve-space *
 
   template qpdb
     text <<% !TEX TS-program = XeLaTeX

@@ -20,7 +20,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
         copy-of self::t/node()
         variable cur current-group()[not(self::t)]
 
-        if -test=<<not(position()=last() and string-length($cur)=0)>>
+        if <(<<not(position()=last() and string-length($cur)=0)>>)>
           # <w> contains word characters
           w -i={position()}
             choose

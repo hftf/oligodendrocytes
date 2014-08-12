@@ -2,7 +2,7 @@
 
 stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:out=d
   output -method=xml -indent=yes -encoding=UTF-8
-  namespace-alias -stylesheet-prefix=out -result-prefix=xsl
+  namespace-alias out xsl
 
   template /
     out:stylesheet -version=1.0
