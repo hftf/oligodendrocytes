@@ -2,10 +2,10 @@
 
 ,tag source result =
   template <(,source)>
-    text <<\>>
     text
+      <<\>>
       ,result
-    text <<{>>
+      <<{>>
     apply-templates
     text <<}>>
 
@@ -28,10 +28,10 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template tournament
     ,renew cmd attr =
-      text <<	\renewcommand{\>>
       text
+        <<	\renewcommand{\>>
         ,cmd
-      text <<}{>>
+        <<}{>>
       apply-templates <(,attr)>
       text <<}
 >>
