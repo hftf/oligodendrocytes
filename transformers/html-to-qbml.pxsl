@@ -67,7 +67,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
                 apply-templates p[text()='Bonuses']
 
   template p[text()='Tossups']
-    for-each -select=<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>
+    for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>)>
       tossup -id={substring-before(text(),'.')}
         question
           ,strip . <<. >>
@@ -76,12 +76,12 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
             with-param p following-sibling::p[1]
 
   template p[text()='Bonuses']
-    for-each -select=<<following-sibling::p[(preceding-sibling::p[1])[br and not(text())]]>>
+    for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(text())]]>>)>
       bonus -id={substring-before(text(),'.')}
         variable cur generate-id(preceding::br[ancestor::p[1][not(text())]][1])
         stem
           ,strip . <<. >>
-        for-each -select=<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(text())]][1]) = $cur and starts-with(text(), '[10]')]>>
+        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(text())]][1]) = $cur and starts-with(text(), '[10]')]>>)>
           part -value=10
             question
               ,strip . <<[10] >>
