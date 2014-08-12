@@ -9,7 +9,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
       apply-templates set/metadata
 
   template metadata
-    out:template -name=metadata
+    out:template -name=tournament-metadata
       for-each *
         variable type
           choose

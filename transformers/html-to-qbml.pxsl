@@ -51,7 +51,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       tournaments
         # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
         tournament
-          call-template metadata
+          call-template tournament-metadata
           packets
             variable packet-name
               choose
