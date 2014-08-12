@@ -7,6 +7,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
   template /
     out:stylesheet -version=1.0
       apply-templates set/metadata
+      apply-templates set/io/in/prefixes
 
   template metadata
     out:template -name=tournament-metadata
@@ -21,3 +22,8 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
           attribute name
             value-of name()
           copy-of node()
+
+  template prefixes
+    for-each *
+      out:param -name={name()}
+        apply-templates

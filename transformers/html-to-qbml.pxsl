@@ -44,9 +44,6 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   include ../tournaments/_cache/metadata.xsl
 
-  param packet <<Packet >>
-  param by <<by >>
-
   template html
     qpdb -version=0.2
       tournaments
@@ -62,14 +59,20 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
                 apply-templates p[text()='Bonuses']
 
   template -name=packet-metadata
+    variable editors contains(p[2],'Editors')
     variable packet-name
       choose
-        when contains(p[2],'Editors')
+        when $editors
           text <<Editors >>
-          value-of substring-after(p[2],$packet)
+          value-of substring-after(p[2],$packet-name-editors)
         otherwise
-          value-of substring-after(p[2],$by)
-    variable authors substring-after(p[3],$by)
+          value-of substring-after(p[2],$packet-name-other)
+    variable authors
+      choose
+        when $editors
+          value-of substring-after(p[3],$authors-editors)
+        otherwise
+          value-of substring-after(p[3],$authors-other)
 
     attribute name
       value-of $packet-name

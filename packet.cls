@@ -84,7 +84,7 @@
 \tournamentname{} \tournamentyear{}: \subtitle{}\\
 \textbf{%{\packet{}} {\packetnumber{}} --- {
 \packetname}\\
-by \authors{}
+\authors{}
 
 \medskip
 \begin{lb}{☞}
