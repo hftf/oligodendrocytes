@@ -44,27 +44,37 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   include ../tournaments/_cache/metadata.xsl
 
+  param packet <<Packet >>
+  param by <<by >>
+
   template html
-    param packet <<Packet >>
-    param by <<by >>
     qpdb -version=0.2
       tournaments
         # TODO: Take this hardcoding out of the stylesheet; also UTF-8 does not work
         tournament
           call-template tournament-metadata
           packets
-            variable packet-name
-              choose
-                when contains(p[2],'Editors')
-                  text <<Editors >>
-                  value-of substring-after(p[2],$packet)
-                otherwise
-                  value-of substring-after(p[2],$by)
-            packet -name={$packet-name} -authors={substring-after(p[3],$by)}
+            packet
+              call-template packet-metadata
               tossups
                 apply-templates p[text()='Tossups']
               boni
                 apply-templates p[text()='Bonuses']
+
+  template -name=packet-metadata
+    variable packet-name
+      choose
+        when contains(p[2],'Editors')
+          text <<Editors >>
+          value-of substring-after(p[2],$packet)
+        otherwise
+          value-of substring-after(p[2],$by)
+    variable authors substring-after(p[3],$by)
+
+    attribute name
+      value-of $packet-name
+    attribute authors
+      value-of $authors
 
   template p[text()='Tossups']
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>)>
