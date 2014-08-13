@@ -27,7 +27,7 @@ $(CURR_DIR_CACHE)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
 	echo "-include $(CURR_DIR_CACHE)deps.mk" >> $@
 
 $(CURR_DIR_CACHE)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR_CACHE)vars.mk
-	awk -f mk-deps.awk $< > $@
+	awk -f $(word 2,$^) $< > $@
 
 $(CURR_DIR_CACHE)metadata.xsl: $(SETTINGS_XML) transformers/settings-to-metadata.xsl
 	saxon -o:$@ $^
@@ -41,7 +41,7 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 	pxslcc -h $< > $@
 
 %.xsl: %.pxsl transformers/xslt2.edf
-	pxslcc -hx --add=transformers/xslt2.edf $< > $@
+	pxslcc -hx --add=$(word 2,$^) $< > $@
 
 
 PACKETS=$(wildcard $(PACKETS_DIR)*.docx)
@@ -81,21 +81,21 @@ reset:
 
 # does not actually depend on %.md
 %.html: %.native %.md transformers/wrap.template
-	pandoc -o $@ $< -f native -t html --template=transformers/wrap.template
+	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
 
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(METADATA_XSL)
-	xsltproc -o $@ transformers/html-to-qbml.xsl $<
-	./transformers/fix-qbml.sh < $@ > $@.temp
+	xsltproc -o $@ $(word 2,$^) $<
+	$(word 3,$^) < $@ > $@.temp
 	mv $@.temp $@
 ifdef DIFF
-	xsltproc -o $@o         old/html-to-qbml.xsl $<
-	./transformers/fix-qbml.sh < $@o > $@o.temp
+	xsltproc -o $@o old/html-to-qbml.xsl $<
+	$(word 3,$^) < $@o > $@o.temp
 	mv $@o.temp $@o
 	diff <(xmllint --format $@) <(xmllint --format $@o)
 endif
 
 %.edges: $(ORDER) transformers/prev-qbml-to-this-edges.sh
-	./transformers/prev-qbml-to-this-edges.sh $@ $<
+	$(word 2,$^) $@ $<
 
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
 	saxon -o:$@ $^
@@ -104,9 +104,9 @@ tests/qbml-to-wqbml.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml.x
 	saxon -o:$@ $^
 
 %.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
-	xsltproc -o $@ transformers/qbml-to-latex.xsl $<
+	xsltproc -o $@ $(word 3,$^) $<
 ifdef DIFF
-	xsltproc -o $@o         old/qbml-to-latex.xsl $<
+	xsltproc -o $@o old/qbml-to-latex.xsl $<
 	diff $@ $@o
 endif
 
