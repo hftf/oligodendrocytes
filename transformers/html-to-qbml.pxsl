@@ -44,6 +44,8 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   include ../tournaments/_cache/metadata.xsl
 
+  param list-punct <<. >>
+
   template html
     qpdb -version=0.2
       tournaments
@@ -81,19 +83,19 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template p[text()='Tossups']
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>)>
-      tossup -id={substring-before(text(),'.')}
+      tossup -id={substring-before(text(),$list-punct)}
         question
-          ,strip . <<. >>
+          ,strip . $list-punct
         answer
           call-template strip-answer
             with-param p following-sibling::p[1]
 
   template p[text()='Bonuses']
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(text())]]>>)>
-      bonus -id={substring-before(text(),'.')}
+      bonus -id={substring-before(text(),$list-punct)}
         variable cur generate-id(preceding::br[ancestor::p[1][not(text())]][1])
         stem
-          ,strip . <<. >>
+          ,strip . $list-punct
         for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(text())]][1]) = $cur and starts-with(text(), '[10]')]>>)>
           part -value=10
             question
