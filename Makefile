@@ -5,12 +5,14 @@ SHELL=bash
 TOURNAMENTS_DIR=tournaments/
 CACHE=_cache/
 CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
-CURR_DIR:=$(TOURNAMENTS_DIR)$(shell cat $(CURR_FILE))/
+CURR_TOURNAMENT:=$(shell cat $(CURR_FILE))
+CURR_DIR:=$(TOURNAMENTS_DIR)$(CURR_TOURNAMENT)/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 PACKETS_DIR:=$(CURR_DIR)packets/
 DOCS_DIR:=$(PACKETS_DIR)docs/
 METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
+$(info $(shell echo -e "\033[0;37;44m $(CURR_TOURNAMENT) \033[0m"))
 
 
 ifneq ($(MAKECMDGOALS),clean-meta)
