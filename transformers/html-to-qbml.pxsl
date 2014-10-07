@@ -27,11 +27,10 @@
 #
 # TODO: Wrap all substring-after() with if starts-with() 
 
-,strip el =
+,strip el str =
   call-template strip
     with-param p <(,el)>
-    with-param s
-      ,BODY
+    with-param s <(,str)>
 
 ,tag source result =
   template <(,source)>
