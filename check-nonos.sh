@@ -30,4 +30,8 @@ echo
 echo "\\answer{}"
 grep --color -EC 4 '\\answer\{\}' $@/*.tex || :
 
+echo
+echo "\\\\}"
+grep --color -EH '\\\\\}' $@/*.tex || :
+
 #grep -Eo '}[^}]+\\w{[^}0-9A-Za-z]+}{[^}]+}[^}]+}' $@/*.tex
