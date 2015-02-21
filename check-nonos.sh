@@ -26,6 +26,11 @@ echo
 echo "* *"
 grep --color=always -EiHn "..\* \*.." $@/*.md | grep -v ANSWER || :
 
+
+echo
+echo "[,.?!]*"
+grep --color -PiHn "(?<!\.\w)[.,?!]\*(?!\*)" $@/*.md || :
+
 echo
 echo "\\answer{}"
 grep --color -EC 4 '\\answer\{\}' $@/*.tex || :
