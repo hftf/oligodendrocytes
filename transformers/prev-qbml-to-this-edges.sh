@@ -28,7 +28,7 @@ PREV_QBML=$DIR/$PREV$INFIX.qbml
 # <å>&#xE5;</å>
 XPATH="xmllint --xpath"
 XSLT="xsltproc transformers/qbml-to-latex.xsl -"
-SED='sed s/\\answer//g'
+SED='sed -e s/\\answer//g -e s/.([^)]*)//g'
 TR="tr -d '\n'"
 
 if [ -z "$PREV" ]; then
