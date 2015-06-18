@@ -8,6 +8,7 @@ CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
 CURR_DIR:=$(TOURNAMENTS_DIR)$(shell cat $(CURR_FILE))/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 PACKETS_DIR:=$(CURR_DIR)packets/
+DOCS_DIR:=$(PACKETS_DIR)docs/
 METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 
@@ -60,7 +61,7 @@ clean:
 
 reset:
 	-rm $(PACKETS_DIR)*.docx
-	./dl-gdocs.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
+	./dl-gdocs.sh $(DOCS_DIR) $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 
 %.o.html: %.docx
