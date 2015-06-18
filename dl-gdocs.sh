@@ -13,10 +13,12 @@ echo
 echo "changing filenames and copying into $2"
 for i in $1*; do
     FILENAME=${i##*\/}
-    NEWNAME=${FILENAME:$4:$5}.docx
-    NEWPATH=$2$NEWNAME
-    printf "copying %-42s → \"$NEWNAME\"\n" "\"$FILENAME\""
-    cp "$i" "$NEWPATH"
+    NEWNAME=${FILENAME:$4:$5}
+    if [ ! -z "$NEWNAME" ]; then
+        NEWPATH=$2$NEWNAME.docx
+        printf "copying %-42s → \"$NEWNAME\"\n" "\"$FILENAME\""
+        cp "$i" "$NEWPATH"
+    fi
 done
 ## and this
 #echo "removing Fi.docx"
