@@ -7,12 +7,12 @@ fi
 
 echo "fetching"
 mkdir -p $1
-google docs get --folder "$2" --format docx --dest $1
+skicka download -download-google-apps-files "$2" "$1"
 
 echo
 echo "changing filenames"
 pushd $1
-for i in *.docx; do
+for i in *; do
     NEW=${i:$3:$4}.docx
     printf "moving %-42s → $NEW\n" "$i"
     mv "$i" "$NEW"
