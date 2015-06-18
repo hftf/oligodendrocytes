@@ -25,8 +25,8 @@
 \RequirePackage{realscripts}
 \RequirePackage{fontspec}
 \defaultfontfeatures{Mapping=tex-text}
-\newcommand{\myfont}{Brill}
-\setmainfont[Ligatures={Common}]{\myfont}
+\newcommand{\myfont}{Lyon Text}
+\setmainfont[BoldFont={* Semibold},Numbers={Lining},Ligatures={Common}]{\myfont}
 
 % SEMANTICS
 \newcounter{question}
