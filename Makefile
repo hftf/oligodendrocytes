@@ -46,8 +46,8 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 	pxslcc -hx --add=$(word 2,$^) $< > $@
 
 
-PACKETS=$(wildcard $(PACKETS_DIR)*.docx)
-FORMATS=$(PACKETS:.docx=.$(1))
+PACKETS=$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT))
+FORMATS=$(PACKETS:$(SOURCE_EXT)=.$(1))
 TEXS:=$(call FORMATS,tex)
 PDFS:=$(call FORMATS,pdf)
 
@@ -62,7 +62,6 @@ clean:
 	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md *.qbml* *.wqbml *.edges *.tex* *.aux *.log *.out *.pdf
 
 reset:
-	-rm $(PACKETS_DIR)*.docx
 	./dl-gdocs.sh $(DOCS_DIR) $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 

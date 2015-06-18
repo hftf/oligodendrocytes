@@ -16,6 +16,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
       text <<&#xa;>>
 
     ,line ORDER $(CURR_DIR) in/order
+    ,line SOURCE_EXT <()> in/source-ext
     ,line DL_GDOCS_ARGS <()> <( <<concat(
       '"', in/gdocs-folder-name, '" ',
       in/packet-filename-to-slug/start, ' ',
