@@ -56,10 +56,13 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
           packets
             packet
               call-template packet-metadata
+              variable bonuses p[text()='Bonuses']
+
               tossups
                 apply-templates p[text()='Tossups']
-              boni
-                apply-templates p[text()='Bonuses']
+              if $bonuses
+                boni
+                  apply-templates p[text()='Bonuses']
 
   template -name=packet-metadata
     variable editors contains(p[2],'Editors')
@@ -83,7 +86,8 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       value-of $authors
 
   template p[text()='Tossups']
-    for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br] and following-sibling::p[text()='Bonuses']]>>)>
+    variable ps following-sibling::p
+    for-each <(<<$ps[(preceding-sibling::p[1])[br] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
       tossup -id={substring-before(text(),$list-punct)}
         question
           ,strip . $list-punct
