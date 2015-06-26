@@ -1,0 +1,59 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+### Toggle comments to use xsl
+# set -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+set
+  metadata
+    name <<Tournament name>>
+    year <<2015>>
+
+    ### Other metadata
+    date <<May 1, 2015>>
+    location <<foo>>
+
+    subtitle <<The subtitle can be plain text>>
+
+    ### Uncomment to use xsl
+    # subtitle
+    #   xsl:text <<It can also be marked up with >>
+    #   abbr <<XSL>>
+
+  io
+    in
+      order <<order.txt>>
+
+      source-ext <<.md>>
+
+      ### Uncomment to use Google Docs
+      # gdocs-folder-name <<Quizbowl/Tournaments/Tournament name/Packets>>
+      # source-ext <<.docx>>
+
+      packet-filename-to-slug
+        start <<0>>
+        length <<2>>
+
+      prefixes
+        ### Uncomment to strip string prefixes from packet header
+
+        ### Example: packet sub
+        ### Packet by Foo and Bar  ->  Foo and Bar
+        ### Editors Packet 1       ->  Editors 1
+        # packet-name-other <<Packet by >>
+        # packet-name-editors <<Editors Packet >>
+        # editors-prefix <<Editors >>
+        # authors-other <<Edited by >>
+        # authors-editors <<Questions by >>
+
+        ### Example: housewrite
+        # packet-name-other <<>>
+        # packet-name-editors <<Questions by >>
+
+      xsl-params
+        ### Uncomment if questions are not numbered
+
+        ### Defaults to <<. >> to strip question numbering:
+        ### 1. Foo bar  ->  Foo bar
+        # list-punct <<>>
+
+        ### Other params are set near the top of transformers/html-to-qbml.pxsl
+
