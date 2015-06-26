@@ -69,8 +69,16 @@ reset:
 	textutil -convert html $< -stdout | \
 	sed "s/ \(<\/[^>]*>\)/\1 /g" | sed "s/\(<[^/][^>]*>\) / \1/g" > $@
 
-%.native: %.o.html
-	pandoc -o $@ $< -f html -t native
+ifeq ($(SOURCE_EXT),.md)
+NATIVE_DEP_EXT=.md
+NATIVE_FLAGS:=
+else
+NATIVE_DEP_EXT=.o.html
+NATIVE_FLAGS:="-f html -t native"
+endif
+
+%.native: %$(NATIVE_DEP_EXT)
+	pandoc -o $@ $< $(NATIVE_FLAGS)
 
 %.md: %.o.html
 	pandoc -o $@ $< -f html -t markdown
