@@ -46,6 +46,11 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   param list-punct <<. >>
   param answer-prefix <<ANSWER: >>
   param bonus-prefix <<[10] >>
+  param editors-prefix <<>>
+  param packet-name-other <<>>
+  param packet-name-editors <<>>
+  param authors-other <<>>
+  param authors-editors <<>>
 
   template html
     qpdb -version=0.2
@@ -69,7 +74,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     variable packet-name
       choose
         when $editors
-          text <<Editors >>
+          text $editors-prefix
           value-of substring-after(p[2],$packet-name-editors)
         otherwise
           value-of substring-after(p[2],$packet-name-other)
