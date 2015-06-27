@@ -74,7 +74,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     variable packet-name
       choose
         when $editors
-          text $editors-prefix
+          value-of $editors-prefix
           value-of substring-after(p[2],$packet-name-editors)
         otherwise
           value-of substring-after(p[2],$packet-name-other)
