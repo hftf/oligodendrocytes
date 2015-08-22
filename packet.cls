@@ -30,6 +30,8 @@
 \newcommand{\myfont}{Lyon Text}
 \setmainfont[BoldFont={* Semibold},Numbers={Lining},Ligatures={Common}]{\myfont}
 
+\newcommand{\powersym}{(*)}% *⁕⁎⋆
+
 % SEMANTICS
 \newcounter{question}
 \def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
