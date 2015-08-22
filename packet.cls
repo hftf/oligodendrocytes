@@ -20,6 +20,8 @@
 
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}
+\usepackage{newunicodechar}
+\newunicodechar{ }{~}
 
 \RequirePackage[log-declarations=false]{xparse}
 \RequirePackage{realscripts}
