@@ -32,7 +32,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template text() -mode=translate -priority=1
     # These characters will be "part of" the word
     param word
-      <{\w&#;%\[\]<>\\/'!}>
+      <{\w&#;%\[\]<>\\/'!_}>
       <<&#x2018;&#x2019;->>
     analyze-string . [^{$word}]+
       matching-substring
