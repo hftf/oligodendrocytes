@@ -33,6 +33,9 @@
 \newcommand{\powersym}{(*)}% *⁕⁎⋆
 
 % SEMANTICS
+\newenvironment{tossups}{\subsection*{Tossups}\setcounter{question}0}{}
+\newenvironment{bonuses}{\subsection*{Bonuses}\setcounter{question}0}{}
+
 \newcounter{question}
 \def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
 \def\endclaim{\par\medskip}
@@ -69,6 +72,8 @@
 \newcommand{\tournamentname}{}
 \newcommand{\tournamentyear}{}
 \newcommand{\subtitle}{}
+\newcommand{\packetname}{}
+\newcommand{\authors}{}
 
 \newcommand{\packet}{Packet}
 
