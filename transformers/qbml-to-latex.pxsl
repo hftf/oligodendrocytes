@@ -127,6 +127,13 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   ,tag sub textsubscript
   ,tag sc textsc
 
+  template pron
+    text <<\pron{>>
+    apply-templates graph
+    text <<}{>>
+    apply-templates phon
+    text <<}>>
+
   template br <<\\>>
 
   template w
