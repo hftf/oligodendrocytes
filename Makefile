@@ -60,6 +60,8 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 PACKETS=$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT))
 FORMATS=$(PACKETS:$(SOURCE_EXT)=.$(1))
 
+PANDOC:=pandoc
+
 formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
 
@@ -88,13 +90,13 @@ NATIVE_FLAGS:=-f html -t native
 endif
 
 %.native: %$(NATIVE_DEP_EXT)
-	pandoc -o $@ $< $(NATIVE_FLAGS)
+	$(PANDOC) -o $@ $< $(NATIVE_FLAGS)
 
 %.md: %.o.html
-	pandoc -o $@ $< -f html -t markdown
+	$(PANDOC) -o $@ $< -f html -t markdown
 
 %.md.nowrap: %.o.html
-	pandoc -o $@ $< -f html -t markdown --no-wrap
+	$(PANDOC) -o $@ $< -f html -t markdown --no-wrap
 
 
 -include makefiles/f.mk
