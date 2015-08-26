@@ -60,7 +60,7 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 PACKETS=$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT))
 FORMATS=$(PACKETS:$(SOURCE_EXT)=.$(1))
 
-PANDOC:=pandoc
+PANDOC:=pandoc-1.15
 
 formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
@@ -78,8 +78,8 @@ $(info Making: $(MAKECMDGOALS))
 
 # TODO fix $@, etc. to "$@"
 # (o.html stands for original.html)
-%.o.html: %.docx transformers/docx-to-o-html.sh
-	$(word 2,$^) $< > $@
+%.o.html: %.docx
+	$(PANDOC) -o $@ $< --preserve-empty-paragraphs
 
 ifeq ($(SOURCE_EXT),.md)
 NATIVE_DEP_EXT=.md
