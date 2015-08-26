@@ -16,6 +16,10 @@
 \RequirePackage{hyperref}
 \RequirePackage{xcolor}
 
+%\RequirePackage{showframe}
+%\renewcommand\ShowFrameLinethickness{0.3pt}
+%\renewcommand\ShowFrameColor{\color{gray!60}}
+
 % PRONUNCIATION GUIDES
 \newcommand{\marginfont}{\footnotesize}
 \newcommand{\pronsymbol}{°}
@@ -34,7 +38,7 @@
 
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}
-\usepackage{newunicodechar}
+\RequirePackage{newunicodechar}
 \newunicodechar{ }{~}
 
 \RequirePackage[log-declarations=false]{xparse}
