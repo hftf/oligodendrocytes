@@ -13,10 +13,24 @@
 \LoadClass{article}
 
 % LAYOUT
-\RequirePackage[hmargin=0.75in,vmargin=0.75in]{geometry}
-\RequirePackage{enumerate}
-\RequirePackage{enumitem}
 \RequirePackage{hyperref}
+\RequirePackage{xcolor}
+
+% PRONUNCIATION GUIDES
+\newcommand{\marginfont}{\footnotesize}
+\newcommand{\pronsymbol}{°}
+\newcommand{\pronnote}[1]{\marginpar{\marginfont{#1}}\pronsymbol}
+\newcommand{\pronmargin}[2]{\pronnote{#2}#1}
+\newcommand{\pronmargingeom}{left=0.75in,right=1.5in,marginparsep=0.2in,marginparwidth=0.8in}
+
+\newcommand{\prongray}[1]{{\color{gray!60}{#1}}}
+\newcommand{\prontheses}[2]{#1 \prongray{[#2]}}
+\newcommand{\pronthesesgeom}{hmargin=0.75in}
+
+\let\pron\prontheses
+\let\geom\pronthesesgeom
+
+\RequirePackage[\geom,vmargin=0.75in]{geometry}
 
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}
