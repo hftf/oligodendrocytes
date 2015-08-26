@@ -65,7 +65,7 @@
 % TOOLTIP
 % Source: http://tex.stackexchange.com/questions/31078/kerning-between-bold-and-non-bold-text
 % TODO: kernleft (this will restore the kerning between “ and A, T, or similar letters the most)
-\newcommand\kernright[1]{\def\hltext{#1}\futurelet\hlnext\hldokern}
+\newcommand\kernright[1]{\renewcommand{\marginpar}[1]{}\def\hltext{#1}\futurelet\hlnext\hldokern}
 \def\hldokern{\sbox0{\mbox\hltext\mbox\hlnext}\sbox2{\hltext\hlnext}\kern\dimexpr\wd2-\wd0\relax}
 \newcommand\tooltip[2]{%
 \special{pdf:bann
