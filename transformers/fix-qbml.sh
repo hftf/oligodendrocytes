@@ -1,1 +1,2 @@
-sed 's/\([%$&#_]\)/\\\1/g'
+# note: \& refers to the entire match
+sed -E 's/[%$#_]|&amp;/\\&/g'
