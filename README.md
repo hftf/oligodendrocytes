@@ -5,6 +5,10 @@ Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Conve
 
 ---
 
+### Instructions
+
+Will likely be superseded by a script (see `compile.sh`)
+
 #### Add a tournament
 
 1. Create the folder <code>tournaments/_name_/</code>.
@@ -23,3 +27,5 @@ Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Conve
 2. Run `make reset` to download the packets from Google Docs.
   * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
 3. Run `make pdfs`.
+  * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
+    * `html`,  `f.html`, `md`, `md.nowrap`, `qbml`, `tex`, `tossup.answers`, `bonus.answers`, etc.
