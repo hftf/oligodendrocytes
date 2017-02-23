@@ -1,9 +1,12 @@
+.SUFFIXES:
+.PHONY: meta all texs pdfs formats
 .PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 SHELL=bash
 
 
 TOURNAMENTS_DIR=tournaments/
 CACHE=_cache/
+# TODO use current only if not given
 CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
 CURR_TOURNAMENT:=$(shell cat $(CURR_FILE))
 CURR_DIR:=$(TOURNAMENTS_DIR)$(CURR_TOURNAMENT)/
@@ -64,7 +67,9 @@ clean:
 reset:
 	./dl-gdocs.sh $(DOCS_DIR) $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
+$(info Making: $(MAKECMDGOALS))
 
+# TODO fix $@, etc. to "$@"
 %.o.html: %.docx
 	textutil -convert html $< -stdout | \
 	sed "s/ \(<\/[^>]*>\)/\1 /g" | sed "s/\(<[^/][^>]*>\) / \1/g" > $@
