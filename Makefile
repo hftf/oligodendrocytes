@@ -125,7 +125,7 @@ tests/qbml-to-wqbml-2.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml
 tests: tests/qbml-to-wqbml.wqbml tests/qbml-to-wqbml-2.wqbml
 	diff $^
 
-%.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
+%.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ $(word 3,$^) $<
 ifdef DIFF
 	xsltproc -o $@o old/qbml-to-latex.xsl $<
