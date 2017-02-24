@@ -1,0 +1,22 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+  #output -method=html -indent=yes
+
+  template @*|node()
+    copy
+      apply-templates @*|node()
+
+  template * -priority=1
+    p
+      copy
+        apply-templates @*|node()
+
+  template tossup|question -priority=2
+    apply-templates node()
+
+  template -match=<{text()[contains(.,'\n') or ../*]}>
+    xsl:analyze-string -select=. -regex=\s*\n\s*
+      xsl:non-matching-substring
+        p
+          value-of .

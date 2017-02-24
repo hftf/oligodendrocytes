@@ -119,8 +119,11 @@ endif
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
 	saxon -o:$@ $^
 
-tests/qbml-to-wqbml.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml.xsl
+tests/qbml-to-wqbml-2.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml-2.xsl
 	saxon -o:$@ $^
+
+tests: tests/qbml-to-wqbml.wqbml tests/qbml-to-wqbml-2.wqbml
+	diff $^
 
 %.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ $(word 3,$^) $<
