@@ -1,10 +1,14 @@
+/* BASIC TYPOGRAPHY */
+
+/* Standard page width */
 body {
 	width: 7.8in;
 	margin: 1em auto;
-	line-height: 1.4;
+	line-height: 1.5;
 	font-size: 12pt;
 }
 
+/* Space between paragraphs */
 p {
 	margin: 0.25em 0;
 }
@@ -13,18 +17,19 @@ strong, b {
 	/*font-weight: 600;*/
 }
 
+/* Restore underlines (stored as spans in Google Docs) */
+span.s1 {
+	text-decoration: underline;
+}
 .answer strong, .answer b {
 	text-decoration: underline;
 }
 
-m {
-	cursor: pointer;
-}
 
-m:hover {
-	background: #cf8;
-}
 
+/* BUZZ TRACKING */
+
+/* Fixed header to display buzz location */
 #head {
 	position: fixed;
 	left: 1em;
@@ -35,6 +40,11 @@ m:hover {
 	width: 7em;
 }
 
-span.s1 {
-	text-decoration: underline;
+/* Word highlighting */
+m {
+	cursor: pointer;
+}
+
+m:hover {
+	background: #cf8;
 }
