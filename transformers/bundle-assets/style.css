@@ -1,0 +1,40 @@
+body {
+	width: 7.8in;
+	margin: 1em auto;
+	line-height: 1.4;
+	font-size: 12pt;
+}
+
+p {
+	margin: 0.25em 0;
+}
+
+strong, b {
+	/*font-weight: 600;*/
+}
+
+.answer strong, .answer b {
+	text-decoration: underline;
+}
+
+m {
+	cursor: pointer;
+}
+
+m:hover {
+	background: #cf8;
+}
+
+#head {
+	position: fixed;
+	left: 1em;
+	top: 1em;
+}
+#head span {
+	display: inline-block;
+	width: 7em;
+}
+
+span.s1 {
+	text-decoration: underline;
+}
