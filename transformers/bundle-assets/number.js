@@ -71,8 +71,24 @@ function setHandler() {
 }
 
 function showPrompt() {
-	var pw = Array.from(document.querySelectorAll('.tu b')).map(v=>Array.from(v.querySelectorAll('m')).pop().dataset.v);
-	var w = Array.from(document.querySelectorAll('.tu')).map(v=>Array.from(v.querySelectorAll('m')).pop().dataset.v);
+	function qu(el, q) {
+		return Array.from(el.querySelectorAll(q));
+	}
+	function getLastIfExists(q) {
+		return function(el) {
+			if (!el)
+				return;
+			var ms = qu(el, q);
+			if (ms.length)
+				return ms.pop();
+		};
+	}
+	function getV(el) {
+		if (el) return el.dataset.v;
+	}
+	var tus = qu(document, '.tu');
+	var pw = tus.map(getLastIfExists('b m')).map(getV);
+	var w = tus.map(getLastIfExists('m')).map(getV);
 	var tab = pw.map((v, i) => v + '\t' + w[i]).join('\n');
 	prompt('', tab);
 }
