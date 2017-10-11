@@ -19,6 +19,66 @@ OKAYS2="\[[A-Z]|-\s|\s-|[^0-9  ]/|/[^0-9  ]"
 
 grep --color=always -EHn "$NONOS" $PREFIX*.md
 
+# ﬀﬁﬂﬃﬄ
+# NONOS2: accept or| mention|or prompt|reveal|
+# NONOS2: search for ", or" without false positives
+# more Dr. Mr. X etc.
+# add quizbowlese: towards, possess, conflict, titular
+#|[A-Z]\w+-[A-Z][a-z]|\([Tac-z]|[^.]”?\)$|[aA][wW][-”]|[!?.]” [a-z]|reasonable|clear[ -]knowledge|synonym|underlined|possess|minus|s’\s|
+# NONOS4:teenth, tieth -> ~~[ -]century
+# power that doesn't end at (*)
+
+# double spaces pack 13
+# ** (*) pack 12
+# addie stray **.** pack 12
+# For 10 points no comma pac 11
+# or...policy**. instead of ,
+# . and , instead of ; in answerlines
+# space …
+# ** ** packet 4 electric
+# packet 14 **. **
+# packet 9 “
+# packet 14 St. E
+# fix prompt regex above returns prompting
+
+# normalize:
+# "do not accept" vs. "do not accept or prompt on"
+# ANSWER.*\* and \*  -> AND, OR
+
+# JR-esque pronoun emphasis
+# \*(this|these)
+
+# double words
+# the the, the a, and and, of of, a the, the in
+# duplicate words
+# '\b(\w+)\s\1\b'
+
+# which instead of that
+# ack -i '(?<!(?:.....,|....,"|..,”|... (?:in|of|to|at|on)|.. (?:for|and|but)|. from|. with|. upon| among| under| after|during|hrough)) which'
+# Tregex: SBAR !$,, /,/ & < (WHNP <<: which)
+
+# PGs?
+# grep -oP '(\S+ (?:\[(?:“|")|(?-1))[^\]\s]+(?: |"|”))\]'
+
+#### /
+#### nbsp
+#### mixed content words (in xml sense)
+# (“Foo”|)|,
+
+# a/an correct usage
+# \b[Aa] [AEIOUaeiou]
+# \b[Aa]n [^AEIOUaeiou]
+# change \b to probably space
+# fix the second one to look past some punctuation “ \( \(\\\*\)\*\*
+# also numbers 8, 18, 18xx starts with vowel (and vice versa); single letters A E F I L M N but not U; mRNA
+
+# accept A, B, C with no or.
+
+# et. al (etc.)
+# WWI
+# points each,
+
+
 #echo
 #echo "(\*)"
 #grep --color=always -EiHno '.{,5}\(\\\*\)\S.{,5}' $PREFIX*.md || :
