@@ -10,19 +10,19 @@ body {
 
 /* Space between paragraphs */
 p {
-	margin: 0.25em 0;
+	margin: 0.25em 0 !important;
 }
 
 strong, b {
 	/*font-weight: 600;*/
 }
 
-/* Restore underlines (stored as spans in Google Docs) */
-span.s1 {
-	text-decoration: underline;
+p, span {
+	font-family: inherit !important;
+	line-height: inherit !important;
 }
-.answer strong, .answer b {
-	text-decoration: underline;
+p {
+	font-size: inherit !important;
 }
 
 
