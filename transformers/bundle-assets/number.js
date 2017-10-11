@@ -70,25 +70,25 @@ function setHandler() {
 	}
 }
 
+function selectorLastM(selectF) {
+	return Array.from(
+		document.querySelectorAll('.tu'),
+
+		function (p) {
+			var lastM = Array.from(
+				selectF(p),
+				b => Array.from(b.querySelectorAll('m')).pop()
+			);
+			lastM = lastM.filter(x => x).pop();
+			return lastM.dataset.v;
+		}
+
+	);
+}
+
 function showPrompt() {
-	function qu(el, q) {
-		return Array.from(el.querySelectorAll(q));
-	}
-	function getLastIfExists(q) {
-		return function(el) {
-			if (!el)
-				return;
-			var ms = qu(el, q);
-			if (ms.length)
-				return ms.pop();
-		};
-	}
-	function getV(el) {
-		if (el) return el.dataset.v;
-	}
-	var tus = qu(document, '.tu');
-	var pw = tus.map(getLastIfExists('b m')).map(getV);
-	var w = tus.map(getLastIfExists('m')).map(getV);
+	var pw = selectorLastM(p => p.querySelectorAll(':scope > b')); // :scope not supported in IE
+	var w  = selectorLastM(p => [p]);
 	var tab = pw.map((v, i) => v + '\t' + w[i]).join('\n');
 	prompt('', tab);
 }
