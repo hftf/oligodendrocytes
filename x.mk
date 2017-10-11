@@ -10,7 +10,5 @@
 #	[Para [Str "A"],Para [LineBreak,Space,Str "A"]]
 	sed -Ei bak 's/<p><br \/> ​?/<p><br \/><\/p><p>/g' $@
 
-# (f.html stands for formatted.html, which is essentially o.html with naive substitutions)
-%.f.html: %.o.html x.mk
-	cat transformers/top.html > $@
-	gsed -E -e '0,/^<body>$$/d' -e 's/<p class="p1">ANSWER/<p class="p1 answer">ANSWER/g' -e 's/<p class="p1">([0-9]+\. )/<p class="p1 tu">\1/g' -e 's/<\/body>/<script src="findAndReplaceDOMText.js"><\/script><script src="number.js"><\/script><\/body>/' $< >> $@
+%.f.html: %.o.html transformers/o-html-to-f-html.sh transformers/top-1.html transformers/top-2.html x.mk
+	$(word 2,$^) $< > $@
