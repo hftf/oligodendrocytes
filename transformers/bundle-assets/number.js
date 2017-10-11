@@ -70,8 +70,17 @@ function setHandler() {
 	}
 }
 
+function showPrompt() {
+	var pw = Array.from(document.querySelectorAll('.tu b')).map(v=>Array.from(v.querySelectorAll('m')).pop().dataset.v);
+	var w = Array.from(document.querySelectorAll('.tu')).map(v=>Array.from(v.querySelectorAll('m')).pop().dataset.v);
+	var tab = pw.map((v, i) => v + '\t' + w[i]).join('\n');
+	prompt('', tab);
+}
+
 window.onload = function() {
 	getPs();
 	setHandler();
-	// prompt('',Array.from(document.querySelectorAll('.tu b')).map(v=>Array.from(v.querySelectorAll('m')).pop().dataset.v).join("\n"))
+
+	if (window.location.search === '?q')
+		showPrompt();
 }
