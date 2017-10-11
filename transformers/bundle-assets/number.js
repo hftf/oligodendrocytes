@@ -3,7 +3,8 @@ var FAR = findAndReplaceDOMText;
 
 function hasSpanParent(el) {
 	while (el = el.parentNode) {
-		if (el.nodeName === 'SPAN' || el.nodeName === 'RP' || el.nodeName === 'RT')
+		if ((el.nodeName === 'SPAN' && getComputedStyle(el).textDecorationLine !== 'underline')
+			|| el.nodeName === 'RP' || el.nodeName === 'RT')
 			return true;
 		if (el.nodeName === 'P')
 			return false;
