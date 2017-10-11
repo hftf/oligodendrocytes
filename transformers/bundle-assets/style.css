@@ -48,3 +48,21 @@ m {
 m:hover {
 	background: #cf8;
 }
+
+
+/* RUBY */
+
+ruby {
+	ruby-align: space-around;
+	ruby-overhang: auto; /* not supported */
+	border-bottom: 3px solid #bef;
+}
+
+ruby > rt {
+	font-size: 75%;
+	font-weight: normal;
+	font-style: normal;
+	font-family: sans-serif;
+	transform: scaleX(0.85);
+	color: #58c;
+}
