@@ -28,28 +28,9 @@ echo '"answers required." "Description acceptable." and titles with ending punct
 echo "[,.?!]*"
 grep --color=always -PiHn "(?<!\.\w)[.,?!]\*(?!\*)" $PREFIX*.md || :
 
-#echo
-#echo " \["
-#not useful for PGs written with []
-####grep --color=always -PiHn " \[" $PREFIX*.md | grep -v ANSWER || :
 
-#echo
-#echo " </"
-#grep --color=always -EiHn " </" $PREFIX*.o.html || :
-
-
-echo
-echo -e "\t  tossups bonuses   parts"
-for i in $PREFIX*.qbml; do
-echo -e "$i`grep -o '<tossup ' $i | wc -l``grep -o '<bonus ' $i | wc -l``grep -o '<part ' $i | wc -l`"
-done
-
-echo
-echo "\\answer{}"
-grep --color=always -EC 4 '\\answer\{\}' $PREFIX*.tex || :
-
-echo
-echo "\\\\}"
-grep --color=always -EH '\\\\\}' $PREFIX*.tex || :
-
-#grep -Eo '}[^}]+\\w{[^}0-9A-Za-z]+}{[^}]+}[^}]+}' $PREFIX*.tex
+# echo
+# echo -e "\t  tossups bonuses   parts"
+# for i in $PREFIX*.qbml; do
+# echo -e "$i`grep -o '<tossup ' $i | wc -l``grep -o '<bonus ' $i | wc -l``grep -o '<part ' $i | wc -l`"
+# done
