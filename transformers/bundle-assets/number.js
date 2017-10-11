@@ -11,7 +11,7 @@ function getPs() {
 		return e;
 	}
 
-	for (var i = 0; i < 20; i ++) {
+	for (var i = 0; i < x.length; i ++) {
 		var p = x[i];
 		j = 0;
 
