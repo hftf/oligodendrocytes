@@ -1,17 +1,37 @@
 var FAR = findAndReplaceDOMText;
 // http://velocityjs.org/blast/
 
+function hasSpanParent(el) {
+	while (el = el.parentNode) {
+		if (el.nodeName === 'SPAN' || el.nodeName === 'RP' || el.nodeName === 'RT')
+			return true;
+		if (el.nodeName === 'P')
+			return false;
+	}
+	return false;
+}
+
 function getPs() {
 	var x = document.body.getElementsByClassName('tu');
 	var j = 0;
 
 	// using unnamed group to keep ^ and $ outside of | scope
-	var no = /^(?:\(\*\)|[\/,\.“”]+)$/;
+	// TODO keep “” outside word? barely matters, but more aesthetic
+	var no = /^(?:\(\*\)|[\/,\.?!'‘’"“”…–—-]+)$/;
 
 	// TODO fix final punctuation kerning (foo</m>.)
 
 	function replace(portion) {
 		var tn = document.createTextNode(portion.text);
+
+		// Don't count this as a word if:
+
+		// it is part of a pronunciation guide (naively defined as being inside a span)
+		// TODO more robust check
+		if (hasSpanParent(portion.node))
+			return tn;
+
+		// it is a power mark (*) or only punctuation
 		if (no.test(portion.text))
 			return tn;
 
