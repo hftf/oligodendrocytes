@@ -5,6 +5,11 @@ if [ $# -ne 5 ]; then
     exit 0
 fi
 
+if [ -z "$3" ]; then
+	echo "Need argument 3 folder name"
+	exit 0
+fi
+
 echo "fetching docs into $1"
 mkdir -p $1
 skicka download -download-google-apps-files "$3" "$1"
@@ -17,7 +22,7 @@ for i in $1*; do
     if [ ! -z "$NEWNAME" ]; then
         NEWPATH=$2$NEWNAME.docx
         printf "copying %-42s → \"$NEWNAME\"\n" "\"$FILENAME\""
-        cp "$i" "$NEWPATH"
+        cp "$i" "$NEWPATH" || true
     fi
 done
 ## and this
