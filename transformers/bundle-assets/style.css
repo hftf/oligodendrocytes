@@ -32,8 +32,10 @@ p {
 /* Fixed header to display buzz location */
 #head {
 	position: fixed;
-	left: 1em;
-	top: 1em;
+	left: 0;
+	top: 0;
+	padding: 1em;
+	background: rgba(255, 255, 255, 0.9);
 }
 #head span {
 	display: inline-block;
