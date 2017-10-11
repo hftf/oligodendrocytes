@@ -1,5 +1,12 @@
 old/
 tournaments/
+
+*packets/
+O/
+S*/
+*packets.zip
+.DS_Store
+
 *.xsl
 *.xml
 _*
