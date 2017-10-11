@@ -97,6 +97,9 @@ endif
 %.html: %.native %.md transformers/wrap.template
 	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
 
+%.k.html: %.native %.md transformers/html.template
+	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
+
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(METADATA_XSL)
 	saxon -o:$@ $< $(word 2,$^)
 	$(word 3,$^) < $@ > $@.temp
