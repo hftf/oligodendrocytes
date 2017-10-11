@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all texs pdfs formats
-.PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
+.PRECIOUS: %.o.html %.f.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 SHELL=bash
 
 
@@ -70,6 +70,7 @@ reset:
 $(info Making: $(MAKECMDGOALS))
 
 # TODO fix $@, etc. to "$@"
+# (o.html stands for original.html)
 %.o.html: %.docx
 	textutil -convert html $< -stdout | \
 	sed "s/ \(<\/[^>]*>\)/\1 /g" | sed "s/\(<[^/][^>]*>\) / \1/g" > $@
