@@ -35,19 +35,14 @@ if 1:
 	use_tags = True
 	use_paren_quote = False
 
-EXTRA_TAGS   = '<\/?b>'
 EXTRA_TAGS   = '(?:<\/?b>|)'
 PG_TAG_S     = '<span\ class=\"s\d\">'
 PG_TAG_E     = '<\/span>'
-QUOTE_S      = '(?:\"|“)?'
-QUOTE_E      = '(?:\"|”)?'
 SPACE        = u'[  ]'
 SPACES       = SPACE + '+'
 SPACEM       = SPACE + '*'
 SPACE_NONBSP = u'[ ]'
 SPACES_NONBSP= SPACE_NONBSP + '+'
-LETTER       = '[^\]\)\s]'
-WORD         = '[^\]\)\s]+'
 
 if use_paren_quote:
 	PG_BRACKET_S = u'[\(]“'
@@ -57,18 +52,6 @@ else:
 	PG_BRACKET_S = '[\(\[]'
 	PG_BRACKET_E = '[\)\]]'
 	PG_MIDDLE    = '[^\)\]]+'
-
-# PG_S  =                       PG_TAG_S + EXTRA_TAGS + PG_BRACKET_S
-# PG_S2 = EXTRA_TAGS + SPACES + PG_TAG_S + EXTRA_TAGS + PG_BRACKET_S
-# PG_SB = '(?:' + EXTRA_TAGS + '|)(?P<ss>' + SPACES + ')' + PG_TAG_S + EXTRA_TAGS + '(?P<sb>' + PG_BRACKET_S + ')'
-# PG_SB = EXTRA_TAGS + '(?P<ss>' + SPACES + ')' + PG_TAG_S + EXTRA_TAGS + '(?P<sb>' + PG_BRACKET_S + ')'
-
-# PG_M  = u'(?P<m>' + PG_MIDDLE + ')'
-# PG_E  = PG_BRACKET_E + EXTRA_TAGS + PG_TAG_E
-# PG_E2 = PG_BRACKET_E + EXTRA_TAGS + PG_TAG_E + '(?P<es>' + SPACEM + ')' + EXTRA_TAGS
-# PG_EB = '(?P<eb>' + PG_BRACKET_E + ')' + EXTRA_TAGS + PG_TAG_E + '(?P<es>' + SPACEM + ')' + EXTRA_TAGS
-
-# PG  = PG_S + PG_M + PG_E
 
 if use_tags:
 	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
@@ -123,7 +106,7 @@ ruby_tag_color = '\033[107;4m'*zz
 contents_color = '\033[102;4m'*zz
 bracket_color  = '\033[103;4m'*zz
 space_color    = '\033[103;4m'*zz
-resetCmd = '\033[0m'*zz
+reset_color    = '\033[0m'*zz
 
 def html_span_to_ruby(contents):
 	instances = re.finditer(PGB, contents)
@@ -132,7 +115,6 @@ def html_span_to_ruby(contents):
 
 	for match in instances:
 		start, end = match.span()
-		# print [start, end, match.group('m'), match.group('es')]
 
 		prev = contents[lastMatch : start]
 		main = contents[start : end]
@@ -146,21 +128,16 @@ def html_span_to_ruby(contents):
 		es = match.group('es')
 
 		space_count = 1 + len(re.findall(SPACES_NONBSP, b))
-		# print '(' + str(n) + ')    ' + colerCmd + b + resetCmd
-		# fake_a = ' '.join(prev.replace('<span ', '<span~').rsplit(None, n)[-n:]).replace('<span~', '<span ')
-		# print 'Faked: ' + fake_a
 
 		last_newline_pos = prev.rfind('\n') + 1
 		prev1 = prev[:last_newline_pos]
 		prev2 = prev[last_newline_pos:]
 		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(space_count)
-		# print 'Real:  ' + '***'.join(list(real_a))
 
 		a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
 		a_phonetic = caverphone(a_stripped)
 		b_stripped = unidecode(re.sub('<[^<]+?>', '', b))
 		b_phonetic = caverphone(b_stripped)
-		# print type(a_phonetic), type(b_phonetic)
 		distance = Levenshtein.distance(a_phonetic, b_phonetic)
 		ratio = Levenshtein.ratio(a_phonetic, b_phonetic)
 		# sys.stderr.write( '%-20s\t%-12s\t%-36s\t%-12s\t%2d\t%0.2f\n' % (a_stripped, a_phonetic, b_stripped, b_phonetic, distance, ratio) )
@@ -180,7 +157,7 @@ def html_span_to_ruby(contents):
 			ruby_tag_color + '</rp></ruby>' +
 			bracket_color  + closing_tags   +
 			space_color    + es             +
-			resetCmd
+			reset_color
 		)
 
 		lastMatch = end
@@ -190,10 +167,6 @@ def html_span_to_ruby(contents):
 fake = False
 if fake:
 	out = html_span_to_ruby(fake_contents)
-	# print out
 else:
 	out = html_span_to_ruby(contents)
 sys.stdout.write(out)
-
-	# with io.open(filename_out, 'w', encoding='utf-8') as file_out:
-		# file_out.write(out)
