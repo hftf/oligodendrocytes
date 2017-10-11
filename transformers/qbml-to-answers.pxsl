@@ -1,0 +1,45 @@
+<<<?xml version="1.0" encoding="UTF-8" ?>>>
+
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+  output -method=text -indent=no -encoding=UTF-8
+
+  param type "tossup"
+  param packet <(<<substring-after(//packet/@name,'Packet ')>>)>
+
+  ,tab el =
+    value-of <(,el)>
+    text <<	>>
+
+  ,tabstrip el =
+    call-template strip
+      with-param el <(,el)>
+    text <<	>>
+
+  template /
+    apply-templates //.[name()=$type]
+
+  template tossup
+    ,tabstrip $packet
+    ,tab @id
+    ,tab @author
+    ,tab @category
+    #,tab @power-words
+    #,tab @tossup-words
+    ,tabstrip answer
+    #,tab answer
+    text <<&#xa;>>
+
+  template bonus
+    ,tabstrip $packet
+    ,tab @id
+    ,tab @author
+    ,tab @category
+    for-each part/answer
+      ,tabstrip .
+    text <<&#xa;>>
+
+  template -name=strip
+    param el
+
+    value-of <(<<replace(replace($el,' \[.+\]',''),' \(.+\)','')>>)>
+

@@ -103,6 +103,11 @@ ifdef DIFF
 	diff <(xmllint --format $@) <(xmllint --format $@o)
 endif
 
+%.tossup.answers: %.qbml transformers/qbml-to-answers.xsl
+	saxon -o:$@ $^ type=tossup
+%.bonus.answers: %.qbml transformers/qbml-to-answers.xsl
+	saxon -o:$@ $^ type=bonus
+
 %.edges: $(ORDER) transformers/prev-qbml-to-this-edges.sh
 	$(word 2,$^) $@ $<
 
