@@ -1,0 +1,27 @@
+(ROOT
+  (S
+    (NP (DT The) (NNP Water) (NNP Level) (NNP Route))
+    (VP (VBD was)
+      (NP
+        (NP (DT a) (NN railroad) (NN route))
+        (SBAR
+          (WHNP (WDT which))
+          (S
+            (VP (VBN connected)
+              (NP (DT these) (CD two) (NNS cities)))))))
+    (. .)))
+
+
+(ROOT
+  (S
+    (NP (DT The) (NNP Water) (NNP Level) (NNP Route))
+    (VP (VBD was)
+      (NP
+        (NP (DT a) (NN railroad) (NN route))
+        (, ,)
+        (SBAR
+          (WHNP (WDT which))
+          (S
+            (VP (VBN connected)
+              (NP (DT these) (CD two) (NNS cities)))))))
+    (. .)))
