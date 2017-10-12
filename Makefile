@@ -71,11 +71,8 @@ $(info Making: $(MAKECMDGOALS))
 
 # TODO fix $@, etc. to "$@"
 # (o.html stands for original.html)
-%.o.html: %.docx
-	textutil -convert html $< -stdout \
-	| sed -E "s/ ((<[\/][^>]*>)+)/\1 /g" \
-	| sed -E "s/((<[^/][^>]*>)+) / \1/g" \
-	> $@
+%.o.html: %.docx transformers/docx-to-o-html.sh
+	$(word 2,$^) $< > $@
 
 ifeq ($(SOURCE_EXT),.md)
 NATIVE_DEP_EXT=.md
