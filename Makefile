@@ -91,7 +91,9 @@ endif
 %.md.nowrap: %.o.html
 	pandoc -o $@ $< -f html -t markdown --no-wrap
 
--include x.mk
+
+-include makefiles/f.mk
+-include makefiles/x.mk
 
 # does not actually depend on %.md
 %.html: %.native %.md transformers/wrap.template
