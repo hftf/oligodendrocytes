@@ -22,12 +22,19 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # ﬀﬁﬂﬃﬄ
 # NONOS2: accept or| mention|or prompt|reveal|
 # NONOS2: search for ", or" without false positives
-# more Dr. Mr. X etc.
+# more Dr. Mr. X etc. need nbsp
+# Titles like Foo? Bar! need nbsp
 # add quizbowlese: towards, possess, conflict, titular
 #|[A-Z]\w+-[A-Z][a-z]|\([Tac-z]|[^.]”?\)$|[aA][wW][-”]|[!?.]” [a-z]|reasonable|clear[ -]knowledge|synonym|underlined|possess|minus|s’\s|
 # NONOS4:teenth, tieth -> ~~[ -]century
 # power that doesn't end at (*)
 
+# extremely naive: '\s[\(\[](?! ... )[^\)\]]+[\)\]]'
+# keep: [this author] [his namesake unit] [here] [these things] [this]
+# [do this action] [one of these places] [3,3]-sigmatropic [this type of person] [Abridged]
+# delete: [read slowly] [emphasize] [pause]
+
+# “\*
 # double spaces pack 13
 # ** (*) pack 12
 # addie stray **.** pack 12
@@ -48,6 +55,10 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # JR-esque pronoun emphasis
 # \*(this|these)
 
+# doubly-eponymous en-dash
+# [A-Z][a-z]+-[A-Z][a-z]+
+# need to use unicode uppercase/lowercase
+
 # double words
 # the the, the a, and and, of of, a the, the in
 # duplicate words
@@ -56,6 +67,10 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # which instead of that
 # ack -i '(?<!(?:.....,|....,"|..,”|... (?:in|of|to|at|on)|.. (?:for|and|but)|. from|. with|. upon| among| under| after|during|hrough)) which'
 # Tregex: SBAR !$,, /,/ & < (WHNP <<: which)
+
+# that,: It indicates that, in the 17th century, ...
+
+# no punct at end of line
 
 # PGs?
 # grep -oP '(\S+ (?:\[(?:“|")|(?-1))[^\]\s]+(?: |"|”))\]'
@@ -68,6 +83,7 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # a/an correct usage
 # \b[Aa] [AEIOUaeiou]
 # \b[Aa]n [^AEIOUaeiou]
+# ' an [()\[\]\\* ]*+(?!1[18])[^aeiouAEIOU<“]'
 # change \b to probably space
 # fix the second one to look past some punctuation “ \( \(\\\*\)\*\*
 # also numbers 8, 18, 18xx starts with vowel (and vice versa); single letters A E F I L M N but not U; mRNA
