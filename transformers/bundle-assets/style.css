@@ -37,9 +37,11 @@ p {
 	padding: 1em;
 	background: rgba(255, 255, 255, 0.9);
 }
-#head span {
-	display: inline-block;
-	width: 7em;
+#head dl {
+	margin: 0;
+}
+#head dl dd {
+	font-weight: bold;
 }
 
 /* Word highlighting */
