@@ -98,6 +98,35 @@ function setHandler() {
 		}
 		e.stopPropagation();
 	}
+
+	document.getElementById('reset').addEventListener('click', clearAllBuzzes, false);
+	document.getElementById('copy').addEventListener('click', copyBuzzPoints, false);
+
+	function clearAllBuzzes() {
+		var really = window.confirm('Are you sure you want to clear all buzzes?');
+		if (!really) return;
+
+		mapTU(function(p) { p.marked = []; });
+		Array.from(
+			document.querySelectorAll('m[data-toggle]'),
+			function(m) { m.removeAttribute('data-toggle'); }
+		);
+	}
+
+	function copyBuzzPoints() {
+		var string = mapTU(function(p) {
+			var marked_vs = p.marked.map(function(m) { return m.dataset.v; });
+			// sort by index (instead of by time)
+			marked_vs.sort(function(v1, v2) {
+				return parseInt(v1, 10) - parseInt(v2, 10);
+			});
+			if (marked_vs.length === 1)
+				marked_vs.unshift('');
+			return marked_vs.join('\t');
+		}).join('\n');
+		clipboard.writeText(string);
+		window.alert('The buzz points have been copied! Go to the scoresheet to paste them.');
+	}
 }
 
 function selectorLastM(selectF) {
