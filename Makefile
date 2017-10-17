@@ -21,7 +21,6 @@ endif
 CURR_DIR:=$(TOURNAMENTS_DIR)$(CURR_TOURNAMENT)/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 PACKETS_DIR:=$(CURR_DIR)packets/
-DOCS_DIR:=$(PACKETS_DIR)docs/
 METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 $(info $(shell echo -e "\033[0;37;44m $(CURR_TOURNAMENT) \033[0m"))
@@ -71,7 +70,7 @@ clean:
 	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md
 
 reset:
-	./dl-gdocs.sh $(DOCS_DIR) $(PACKETS_DIR) $(DL_GDOCS_ARGS)
+	./dl-gdocs.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 $(info Making: $(MAKECMDGOALS))
 
