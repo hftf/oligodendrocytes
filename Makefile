@@ -6,9 +6,18 @@ SHELL=bash
 
 TOURNAMENTS_DIR=tournaments/
 CACHE=_cache/
+
 # TODO use current only if not given
 CURR_FILE:=$(TOURNAMENTS_DIR)current.txt
+ifeq ($(wildcard $(CURR_FILE)),)
+$(error Current tournament is not set)
+endif
+
 CURR_TOURNAMENT:=$(shell cat $(CURR_FILE))
+ifeq ($(CURR_TOURNAMENT),sample)
+$(error Current tournament should not be "sample")
+endif
+
 CURR_DIR:=$(TOURNAMENTS_DIR)$(CURR_TOURNAMENT)/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 PACKETS_DIR:=$(CURR_DIR)packets/
