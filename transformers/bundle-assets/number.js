@@ -1,6 +1,10 @@
 var FAR = findAndReplaceDOMText;
 // http://velocityjs.org/blast/
 
+function mapTU(f) {
+	return Array.from(document.querySelectorAll('.tu'), f);
+}
+
 function hasSpanParent(el) {
 	while (el = el.parentNode) {
 		if ((el.nodeName === 'SPAN' && getComputedStyle(el).textDecorationLine !== 'underline')
@@ -72,26 +76,22 @@ function setHandler() {
 }
 
 function selectorLastM(selectF) {
-	return Array.from(
-		document.querySelectorAll('.tu'),
-
-		function (p) {
-			var lastM = Array.from(
-				selectF(p),
-				b => Array.from(b.querySelectorAll('m')).pop()
-			);
-			lastM = lastM.filter(x => x).pop();
-			return lastM.dataset.v;
-		}
-
-	);
+	return mapTU(function(p) {
+		var lastM = Array.from(
+			selectF(p),
+			function (b) { return Array.from(b.querySelectorAll('m')).pop(); }
+		);
+		lastM = lastM.filter(function(x) { return x; }).pop();
+		return lastM.dataset.v;
+	});
 }
 
 function showPrompt() {
-	var pw = selectorLastM(p => p.querySelectorAll(':scope > b')); // :scope not supported in IE
-	var w  = selectorLastM(p => [p]);
-	var tab = pw.map((v, i) => v + '\t' + w[i]).join('\n');
-	prompt('', tab);
+	// :scope not supported in IE, but this code doesn't matter for moderators
+	var pw = selectorLastM(function(p) { return p.querySelectorAll(':scope > b'); });
+	var w  = selectorLastM(function(p) { return [p]; });
+	var tab = pw.map(function(v, i) { return v + '\t' + w[i]; }).join('\n');
+	window.prompt('', tab);
 }
 
 window.onload = function() {
