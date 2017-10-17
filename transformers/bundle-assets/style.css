@@ -3,9 +3,10 @@
 /* Standard page width */
 body {
 	width: 7.8in;
-	margin: 1em auto;
+	margin: 4em auto;
 	line-height: 1.5;
 	font-size: 12pt;
+	-webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* Space between paragraphs */
@@ -34,14 +35,17 @@ p {
 	position: fixed;
 	left: 0;
 	top: 0;
-	padding: 1em;
-	background: rgba(255, 255, 255, 0.9);
+	right: 0;
+	padding: 0.4em;
+	background: rgba(249, 236, 229, 0.9);
 }
-#head dl {
-	margin: 0;
+#head > p > * {
+	margin: 0 1em;
 }
-#head dl dd {
-	font-weight: bold;
+.fr {
+	float: right;
+	text-decoration: none;
+	color: #f2c9af;
 }
 
 /* Word highlighting */
