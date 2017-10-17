@@ -1,7 +1,14 @@
 var FAR = findAndReplaceDOMText;
 // http://velocityjs.org/blast/
 
-var page_key = window.location.href;
+var old_page_key = window.location.href;
+var page_key = old_page_key.replace(/\.\w\.html/, '');
+
+// backwards compatibility with old key
+if (window.localStorage[old_page_key]) {
+	window.localStorage[page_key] = window.localStorage[old_page_key];
+	delete window.localStorage[old_page_key];
+}
 
 function mapTU(f) {
 	return Array.from(document.querySelectorAll('.tu'), f);
