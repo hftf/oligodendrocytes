@@ -18,7 +18,7 @@ function hasSpanParent(el) {
 
 function getPs() {
 	var x = document.body.getElementsByClassName('tu');
-	var j = 0;
+	var j = 0, p;
 
 	// using unnamed group to keep ^ and $ outside of | scope
 	// TODO keep “” outside word? barely matters, but more aesthetic
@@ -27,6 +27,7 @@ function getPs() {
 	// TODO fix final punctuation kerning (foo</m>.)
 
 	function replace(portion) {
+		// Uses closure vars j, p, no
 		var tn = document.createTextNode(portion.text);
 
 		// Don't count this as a word if:
@@ -41,14 +42,17 @@ function getPs() {
 			return tn;
 
 		var e = document.createElement('m');
+		e.p = p; // pointer to parent p
 		e.dataset.v = j ++;
 		e.appendChild(tn);
 		return e;
 	}
 
 	for (var i = 0; i < x.length; i ++) {
-		var p = x[i];
+		p = x[i];
 		j = 0;
+
+		p.marked = []; // queue of toggled words
 
 		FAR(p, {
 			find: /[^  ]+/g,
@@ -63,11 +67,21 @@ function setHandler() {
 	var l = document.getElementById('location');
 
 	function toggleM(m) {
+		var p = m.p;
+
 		if (m.dataset.toggle === 'true') {
 			m.removeAttribute('data-toggle');
+			var index = p.marked.indexOf(m);
+			if (index !== -1)
+				p.marked.splice(index, 1);
 		}
 		else {
+			if (p.marked.length === 2) {
+				// dequeue oldest mark
+				p.marked.shift().removeAttribute('data-toggle');
+			}
 			m.dataset.toggle = 'true';
+			p.marked.push(m);
 		}
 	}
 
