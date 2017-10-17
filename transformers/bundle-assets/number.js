@@ -1,8 +1,28 @@
 var FAR = findAndReplaceDOMText;
 // http://velocityjs.org/blast/
 
+var page_key = window.location.href;
+
 function mapTU(f) {
 	return Array.from(document.querySelectorAll('.tu'), f);
+}
+
+function setLocalStorage() {
+	var all_marks = mapTU(function(p) { return p.marked.map(function(v) { return v.dataset.v; }); });
+	window.localStorage[page_key] = JSON.stringify(all_marks);
+}
+function getFromLocalStorage() {
+	var a = window.localStorage[page_key];
+	if (!a) return;
+	var parsed = JSON.parse(a);
+
+	mapTU(function(p, i) {
+		p.marked = parsed[i].map(function(v) {
+			var m = p.querySelector('m[data-v="' + v + '"]');
+			m.dataset.toggle = 'true';
+			return m;
+		});
+	});
 }
 
 function hasSpanParent(el) {
@@ -94,6 +114,8 @@ function setHandler() {
 				l.textContent = m.dataset.v;
 
 				toggleM(m);
+
+				setLocalStorage();
 			}
 		}
 		e.stopPropagation();
@@ -106,6 +128,7 @@ function setHandler() {
 		var really = window.confirm('Are you sure you want to clear all buzzes?');
 		if (!really) return;
 
+		delete window.localStorage[page_key];
 		mapTU(function(p) { p.marked = []; });
 		Array.from(
 			document.querySelectorAll('m[data-toggle]'),
@@ -150,6 +173,7 @@ function showPrompt() {
 
 window.onload = function() {
 	getPs();
+	getFromLocalStorage();
 	setHandler();
 
 	if (window.location.search === '?q')
