@@ -52,6 +52,9 @@ m {
 m:hover {
 	background: #cf8;
 }
+m[data-toggle] {
+	background: #cdf;
+}
 
 
 /* RUBY */

@@ -62,6 +62,15 @@ function setHandler() {
 	var w = document.getElementById('word');
 	var l = document.getElementById('location');
 
+	function toggleM(m) {
+		if (m.dataset.toggle === 'true') {
+			m.removeAttribute('data-toggle');
+		}
+		else {
+			m.dataset.toggle = 'true';
+		}
+	}
+
 	function doSomething(e) {
 		if (e.target !== e.currentTarget) {
 			var m = e.target;
@@ -69,6 +78,8 @@ function setHandler() {
 			if (m.tagName === 'M') {
 				w.textContent = m.textContent;
 				l.textContent = m.dataset.v;
+
+				toggleM(m);
 			}
 		}
 		e.stopPropagation();
