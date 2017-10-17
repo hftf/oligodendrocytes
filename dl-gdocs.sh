@@ -5,26 +5,29 @@ if [ $# -ne 5 ]; then
     exit 0
 fi
 
-if [ -z "$3" ]; then
-	echo "Need argument 3 folder name"
-	exit 0
+DOCS_DIR="$1"    # packets/docs/
+PACKETS_DIR="$2" # packets/
+GDOCS_FOLDER_NAME="$3"
+PACKET_FILENAME_TO_SLUG_START="$4"
+PACKET_FILENAME_TO_SLUG_LENGTH="$5"
+
+if [ -z "$GDOCS_FOLDER_NAME" ]; then
+    echo "Need Google Drive folder name"
+    exit 0
 fi
 
-echo "fetching docs into $1"
-mkdir -p $1
-skicka download -download-google-apps-files "$3" "$1"
+echo "fetching docs into $DOCS_DIR"
+mkdir -p $DOCS_DIR
+skicka download -download-google-apps-files "$GDOCS_FOLDER_NAME" "$DOCS_DIR"
 
 echo
-echo "changing filenames and copying into $2"
-for i in $1*; do
-    FILENAME=${i##*\/}
-    NEWNAME=${FILENAME:$4:$5}
+echo "changing filenames and copying into $PACKETS_DIR"
+for DOC in $DOCS_DIR*; do
+    OLDNAME=${DOC##*\/}
+    NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START:$PACKET_FILENAME_TO_SLUG_LENGTH}
     if [ ! -z "$NEWNAME" ]; then
-        NEWPATH=$2$NEWNAME.docx
-        printf "copying %-42s → \"$NEWNAME\"\n" "\"$FILENAME\""
-        cp "$i" "$NEWPATH" || true
+        NEWPATH=$PACKETS_DIR$NEWNAME.docx
+        printf "copying %-42s → \"$NEWNAME\"\n" "\"$OLDNAME\""
+        cp "$DOC" "$NEWPATH" || true
     fi
 done
-## and this
-#echo "removing Fi.docx"
-#rm Fi.docx
