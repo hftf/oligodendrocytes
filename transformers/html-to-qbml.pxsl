@@ -141,12 +141,12 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   # While xslt 2.0 allows params in match attributes, we still need 1.0 so that includes can override top-level params.
   # Therefore we need to use a choose here.
   template a
-    choose
-      when starts-with(@href,$href-pron-prefix)
-        pron
-          graph
-            apply-templates
-          phon
-            value-of substring-after(@href,$href-pron-prefix)
-      otherwise
+    pron
+      graph
         apply-templates
+      phon
+        choose
+          when starts-with(@href,$href-pron-prefix)
+            value-of substring-after(@href,$href-pron-prefix)
+          otherwise
+            value-of @href
