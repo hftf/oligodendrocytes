@@ -40,6 +40,7 @@
 \RequirePackage[normalem]{ulem}
 \RequirePackage{newunicodechar}
 \newunicodechar{ }{~}
+\newunicodechar{ɶ}{\textsc{œ}}
 
 \RequirePackage[log-declarations=false]{xparse}
 \RequirePackage{realscripts}
@@ -104,7 +105,7 @@
 \newcommand{\lastpackettwenty}{}
 
 % LEADING, WIDOWS
-\linespread{1.15}
+\linespread{1.3}
 \widowpenalties 1 10000
 \raggedbottom
 
