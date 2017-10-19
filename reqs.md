@@ -35,3 +35,6 @@ skicka ls
 
 ### XeLaTeX
 [Download](https://tug.org/mactex/)
+
+### Stanford NLP parser
+### Tregex
