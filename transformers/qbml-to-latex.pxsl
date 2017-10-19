@@ -9,111 +9,86 @@
     apply-templates
     text <<}>>
 
+,line body =
+    text
+      ,body
+      <<&#xa;>>
+
+,env name =
+    ,line <(
+      <<\begin{>>
+      ,name
+      <<}>> )>
+    ,BODY
+    ,line <(
+      <<\end{>>
+      ,name
+      <<}>> )>
+
+,enva name el =
+  ,env <(,name)>
+    apply-templates <(,el)>
+
+,renew cmd attr =
+    text
+      <<\renewcommand{\>>
+      ,cmd
+      <<}{>>
+    apply-templates <(,attr)>
+    ,line }
+
+
 stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=text -encoding=UTF-8
   preserve-space *
 
   template qpdb
-    text <<% !TEX TS-program = XeLaTeX
-\documentclass[10pt]{packet}
-
-\input{\jobname.edges}
-
-\begin{document}
->>
-    apply-templates tournaments
-    text <<
-\end{document}
->>
+    ,line <(<<% !TEX TS-program = XeLaTeX>>)>
+    ,line <(<<\documentclass[10pt]{packet}>>)>
+    ,line <(<<\input{\jobname.edges}>>)>
+    ,enva document tournaments
 
   template tournament
-    ,renew cmd attr =
-      text
-        <<	\renewcommand{\>>
-        ,cmd
-        <<}{>>
-      apply-templates <(,attr)>
-      text <<}
->>
-
-    text <<
->>
     ,renew tournamentname @name
     ,renew tournamentyear @year
     ,renew subtitle subtitle
-    text <<	>>
-
     apply-templates packets
 
   template packet
-    text <<
-	\newcommand{\packetname}{>>
-    value-of @name
-    text <<}
-	\newcommand{\authors}{>>
-    value-of @authors
-    text <<}
-
-	\maketitle
-
-	>>
+    ,renew packetname @name
+    ,renew authors @authors
+    ,line <(<<\maketitle>>)>
     apply-templates tossups
-    text <<
-
-	\clearpage
-
-	>>
+    ,line <(<<\clearpage>>)>
     apply-templates boni
 
   template tossups
-    text <<
-	\subsection*{Tossups}
-	>>
-    apply-templates tossup
+    ,enva tossups tossup
 
   template tossup
-    text <<
-	\begin{question}%
-		>>
-    apply-templates question
-    text <<\\
-		>>
-    apply-templates answer
-    text <<
-	\end{question}
->>
+    ,env question
+      apply-templates question
+      ,line <(<<\\*>>)>
+      apply-templates answer
+      ,line <()>
 
   template boni
-    text <<
-	\subsection*{Bonuses}
-	\begin{enumerate}[leftmargin=0pt]
-	>>
-    apply-templates bonus
-    text <<
-	\end{enumerate}
->>
+    ,enva bonuses bonus
 
   template bonus
-    text <<
-	\item\hyperdef{bonus}{\arabic{enumi}}{}
-	\begin{minipage}[t]{\linewidth}
-		>>
-    apply-templates stem
-    apply-templates part
-    text <<
-	\end{minipage}
-
->>
+    ,env question
+      apply-templates stem
+      apply-templates part
 
   template part
-    text <<\\[1mm]
-		\partvalue{>>
+    ,line <(<<\\*[1mm]>>)>
+    text <<\partvalue{>>
     value-of @value
     text <<} >>
     apply-templates question
-    text <<\\
-		>>
+    ,line <(<<\\*>>)>
     apply-templates answer
+    ,line <()>
 
   template question
     apply-templates
@@ -126,6 +101,13 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   ,tag sup textsuperscript
   ,tag sub textsubscript
   ,tag sc textsc
+
+  template pron
+    text <<\pron{>>
+    apply-templates graph
+    text <<}{>>
+    apply-templates phon
+    text <<}>>
 
   template br <<\\>>
 

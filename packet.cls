@@ -13,14 +13,32 @@
 \LoadClass{article}
 
 % LAYOUT
-\RequirePackage[hmargin=0.75in,vmargin=0.75in]{geometry}
-\RequirePackage{enumerate}
-\RequirePackage{enumitem}
 \RequirePackage{hyperref}
+\RequirePackage{xcolor}
+
+%\RequirePackage{showframe}
+%\renewcommand\ShowFrameLinethickness{0.3pt}
+%\renewcommand\ShowFrameColor{\color{gray!60}}
+
+% PRONUNCIATION GUIDES
+\newcommand{\marginfont}{\footnotesize}
+\newcommand{\pronsymbol}{°}
+\newcommand{\pronnote}[1]{\marginpar{\marginfont{#1}}\pronsymbol}
+\newcommand{\pronmargin}[2]{\pronnote{#2}#1}
+\newcommand{\pronmargingeom}{left=0.75in,right=1.5in,marginparsep=0.2in,marginparwidth=0.8in}
+
+\newcommand{\prongray}[1]{{\color{gray!60}{#1}}}
+\newcommand{\prontheses}[2]{#1 \prongray{[#2]}}
+\newcommand{\pronthesesgeom}{hmargin=0.75in}
+
+\let\pron\prontheses
+\let\geom\pronthesesgeom
+
+\RequirePackage[\geom,vmargin=0.75in]{geometry}
 
 % TYPOGRAPHY
 \RequirePackage[normalem]{ulem}
-\usepackage{newunicodechar}
+\RequirePackage{newunicodechar}
 \newunicodechar{ }{~}
 
 \RequirePackage[log-declarations=false]{xparse}
@@ -33,6 +51,9 @@
 \newcommand{\powersym}{(*)}% *⁕⁎⋆
 
 % SEMANTICS
+\newenvironment{tossups}{\subsection*{Tossups}\setcounter{question}0}{}
+\newenvironment{bonuses}{\subsection*{Bonuses}\setcounter{question}0}{}
+
 \newcounter{question}
 \def\claim#1{\par\noindent\hspace{-10mm}\makebox[10mm][r]{#1\enskip}\ignorespaces}
 \def\endclaim{\par\medskip}
@@ -48,7 +69,7 @@
 % TOOLTIP
 % Source: http://tex.stackexchange.com/questions/31078/kerning-between-bold-and-non-bold-text
 % TODO: kernleft (this will restore the kerning between “ and A, T, or similar letters the most)
-\newcommand\kernright[1]{\def\hltext{#1}\futurelet\hlnext\hldokern}
+\newcommand\kernright[1]{\renewcommand{\marginpar}[1]{}\def\hltext{#1}\futurelet\hlnext\hldokern}
 \def\hldokern{\sbox0{\mbox\hltext\mbox\hlnext}\sbox2{\hltext\hlnext}\kern\dimexpr\wd2-\wd0\relax}
 \newcommand\tooltip[2]{%
 \special{pdf:bann
@@ -69,6 +90,8 @@
 \newcommand{\tournamentname}{}
 \newcommand{\tournamentyear}{}
 \newcommand{\subtitle}{}
+\newcommand{\packetname}{}
+\newcommand{\authors}{}
 
 \newcommand{\packet}{Packet}
 

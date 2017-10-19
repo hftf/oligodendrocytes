@@ -51,6 +51,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   param packet-name-editors <<>>
   param authors-other <<>>
   param authors-editors <<>>
+  param href-pron-prefix <<http://pron.>>
 
   template html
     qpdb -version=0.2
@@ -136,3 +137,16 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   ,tag sup sup
   ,tag sub sub
   ,tag br br
+
+  # While xslt 2.0 allows params in match attributes, we still need 1.0 so that includes can override top-level params.
+  # Therefore we need to use a choose here.
+  template a
+    choose
+      when starts-with(@href,$href-pron-prefix)
+        pron
+          graph
+            apply-templates
+          phon
+            value-of substring-after(@href,$href-pron-prefix)
+      otherwise
+        apply-templates
