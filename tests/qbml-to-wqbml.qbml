@@ -1,0 +1,18 @@
+<html>
+<body>
+<style>
+w { text-decoration: underline; }
+w::after { content: attr(i); vertical-align: super; display: inline-block; font-size: 0.8em; }
+</style>
+<tossup>
+<question>aaa bbb <b>ccc ddd</b> <i>eee</i>'s 25% %tex $5 5$ 25\% \%tex \$5 5\$ foo! foo? !foo ?foo  fff.</question>
+</tossup>
+
+<h3>Expected</h3>
+
+<p><w i="1">aaa</w> <w i="2">bbb</w> <b><w i="3">ccc</w> <w i="4">ddd</w></b> <w i="5">eee</w> <w i="6">fff</w>.</p>
+</body>
+</html>
+
+<!--<question>The quick brown fooesque T<sub>1</sub> foo (II) and “<b>one two</b> three.” <b>Four, five,</b> bar’s bars’ bar? Bar! <b>!Xóõ H<sub>2</sub>O</b>.</question>-->
+<!--<question>C. &#x2018;foo &#x201c;foo “foo ‘foo</question>-->

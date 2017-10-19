@@ -119,10 +119,13 @@ endif
 %.wqbml: %.qbml transformers/qbml-to-wqbml.xsl
 	saxon -o:$@ $^
 
-tests/qbml-to-wqbml.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml.xsl
+tests/qbml-to-wqbml-2.wqbml: tests/qbml-to-wqbml.qbml transformers/qbml-to-wqbml-2.xsl
 	saxon -o:$@ $^
 
-%.tex: %.wqbml %.edges transformers/qbml-to-latex.xsl
+tests: tests/qbml-to-wqbml.wqbml tests/qbml-to-wqbml-2.wqbml
+	diff $^
+
+%.tex: %.qbml %.edges transformers/qbml-to-latex.xsl
 	xsltproc -o $@ $(word 3,$^) $<
 ifdef DIFF
 	xsltproc -o $@o old/qbml-to-latex.xsl $<
