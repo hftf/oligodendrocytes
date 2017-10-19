@@ -1,0 +1,79 @@
+/* BASIC TYPOGRAPHY */
+
+/* Standard page width */
+body {
+	width: 7.8in;
+	margin: 4em auto;
+	line-height: 1.5;
+	font-size: 12pt;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Space between paragraphs */
+p {
+	margin: 0.25em 0 !important;
+}
+
+strong, b {
+	/*font-weight: 600;*/
+}
+
+p, span {
+	font-family: inherit !important;
+	line-height: inherit !important;
+}
+p {
+	font-size: inherit !important;
+}
+
+
+
+/* BUZZ TRACKING */
+
+/* Fixed header to display buzz location */
+#head {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	padding: 0.4em;
+	background: rgba(249, 236, 229, 0.9);
+}
+#head > p > * {
+	margin: 0 1em;
+}
+.fr {
+	float: right;
+	text-decoration: none;
+	color: #f2c9af;
+}
+
+/* Word highlighting */
+m {
+	cursor: pointer;
+}
+
+m:hover {
+	background: #cf8;
+}
+m[data-toggle] {
+	background: #cdf;
+}
+
+
+/* RUBY */
+
+ruby {
+	ruby-align: space-around;
+	ruby-overhang: auto; /* not supported */
+	border-bottom: 3px solid #bef;
+}
+
+ruby > rt {
+	font-size: 75%;
+	font-weight: normal;
+	font-style: normal;
+	font-family: sans-serif;
+	transform: scaleX(0.85);
+	color: #58c;
+}
