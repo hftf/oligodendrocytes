@@ -37,7 +37,7 @@
     element <(,result)>
       apply-templates
 
-stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
 
@@ -52,6 +52,10 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   param authors-other <<>>
   param authors-editors <<>>
   param href-pron-prefix <<http://pron.>>
+  param password-infix << &#x2013; >>
+  param byline-prefix <{<}>
+  param byline-suffix <{>}>
+  param byline-infix <(<<' '>>)>
 
   template html
     qpdb -version=0.2
@@ -72,13 +76,20 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template -name=packet-metadata
     variable editors contains(p[2],'Editors')
+    variable password contains(p[2],$password-infix)
+    variable raw-packet-name
+      choose
+        when $password
+          value-of substring-before(p[2],$password-infix)
+        otherwise
+          value-of p[2]
     variable packet-name
       choose
         when $editors
           value-of $editors-prefix
-          value-of substring-after(p[2],$packet-name-editors)
+          value-of substring-after($raw-packet-name,$packet-name-editors)
         otherwise
-          value-of substring-after(p[2],$packet-name-other)
+          value-of substring-after($raw-packet-name,$packet-name-other)
     variable authors
       choose
         when $editors
@@ -90,11 +101,27 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
       value-of $packet-name
     attribute authors
       value-of $authors
+    if $password
+      attribute password
+        value-of substring-after(p[2],$password-infix)
 
   template p[text()='Tossups']
     variable ps following-sibling::p
     for-each <(<<$ps[(preceding-sibling::p[1])[br] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
-      tossup -id={substring-before(text(),$list-punct)}
+      tossup -id={substring-before(text()[1],$list-punct)}
+        variable byline substring-before(substring-after(following-sibling::p[2],$byline-prefix),$byline-suffix)
+        variable author substring-before($byline,$byline-infix)
+        variable category substring-after($byline,$byline-infix)
+
+        attribute category
+          value-of $category
+        attribute author
+          value-of $author
+        attribute tossup-words
+          value-of string-length(replace(string(.),'[^\s]',''))-1
+        attribute power-words
+          value-of string-length(replace(string(strong[1]),'[^\s]',''))+1
+
         question
           ,strip . $list-punct
         answer
@@ -103,11 +130,21 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template p[text()='Bonuses']
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(normalize-space(text()))]]>>)>
-      bonus -id={substring-before(text(),$list-punct)}
+      bonus -id={substring-before(text()[1],$list-punct)}
         variable cur generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1])
+
+        variable byline substring-before(substring-after(following-sibling::p[7],$byline-prefix),$byline-suffix)
+        variable author substring-before($byline,$byline-infix)
+        variable category substring-after($byline,$byline-infix)
+
+        attribute category
+          value-of $category
+        attribute author
+          value-of $author
+
         stem
           ,strip . $list-punct
-        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text(), '[10]')]>>)>
+        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text()[1], '[10]')]>>)>
           part -value=10
             question
               ,strip . $bonus-prefix
@@ -118,10 +155,15 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template -name=strip
     param p
     param s
-    variable temp
-      apply-templates $p/text()[1]
-    value-of substring-after($temp,$s)
-    apply-templates $p/*|$p/text()[not(position()=1)]
+
+    choose
+      when $p/node()[1]/self::text()
+        variable temp
+          apply-templates $p/text()[1]
+        value-of substring-after($temp,$s)
+        apply-templates $p/*|$p/text()[not(position()=1)]
+      otherwise
+        apply-templates
 
   template -name=strip-answer
     # Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be lucky enough
@@ -136,17 +178,18 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   ,tag em title
   ,tag sup sup
   ,tag sub sub
+  ,tag code code
   ,tag br br
 
   # While xslt 2.0 allows params in match attributes, we still need 1.0 so that includes can override top-level params.
   # Therefore we need to use a choose here.
   template a
-    choose
-      when starts-with(@href,$href-pron-prefix)
-        pron
-          graph
-            apply-templates
-          phon
-            value-of substring-after(@href,$href-pron-prefix)
-      otherwise
+    pron
+      graph
         apply-templates
+      phon
+        choose
+          when starts-with(@href,$href-pron-prefix)
+            value-of substring-after(@href,$href-pron-prefix)
+          otherwise
+            value-of @href

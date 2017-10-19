@@ -93,7 +93,7 @@ endif
 	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
 
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(METADATA_XSL)
-	xsltproc -o $@ $(word 2,$^) $<
+	saxon -o:$@ $< $(word 2,$^)
 	$(word 3,$^) < $@ > $@.temp
 	mv $@.temp $@
 ifdef DIFF
@@ -102,6 +102,11 @@ ifdef DIFF
 	mv $@o.temp $@o
 	diff <(xmllint --format $@) <(xmllint --format $@o)
 endif
+
+%.tossup.answers: %.qbml transformers/qbml-to-answers.xsl
+	saxon -o:$@ $^ type=tossup
+%.bonus.answers: %.qbml transformers/qbml-to-answers.xsl
+	saxon -o:$@ $^ type=bonus
 
 %.edges: $(ORDER) transformers/prev-qbml-to-this-edges.sh
 	$(word 2,$^) $@ $<
