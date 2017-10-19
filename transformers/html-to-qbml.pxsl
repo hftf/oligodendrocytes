@@ -37,7 +37,7 @@
     element <(,result)>
       apply-templates
 
-stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
+stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   output -method=xml -indent=no -encoding=UTF-8
   preserve-space *
 
@@ -108,7 +108,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template p[text()='Tossups']
     variable ps following-sibling::p
     for-each <(<<$ps[(preceding-sibling::p[1])[br] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
-      tossup -id={substring-before(text(),$list-punct)}
+      tossup -id={substring-before(text()[1],$list-punct)}
         variable byline substring-before(substring-after(following-sibling::p[2],$byline-prefix),$byline-suffix)
         variable author substring-before($byline,$byline-infix)
         variable category substring-after($byline,$byline-infix)
@@ -130,7 +130,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template p[text()='Bonuses']
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(normalize-space(text()))]]>>)>
-      bonus -id={substring-before(text(),$list-punct)}
+      bonus -id={substring-before(text()[1],$list-punct)}
         variable cur generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1])
 
         variable byline substring-before(substring-after(following-sibling::p[7],$byline-prefix),$byline-suffix)
@@ -144,7 +144,7 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
         stem
           ,strip . $list-punct
-        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text(), '[10]')]>>)>
+        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text()[1], '[10]')]>>)>
           part -value=10
             question
               ,strip . $bonus-prefix
