@@ -178,6 +178,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   ,tag em title
   ,tag sup sup
   ,tag sub sub
+  ,tag code code
   ,tag br br
 
   # While xslt 2.0 allows params in match attributes, we still need 1.0 so that includes can override top-level params.

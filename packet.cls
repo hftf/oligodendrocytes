@@ -47,6 +47,8 @@
 \defaultfontfeatures{Mapping=tex-text}
 \newcommand{\myfont}{Lyon Text}
 \setmainfont[BoldFont={* Semibold},Numbers={Lining},Ligatures={Common}]{\myfont}
+\newcommand{\mymonofont}{TheSansMono}
+\setmonofont{\mymonofont}
 
 \newcommand{\powersym}{(*)}% *⁕⁎⋆
 
