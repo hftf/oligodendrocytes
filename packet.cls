@@ -53,6 +53,14 @@
 
 \newcommand{\powersym}{(*)}% *⁕⁎⋆
 
+\iffontchar\font`☞
+\newcommand{\manicule}{☞}
+\else
+% \RequirePackage{bbding}
+% \newcommand{\manicule}{\HandRight}
+\newcommand{\manicule}{{\fontsize{14pt}{14pt}\fontspec{Brill}☞}}
+\fi
+
 % SEMANTICS
 \newenvironment{tossups}{\subsection*{Tossups}\setcounter{question}0}{}
 \newenvironment{bonuses}{\subsection*{Bonuses}\setcounter{question}0}{}
@@ -117,7 +125,7 @@
 \authors{}
 
 \medskip
-\begin{lb}{☞}
+\begin{lb}{\manicule}
 Please verify that the last packet was \textit{\lastpacketname}%
 \iffirstpacket\else
 \ifnolastpacket\else, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}%
