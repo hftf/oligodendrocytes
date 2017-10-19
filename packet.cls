@@ -21,16 +21,27 @@
 %\renewcommand\ShowFrameColor{\color{gray!60}}
 
 % PRONUNCIATION GUIDES
+\newcommand{\prongray}[1]{{\color{gray!75}{#1}}}
+
+%% margin note
 \newcommand{\marginfont}{\footnotesize}
-\newcommand{\pronsymbol}{°}
+\newcommand{\pronsymbol}{\prongray{°}}
 \newcommand{\pronnote}[1]{\marginpar{\marginfont{#1}}\pronsymbol}
 \newcommand{\pronmargin}[2]{\pronnote{#2}#1}
 \newcommand{\pronmargingeom}{left=0.75in,right=1.5in,marginparsep=0.2in,marginparwidth=0.8in}
 
-\newcommand{\prongray}[1]{{\color{gray!60}{#1}}}
+%% parentheses
 \newcommand{\prontheses}[2]{#1 \prongray{[#2]}}
 \newcommand{\pronthesesgeom}{hmargin=0.75in}
 
+%% ruby
+\RequirePackage[latin]{ruby}
+\renewcommand{\rubysize}{0.75}
+\renewcommand{\rubysep}{-0.75ex}
+\newcommand{\pronruby}[2]{\ruby{#1}{\prongray{\normalfont{#2}}}}
+\newcommand{\pronrubygeom}{hmargin=0.75in}
+
+%% set pronunciation guide style
 \let\pron\prontheses
 \let\geom\pronthesesgeom
 
