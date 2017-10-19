@@ -23,6 +23,26 @@
 % PRONUNCIATION GUIDES
 \newcommand{\prongray}[1]{{\color{gray!75}{#1}}}
 
+%% transform uppercase to small caps
+%% https://tex.stackexchange.com/questions/39831/uppercase-smallcaps-with-latex-not-xelatex
+\makeatletter
+\newif\ifsc@active
+\newif\ifnf@active
+\def\upsc#1{{\sc@activefalse\nf@activetrue\@upsc#1\@nil}}
+\def\@upsc#1{\ifx#1\@nil\else\@@upsc{#1}\expandafter\@upsc\fi}
+\def\@@upsc#1{%
+  \ifnum\uccode`#1=`#1\relax
+     \ifsc@active\else\sc@activetrue\nf@activefalse\scshape\fi
+     \expandafter\@firstoftwo
+   \else
+     \ifsc@active\sc@activefalse\fi
+     \ifnf@active\else\nf@activetrue\normalfont\fi
+     \expandafter\@secondoftwo
+   \fi
+     {\lowercase{#1}}%
+     {#1}}
+\makeatother
+
 %% margin note
 \newcommand{\marginfont}{\footnotesize}
 \newcommand{\pronsymbol}{\prongray{°}}
@@ -42,7 +62,8 @@
 \newcommand{\pronrubygeom}{hmargin=0.75in}
 
 %% set pronunciation guide style
-\let\pron\prontheses
+\let\pronstyle\prontheses
+\newcommand{\pron}[2]{\pronstyle{#1}{\upsc{#2}}}
 \let\geom\pronthesesgeom
 
 \RequirePackage[\geom,vmargin=0.75in]{geometry}
