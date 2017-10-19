@@ -1,5 +1,6 @@
 .PRECIOUS: %.x.md %.x.html
 
+# (x refers to censoring all the alphanumeric characters with A/a)
 %.x.md: %.md
 	sed -e '7,$$s/Tossups/@@/' -e '7,$$s/Bonuses/==/' -e '7,$$s/[[:upper:]]/A/g' -e '7,$$s/[[:lower:][:digit:]]/a/g' -e '7,$$s/^AAAAAA:/ANSWER:/g' -e '7,$$s/^\[aa] /[10] /g' -e '7,$$s/@@/Tossups/' -e '7,$$s/==/Bonuses/' $< > $@
 
@@ -8,3 +9,9 @@
 #	$ echo '[Para [Str "A"],Para[LineBreak],Para[Str "A"]]' | pandoc -f native -t markdown | pandoc -f markdown -t native
 #	[Para [Str "A"],Para [LineBreak,Space,Str "A"]]
 	sed -Ei bak 's/<p><br \/> ​?/<p><br \/><\/p><p>/g' $@
+
+%.f.html: %.o.html transformers/o-html-to-f-html.sh transformers/top-1.html transformers/top-2.html x.mk
+	$(word 2,$^) $< > $@
+
+%.r.html: %.f.html transformers/f-html-to-r-html.py transformers/htmlparser.py
+	$(word 2,$^) $< > $@

@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all texs pdfs formats
-.PRECIOUS: %.o.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
+.PRECIOUS: %.o.html %.f.html %.native %.md %.html %.qbml %.wqbml %.edges %.tex
 SHELL=bash
 
 
@@ -70,9 +70,12 @@ reset:
 $(info Making: $(MAKECMDGOALS))
 
 # TODO fix $@, etc. to "$@"
+# (o.html stands for original.html)
 %.o.html: %.docx
-	textutil -convert html $< -stdout | \
-	sed "s/ \(<\/[^>]*>\)/\1 /g" | sed "s/\(<[^/][^>]*>\) / \1/g" > $@
+	textutil -convert html $< -stdout \
+	| sed -E "s/ ((<[\/][^>]*>)+)/\1 /g" \
+	| sed -E "s/((<[^/][^>]*>)+) / \1/g" \
+	> $@
 
 ifeq ($(SOURCE_EXT),.md)
 NATIVE_DEP_EXT=.md
@@ -95,6 +98,9 @@ endif
 
 # does not actually depend on %.md
 %.html: %.native %.md transformers/wrap.template
+	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
+
+%.k.html: %.native %.md transformers/html.template
 	pandoc -o $@ $< -f native -t html --template=$(word 3,$^)
 
 %.qbml: %.html transformers/html-to-qbml.xsl transformers/fix-qbml.sh $(METADATA_XSL)
