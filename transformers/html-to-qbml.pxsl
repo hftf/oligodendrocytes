@@ -52,6 +52,9 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   param authors-other <<>>
   param authors-editors <<>>
   param href-pron-prefix <<http://pron.>>
+  param byline-prefix <{<}>
+  param byline-suffix <{>}>
+  param byline-infix <(<<' '>>)>
 
   template html
     qpdb -version=0.2
@@ -95,6 +98,15 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     variable ps following-sibling::p
     for-each <(<<$ps[(preceding-sibling::p[1])[br] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
       tossup -id={substring-before(text(),$list-punct)}
+        variable byline substring-before(substring-after(following-sibling::p[2],$byline-prefix),$byline-suffix)
+        variable author substring-before($byline,$byline-infix)
+        variable category substring-after($byline,$byline-infix)
+
+        attribute category
+          value-of $category
+        attribute author
+          value-of $author
+
         question
           ,strip . $list-punct
         answer
@@ -105,6 +117,16 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
     for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(normalize-space(text()))]]>>)>
       bonus -id={substring-before(text(),$list-punct)}
         variable cur generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1])
+
+        variable byline substring-before(substring-after(following-sibling::p[7],$byline-prefix),$byline-suffix)
+        variable author substring-before($byline,$byline-infix)
+        variable category substring-after($byline,$byline-infix)
+
+        attribute category
+          value-of $category
+        attribute author
+          value-of $author
+
         stem
           ,strip . $list-punct
         for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text(), '[10]')]>>)>
