@@ -155,10 +155,15 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
   template -name=strip
     param p
     param s
-    variable temp
-      apply-templates $p/text()[1]
-    value-of substring-after($temp,$s)
-    apply-templates $p/*|$p/text()[not(position()=1)]
+
+    choose
+      when $p/node()[1]/self::text()
+        variable temp
+          apply-templates $p/text()[1]
+        value-of substring-after($temp,$s)
+        apply-templates $p/*|$p/text()[not(position()=1)]
+      otherwise
+        apply-templates
 
   template -name=strip-answer
     # Sometimes a typo like "ANWER: " or "ANSWER " will cause substring-after to fail, but you may be lucky enough
