@@ -150,8 +150,12 @@
 \raggedbottom
 
 % HEADER
+\newif\ifstandalonepacket\standalonepackettrue
 \renewcommand{\maketitle}{\noindent
-\tournamentname{} \tournamentyear{}: \subtitle{}\\
+\tournamentname{} \tournamentyear{}%
+\ifstandalonepacket\else
+: \subtitle{}%
+\\
 \textbf{%{\packet{}} {\packetnumber{}} --- {
 \packetname}\\
 \authors{}
@@ -163,4 +167,5 @@ Please verify that the last packet was \textit{\lastpacketname}%
 \ifnolastpacket\else, which began with a tossup on \lastpacketone{} and ended with one on \lastpackettwenty{}%
 \fi\fi.
 \end{lb}
+\fi
 }
