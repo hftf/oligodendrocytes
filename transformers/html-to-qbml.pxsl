@@ -117,6 +117,10 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
           value-of $category
         attribute author
           value-of $author
+        attribute tossup-words
+          value-of string-length(replace(string(.),'[^\s]',''))-1
+        attribute power-words
+          value-of string-length(replace(string(strong[1]),'[^\s]',''))+1
 
         question
           ,strip . $list-punct
