@@ -16,7 +16,7 @@ PREV_QBML=$DIR/$PREV$INFIX.qbml
 # echo $PREV_QBML       O/11.qbml    O/11.x.qbml
 # echo $PREV              11           11
 
-# TODO fix whitepsace
+# TODO fix whitespace
 #XPATH="xpath"
 
 # xmllint --noent doesn't work with --xpath:
@@ -28,7 +28,7 @@ PREV_QBML=$DIR/$PREV$INFIX.qbml
 # <å>&#xE5;</å>
 XPATH="xmllint --xpath"
 XSLT="xsltproc transformers/qbml-to-latex.xsl -"
-SED='sed -e s/\\answer//g -e s/.([^)]*)//g'
+SED='perl -pe "s/\\answer|\s[[(][^)\]]+[)\]]//g"'
 TR="tr -d '\n'"
 
 if [ -z "$PREV" ]; then
