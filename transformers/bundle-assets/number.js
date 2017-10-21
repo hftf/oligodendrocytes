@@ -1,6 +1,13 @@
 var old_page_key = window.location.href;
 var page_key = old_page_key.replace(/\.\w\.html/, '');
 
+function arrayFrom(nl, f) {
+	var arr = [];
+	for (var i = 0, l = nl.length; i < l; i ++)
+		arr.push( f(nl[i], i) );
+	return arr;
+}
+
 // backwards compatibility with old key
 if (window.localStorage[old_page_key]) {
 	window.localStorage[page_key] = window.localStorage[old_page_key];
@@ -8,7 +15,7 @@ if (window.localStorage[old_page_key]) {
 }
 
 function mapTU(f) {
-	return Array.from(document.querySelectorAll('.tu'), f);
+	return arrayFrom(document.querySelectorAll('.tu'), f);
 }
 
 function setLocalStorage() {
@@ -83,7 +90,7 @@ function setHandler() {
 
 		delete window.localStorage[page_key];
 		mapTU(function(p) { p.marked = []; });
-		Array.from(
+		arrayFrom(
 			document.querySelectorAll('m[data-toggle]'),
 			function(m) { m.removeAttribute('data-toggle'); }
 		);
