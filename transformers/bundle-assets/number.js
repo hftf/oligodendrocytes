@@ -115,6 +115,7 @@ function setHandler() {
 	}
 
 	function copyBuzzPoints() {
+		var line_ending = (navigator.platform.indexOf('Win') !== -1) ? '\r\n' : '\n';
 		var string = mapTU(function(p) {
 			var marked_vs = p.marked.map(function(m) { return m.dataset.v; });
 			// sort by index (instead of by time)
@@ -124,7 +125,7 @@ function setHandler() {
 			if (marked_vs.length === 1)
 				marked_vs.unshift('');
 			return marked_vs.join('\t');
-		}).join('\n');
+		}).join(line_ending);
 		clipboard.writeText(string);
 		window.alert('The buzz points have been copied! Go to the scoresheet to paste them.');
 	}
