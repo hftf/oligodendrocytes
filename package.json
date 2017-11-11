@@ -1,0 +1,11 @@
+{
+  "name": "oligodendrocytes",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hftf/oligodendrocytes.git"
+  },
+  "dependencies": {
+    "fibrio": "^0.1.2"
+  }
+}
