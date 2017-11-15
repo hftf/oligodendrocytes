@@ -1,6 +1,3 @@
-var FAR = findAndReplaceDOMText;
-// http://velocityjs.org/blast/
-
 var old_page_key = window.location.href;
 var page_key = old_page_key.replace(/\.\w\.html/, '');
 
@@ -15,7 +12,7 @@ function mapTU(f) {
 }
 
 function setLocalStorage() {
-	var all_marks = mapTU(function(p) { return p.marked.map(function(v) { return v.dataset.v; }); });
+	var all_marks = mapTU(function(p) { return p.marked.map(function(m) { return m.dataset.v; }); });
 	window.localStorage[page_key] = JSON.stringify(all_marks);
 }
 function getFromLocalStorage() {
@@ -32,60 +29,9 @@ function getFromLocalStorage() {
 	});
 }
 
-function hasSpanParent(el) {
-	while (el = el.parentNode) {
-		if ((el.nodeName === 'SPAN' && getComputedStyle(el).textDecorationLine !== 'underline')
-			|| el.nodeName === 'RP' || el.nodeName === 'RT')
-			return true;
-		if (el.nodeName === 'P')
-			return false;
-	}
-	return false;
-}
-
 function getPs() {
-	var x = document.body.getElementsByClassName('tu');
-	var j = 0, p;
-
-	// using unnamed group to keep ^ and $ outside of | scope
-	// TODO keep “” outside word? barely matters, but more aesthetic
-	var no = /^(?:\(\*\)|[\/,\.?!'‘’"“”…–—-]+)$/;
-
-	// TODO fix final punctuation kerning (foo</m>.)
-
-	function replace(portion) {
-		// Uses closure vars j, p, no
-		var tn = document.createTextNode(portion.text);
-
-		// Don't count this as a word if:
-
-		// it is part of a pronunciation guide (naively defined as being inside a span)
-		// TODO more robust check
-		if (hasSpanParent(portion.node))
-			return tn;
-
-		// it is a power mark (*) or only punctuation
-		if (no.test(portion.text))
-			return tn;
-
-		var e = document.createElement('m');
-		e.p = p; // pointer to parent p
-		e.dataset.v = j ++;
-		e.appendChild(tn);
-		return e;
-	}
-
-	for (var i = 0; i < x.length; i ++) {
-		p = x[i];
-		j = 0;
-
-		p.marked = []; // queue of toggled words
-
-		FAR(p, {
-			find: /[^  ]+/g,
-			replace: replace
-		});
-	}
+	// queue of toggled words
+	mapTU(function(p) { p.marked = []; });
 }
 
 function setHandler() {
@@ -94,7 +40,7 @@ function setHandler() {
 	var l = document.getElementById('location');
 
 	function toggleM(m) {
-		var p = m.p;
+		var p = m.closest('p.tu'); // TODO browser support
 
 		if (m.dataset.toggle === 'true') {
 			m.removeAttribute('data-toggle');
