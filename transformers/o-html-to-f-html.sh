@@ -9,5 +9,7 @@ cat transformers/top-2.html
 	gsed -E -e '0,/^<body>$$/d' \
 	        -e 's/<p class="p1">ANSWER/<p class="p1 answer">ANSWER/g' \
 	        -e '1,/>Bonuses/I s/<p class="p1">([0-9]+\. )/<p class="p1 tu">\1/g' \
+	        -e '/>Bonuses/I,$ s/<p class="p1">([0-9]+\. )/<p class="p1 bonus">\1/g' \
+	        -e 's/>Bonuses/ id="bonuses"&/' \
 	        -e '/^<\/body>$$/,$d'
 cat transformers/bottom.html

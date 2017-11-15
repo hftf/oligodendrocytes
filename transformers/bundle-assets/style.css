@@ -4,7 +4,7 @@
 /* Standard page width */
 body {
 	max-width: 8in;
-	margin: 4em auto;
+	margin: 4em auto 7em;
 	padding: 0 1em;
 	line-height: 1.5;
 	font-family: 'Novel Sans Pro', sans-serif;
@@ -34,6 +34,10 @@ main, .text {
 	font-family: 'Times', 'Times New Roman', serif;
 }
 
+#bonuses {
+	margin-top: 4em !important;
+}
+
 
 /* BUZZ TRACKING */
 
@@ -43,7 +47,8 @@ main, .text {
 	left: 0;
 	top: 0;
 	right: 0;
-	padding: 0.4em;
+	height: 2em;
+	padding: 0.5em;
 	background: rgba(249, 236, 229, 0.9);
 }
 @media screen and (max-width: 800px) {
@@ -81,4 +86,17 @@ rt, rp {
 	font-style: normal;
 	font-family: 'Novel SansCond Pro', sans-serif;
 	color: #58c;
+}
+
+
+/* SCROLL */
+
+#toggle {
+	z-index: 1;
+	position: fixed;
+	right: 0; bottom: 0; left: 0;
+	height: 5em;
+	padding: 0.5em;
+	background: #c9eaff;
+	cursor: pointer;
 }
