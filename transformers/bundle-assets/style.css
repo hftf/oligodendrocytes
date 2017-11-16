@@ -1,4 +1,5 @@
 /* BASIC TYPOGRAPHY */
+@import url('fonts.css');
 
 /* Standard page width */
 body {
@@ -6,6 +7,7 @@ body {
 	margin: 4em auto;
 	padding: 0 1em;
 	line-height: 1.5;
+	font-family: 'Novel Sans Pro', sans-serif;
 	font-size: 12pt;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
@@ -19,14 +21,18 @@ strong, b {
 	/*font-weight: 600;*/
 }
 
-p, span {
+/* MAIN */
+main p, main span {
 	font-family: inherit !important;
 	line-height: inherit !important;
 }
-p {
+main p {
 	font-size: inherit !important;
 }
 
+main, .text {
+	font-family: 'Times', 'Times New Roman', serif;
+}
 
 
 /* BUZZ TRACKING */
@@ -74,11 +80,10 @@ ruby {
 	border-bottom: 3px solid #bef;
 }
 
-ruby > rt {
-	font-size: 75%;
+rt, rp {
+	font-size: 80%;
 	font-weight: normal;
 	font-style: normal;
-	font-family: sans-serif;
-	transform: scaleX(0.85);
+	font-family: 'Novel SansCond Pro', sans-serif;
 	color: #58c;
 }

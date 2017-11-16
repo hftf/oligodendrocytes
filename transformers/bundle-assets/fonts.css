@@ -1,0 +1,85 @@
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 400;
+	font-style: normal;
+	src: local('NovelSansPro-Regular'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_Regular.otf');
+}
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 400;
+	font-style: italic;
+	src: local('NovelSansPro-It'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_RegularIt.otf');
+}
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 600;
+	font-style: normal;
+	src: local('NovelSansPro-SemiBold'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_SemiBold.otf');
+}
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 600;
+	font-style: italic;
+	src: local('NovelSansPro-SemiBoldIt'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_SemiBoldIt.otf');
+}
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 700;
+	font-style: normal;
+	src: local('NovelSansPro-Bold'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_Bold.otf');
+}
+@font-face {
+	font-family: 'Novel Sans Pro';
+	font-weight: 700;
+	font-style: italic;
+	src: local('NovelSansPro-BoldIt'), local('Novel Sans Pro'), url('fonts/Novel/NovelSansPro_BoldIt.otf');
+}
+
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 300;
+	font-style: normal;
+	src: local('NovelSansCondPro-Light'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-Light.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 300;
+	font-style: italic;
+	src: local('NovelSansCondPro-LightIt'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-LightIt.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 400;
+	font-style: normal;
+	src: local('NovelSansCondPro-Regular'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-Regular.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 400;
+	font-style: italic;
+	src: local('NovelSansCondPro-RegularIt'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-RegularIt.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 600;
+	font-style: normal;
+	src: local('NovelSansCondPro-SemiBold'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-SemiBold.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 600;
+	font-style: italic;
+	src: local('NovelSansCondPro-SmBdIt'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-SmBdIt.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 700;
+	font-style: normal;
+	src: local('NovelSansCondPro-Bold'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-Bold.otf');
+}
+@font-face {
+	font-family: 'Novel SansCond Pro';
+	font-weight: 700;
+	font-style: italic;
+	src: local('NovelSansCondPro-BdItalic'), local('Novel SansCond Pro'), url('fonts/Novel/NovelSansCondPro-BdItalic.otf');
+}
