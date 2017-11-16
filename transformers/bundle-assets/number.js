@@ -1,12 +1,27 @@
 var old_page_key = window.location.href;
 var page_key = old_page_key.replace(/\.\w\.html/, '');
 
+// polyfills
 function arrayFrom(nl, f) {
 	var arr = [];
 	for (var i = 0, l = nl.length; i < l; i ++)
 		arr.push( f(nl[i], i) );
 	return arr;
 }
+if (!Element.prototype.matches)
+	Element.prototype.matches = Element.prototype.msMatchesSelector ||
+								Element.prototype.webkitMatchesSelector;
+if (!Element.prototype.closest)
+	Element.prototype.closest = function(s) {
+		var el = this;
+		if (!document.documentElement.contains(el)) return null;
+		do {
+			if (el.matches(s)) return el;
+			el = el.parentElement;
+		} while (el !== null);
+		return null;
+	};
+
 
 // backwards compatibility with old key
 if (window.localStorage[old_page_key]) {
@@ -47,7 +62,7 @@ function setHandler() {
 	var l = document.getElementById('location');
 
 	function toggleM(m) {
-		var p = m.closest('p.tu'); // TODO browser support
+		var p = m.closest('p.tu');
 
 		if (m.dataset.toggle === 'true') {
 			m.removeAttribute('data-toggle');
