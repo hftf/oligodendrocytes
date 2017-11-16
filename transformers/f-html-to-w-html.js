@@ -54,7 +54,7 @@ fs.readFile(
 			if (exclude.test(portion.text))
 				return tn;
 
-			return '<m data-v="' + v + '">' + tn + '</m>';
+			return '<m v="' + v + '">' + tn + '</m>';
 		}
 
 

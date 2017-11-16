@@ -34,7 +34,7 @@ function mapTU(f) {
 }
 
 function setLocalStorage() {
-	var all_marks = mapTU(function(p) { return p.marked.map(function(m) { return m.dataset.v; }); });
+	var all_marks = mapTU(function(p) { return p.marked.map(function(m) { return m.getAttribute('v'); }); });
 	window.localStorage[page_key] = JSON.stringify(all_marks);
 }
 function getFromLocalStorage() {
@@ -44,7 +44,7 @@ function getFromLocalStorage() {
 
 	mapTU(function(p, i) {
 		p.marked = parsed[i].map(function(v) {
-			var m = p.querySelector('m[data-v="' + v + '"]');
+			var m = p.querySelector('m[v="' + v + '"]');
 			m.dataset.toggle = 'true';
 			return m;
 		});
@@ -86,7 +86,7 @@ function setHandler() {
 
 			if (m.tagName === 'M') {
 				w.textContent = m.textContent;
-				l.textContent = m.dataset.v;
+				l.textContent = m.getAttribute('v');
 
 				toggleM(m);
 
@@ -117,7 +117,7 @@ function setHandler() {
 	function copyBuzzPoints() {
 		var line_ending = (navigator.platform.indexOf('Win') !== -1) ? '\r\n' : '\n';
 		var string = mapTU(function(p) {
-			var marked_vs = p.marked.map(function(m) { return m.dataset.v; });
+			var marked_vs = p.marked.map(function(m) { return m.getAttribute('v'); });
 			// sort by index (instead of by time)
 			marked_vs.sort(function(v1, v2) {
 				return parseInt(v1, 10) - parseInt(v2, 10);
@@ -138,7 +138,7 @@ function selectorLastM(selectF) {
 			function (b) { return Array.from(b.querySelectorAll('m')).pop(); }
 		);
 		lastM = lastM.filter(function(x) { return x; }).pop();
-		return lastM.dataset.v;
+		return lastM.getAttribute('v');
 	});
 }
 
