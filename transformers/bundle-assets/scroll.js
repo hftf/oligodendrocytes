@@ -26,4 +26,10 @@ function loadScroll() {
 			label();
 		}
 	}, 400);*/
+
+	window.onkeydown = function (e) {
+		if (e.keyCode === 74) { // J
+			swap();
+		}
+	};
 }
