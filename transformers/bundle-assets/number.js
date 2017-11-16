@@ -45,7 +45,7 @@ function getFromLocalStorage() {
 	mapTU(function(p, i) {
 		p.marked = parsed[i].map(function(v) {
 			var m = p.querySelector('m[v="' + v + '"]');
-			m.dataset.toggle = 'true';
+			m.className = 'toggle';
 			return m;
 		});
 	});
@@ -64,8 +64,8 @@ function setHandler() {
 	function toggleM(m) {
 		var p = m.closest('p.tu');
 
-		if (m.dataset.toggle === 'true') {
-			m.removeAttribute('data-toggle');
+		if (m.className === 'toggle') {
+			m.removeAttribute('class');
 			var index = p.marked.indexOf(m);
 			if (index !== -1)
 				p.marked.splice(index, 1);
@@ -73,9 +73,9 @@ function setHandler() {
 		else {
 			if (p.marked.length === 2) {
 				// dequeue oldest mark
-				p.marked.shift().removeAttribute('data-toggle');
+				p.marked.shift().removeAttribute('class');
 			}
-			m.dataset.toggle = 'true';
+			m.className = 'toggle';
 			p.marked.push(m);
 		}
 	}
@@ -106,8 +106,8 @@ function setHandler() {
 		delete window.localStorage[page_key];
 		mapTU(function(p) { p.marked = []; });
 		arrayFrom(
-			document.querySelectorAll('m[data-toggle]'),
-			function(m) { m.removeAttribute('data-toggle'); }
+			document.querySelectorAll('m.toggle'),
+			function(m) { m.removeAttribute('class'); }
 		);
 
 		w.textContent = 'none';
