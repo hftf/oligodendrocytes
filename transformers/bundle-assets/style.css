@@ -123,3 +123,7 @@ rt, rp {
 	margin-left: 1em;
 	width: 6em;
 }
+#toggle.up .down,
+#toggle.down .up {
+	display: none;
+}

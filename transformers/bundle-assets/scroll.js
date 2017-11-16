@@ -8,14 +8,7 @@ function swap() {
 	label();
 }
 function label() {
-	var newHTML;
-	if (window.pageYOffset > scr)
-		newHTML = '<div><span class="arr">↑</span><span class="clm">Jump to the<br>next tossup</span></div>';
-	else
-		newHTML = '<div><span class="arr">↓</span><span class="clm">Jump to the<br>next bonus</span></div>';
-
-	if (toggle.innerHTML != newHTML)
-		toggle.innerHTML = newHTML;
+	toggle.className = (window.pageYOffset > scr) ? 'up' : 'down';
 }
 
 function loadScroll() {
@@ -23,7 +16,6 @@ function loadScroll() {
 
 	// button: set click handler, initial label
 	toggle.onclick = swap;
-	label();
 
 	// scroll handler
 	/*var didScroll = false;
