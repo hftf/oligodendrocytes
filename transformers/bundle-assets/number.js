@@ -24,10 +24,12 @@ if (!Element.prototype.closest)
 
 
 // backwards compatibility with old key
-if (window.localStorage[old_page_key]) {
-	window.localStorage[page_key] = window.localStorage[old_page_key];
-	delete window.localStorage[old_page_key];
-}
+try {
+	if (window.localStorage[old_page_key]) {
+		window.localStorage[page_key] = window.localStorage[old_page_key];
+		delete window.localStorage[old_page_key];
+	}
+} catch (e) {}
 
 function mapTU(f) {
 	return arrayFrom(document.querySelectorAll('.tu'), f);
@@ -35,20 +37,25 @@ function mapTU(f) {
 
 function setLocalStorage() {
 	var all_marks = mapTU(function(p) { return p.marked.map(function(m) { return m.getAttribute('v'); }); });
-	window.localStorage[page_key] = JSON.stringify(all_marks);
+	try {
+		window.localStorage[page_key] = JSON.stringify(all_marks);
+	} catch (e) {}
 }
 function getFromLocalStorage() {
-	var a = window.localStorage[page_key];
-	if (!a) return;
-	var parsed = JSON.parse(a);
+	try {
+		var a = window.localStorage[page_key];
+		if (!a) return;
+		var parsed = JSON.parse(a);
 
-	mapTU(function(p, i) {
-		p.marked = parsed[i].map(function(v) {
-			var m = p.querySelector('m[v="' + v + '"]');
-			m.className = 'toggle';
-			return m;
+		mapTU(function(p, i) {
+			p.marked = parsed[i].map(function(v) {
+				var m = p.querySelector('m[v="' + v + '"]');
+				if (m)
+					m.className = 'toggle';
+				return m;
+			});
 		});
-	});
+	} catch (e) {}
 }
 
 function getPs() {
@@ -103,7 +110,6 @@ function setHandler() {
 		var really = window.confirm('Are you sure you want to clear all buzzes?');
 		if (!really) return;
 
-		delete window.localStorage[page_key];
 		mapTU(function(p) { p.marked = []; });
 		arrayFrom(
 			document.querySelectorAll('m.toggle'),
@@ -112,6 +118,10 @@ function setHandler() {
 
 		w.textContent = 'none';
 		l.textContent = '';
+
+		try {
+			delete window.localStorage[page_key];
+		} catch (e) {}
 	}
 
 	function copyBuzzPoints() {
