@@ -10,9 +10,9 @@ function swap() {
 function label() {
 	var newHTML;
 	if (window.pageYOffset > scr)
-		newHTML = '↑ Up to next tossup';
+		newHTML = '<div><span class="arr">↑</span><span class="clm">Jump to the<br>next tossup</span></div>';
 	else
-		newHTML = '↓ Down to next bonus';
+		newHTML = '<div><span class="arr">↓</span><span class="clm">Jump to the<br>next bonus</span></div>';
 
 	if (toggle.innerHTML != newHTML)
 		toggle.innerHTML = newHTML;

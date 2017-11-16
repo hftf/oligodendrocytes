@@ -50,6 +50,7 @@ main, .text {
 	height: 2em;
 	padding: 0.5em;
 	background: rgba(249, 236, 229, 0.9);
+	border-bottom: 1px solid rgb(229, 214, 189);
 }
 @media screen and (max-width: 800px) {
 	#head { height: 5em; }
@@ -97,6 +98,28 @@ rt, rp {
 	right: 0; bottom: 0; left: 0;
 	height: 5em;
 	padding: 0.5em;
-	background: #c9eaff;
+	background: rgba(249, 236, 229, 0.9);
+	border-top: 1px solid rgb(229, 214, 189);
 	cursor: pointer;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+#toggle > div > span {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: left;
+	line-height: 1.25;
+}
+#toggle > div > .arr {
+	font-size: 200%;
+	font-feature-settings: 'ss06';
+	vertical-align: -4px;
+}
+#toggle > div > .clm {
+	margin-left: 1em;
+	width: 6em;
 }
