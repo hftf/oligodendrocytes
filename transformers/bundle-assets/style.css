@@ -53,11 +53,6 @@ main, .text {
 #head > p > * {
 	margin: 0 1em;
 }
-.fr {
-	float: right;
-	text-decoration: none;
-	color: #f2c9af;
-}
 
 /* Word highlighting */
 m {
