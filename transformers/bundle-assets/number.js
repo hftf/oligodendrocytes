@@ -124,7 +124,7 @@ function showPrompt() {
 	window.prompt('', tab);
 }
 
-window.onload = function() {
+function loadNumber() {
 	getPs();
 	getFromLocalStorage();
 	setHandler();
