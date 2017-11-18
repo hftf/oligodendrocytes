@@ -142,6 +142,18 @@ function setHandler() {
 		window.alert('The buzz points have been copied! Go to the scoresheet to paste them.');
 		e.preventDefault();
 	}
+
+	arrayFrom(
+		document.querySelectorAll('.style-switcher a'),
+		function(a) {
+			a.addEventListener('click', styleSwitcher, false);
+		}
+	);
+
+	function styleSwitcher(e) {
+		main.className = this.className; // TODO id
+		e.preventDefault();
+	}
 }
 
 function selectorLastM(selectF) {

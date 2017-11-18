@@ -56,6 +56,10 @@ header > p > * {
 	margin: 0 1em;
 }
 
+nav ul li .pg-ruby rt {
+	font-size: 70%;
+}
+
 /* Word highlighting */
 m {
 	cursor: pointer;
