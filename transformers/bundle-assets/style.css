@@ -127,3 +127,15 @@ rt, rp {
 #toggle.down .up {
 	display: none;
 }
+
+kbd {
+	display: inline-block;
+	padding: 0.2em 0.6em;
+	font-family: sans-serif;
+	line-height: 1.4;
+	color: #222;
+	background-color: #eee;
+	border: 1px solid #999;
+	border-radius: 3px;
+	box-shadow: 1px 0px 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #999;
+}
