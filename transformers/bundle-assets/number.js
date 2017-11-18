@@ -106,7 +106,7 @@ function setHandler() {
 	document.getElementById('reset').addEventListener('click', clearAllBuzzes, false);
 	document.getElementById('copy').addEventListener('click', copyBuzzPoints, false);
 
-	function clearAllBuzzes() {
+	function clearAllBuzzes(e) {
 		var really = window.confirm('Are you sure you want to clear all buzzes?');
 		if (!really) return;
 
@@ -122,9 +122,11 @@ function setHandler() {
 		try {
 			delete window.localStorage[page_key];
 		} catch (e) {}
+
+		e.preventDefault();
 	}
 
-	function copyBuzzPoints() {
+	function copyBuzzPoints(e) {
 		var line_ending = (navigator.platform.indexOf('Win') !== -1) ? '\r\n' : '\n';
 		var string = mapTU(function(p) {
 			var marked_vs = p.marked.map(function(m) { return m.getAttribute('v'); });
@@ -138,6 +140,7 @@ function setHandler() {
 		}).join(line_ending);
 		clipboard.writeText(string);
 		window.alert('The buzz points have been copied! Go to the scoresheet to paste them.');
+		e.preventDefault();
 	}
 }
 
