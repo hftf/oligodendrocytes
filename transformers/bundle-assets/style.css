@@ -121,7 +121,7 @@ rt, rp {
 }
 #toggle > div > .clm {
 	margin-left: 1em;
-	width: 6em;
+	width: 5em;
 }
 #toggle.up .down,
 #toggle.down .up {
