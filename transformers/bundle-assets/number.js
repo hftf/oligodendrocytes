@@ -87,6 +87,9 @@ function setHandler() {
 			document.querySelectorAll('m[data-toggle]'),
 			function(m) { m.removeAttribute('data-toggle'); }
 		);
+
+		w.textContent = 'none';
+		l.textContent = '';
 	}
 
 	function copyBuzzPoints() {
