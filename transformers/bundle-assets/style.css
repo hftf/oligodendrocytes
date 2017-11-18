@@ -139,3 +139,19 @@ kbd {
 	border-radius: 3px;
 	box-shadow: 1px 0px 1px 0 #eee, 0 2px 0 2px #ccc, 0 2px 0 3px #999;
 }
+
+#line {
+	z-index: -2;
+	position: absolute;
+	top: -100%; left: 0; right: 0;
+	height: 7em;
+	margin-top: 3em;
+	box-sizing: border-box;
+	padding: 1em;
+
+	border-top: 1px solid rgb(241, 232, 219);
+	background: linear-gradient(to bottom, #fffbf0, rgba(255,255,255,0));
+	color: #aaa;
+	font-size: 90%;
+	font-style: italic;
+}

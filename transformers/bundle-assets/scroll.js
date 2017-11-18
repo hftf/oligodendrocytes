@@ -3,6 +3,7 @@ function initialScrolls() {
 }
 function swap() {
 	tmp = window.pageYOffset;
+	line.style.top = scr + 'px';
 	window.scroll(0, scr);
 	scr = tmp;
 	label();
