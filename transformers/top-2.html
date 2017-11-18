@@ -5,14 +5,17 @@
 <header>
 <nav>
 <ul>
-	<li><a href="index.php">← List of packets</a></li>
-	<li><button id="copy" type="button"><b>Copy all buzz points</b></button></li>
-	<li><button id="reset" type="reset">Clear all buzzes</button></li>
-	<li>
-		<label>Most recently clicked word:</label>
-		<b id="location"></b>
-		<span id="word" class="text">none</span>
-	</li>
+	<li><label>Navigation</label><ul>
+		<li><a href="index.php">← List of packets</a></li>
+	</ul></li>
+	<li><label>Most recently clicked word</label><ul>
+		<li><b id="location"></b></li>
+		<li><span id="word" class="text">none</span></li>
+	</ul></li>
+	<li><label>Buzz points</label><ul>
+		<li><a href="#" id="copy"><b>Copy all</b></a></li>
+		<li><a href="#" id="reset">Clear all</a></li>
+	</ul></li>
 </ul>
 </nav>
 </header>
