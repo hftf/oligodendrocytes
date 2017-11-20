@@ -1,0 +1,80 @@
+header {
+	position: fixed;
+	top: 0; left: 0; right: 0;
+	height: 5em;
+	background: rgba(249, 236, 229, 0.9);
+	border-bottom: 1px solid rgb(229, 214, 189);
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+@media screen and (min-width: 700px) {
+	nav ul li {
+		float: left;
+	}
+	nav ul li:last-child {
+		float: right;
+	}
+	nav ul::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+@media screen and (max-width: 699px) {
+	nav {
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+	nav ul li {
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+nav > ul > li {
+	margin-left: 1.5em;
+}
+nav > ul > li:last-child {
+	margin-right: 1.5em;
+}
+
+nav > ul > li > label {
+	display: block;
+	height: 2em;
+	line-height: 2.5em;
+	padding: 0 0.5em;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgb(199, 184, 169);
+	font-style: italic;
+	/*text-align: center;*/
+}
+nav ul li > *:not(ul):not(label) {
+	display: block;
+	padding: 0 0.5em;
+	line-height: 3em;
+	color: inherit;
+	text-decoration: none;
+}
+nav ul li > a:hover {
+	background: rgb(241, 229, 214);
+}
+nav ul li #location {
+	display: inline-block;
+	min-width: 2em;
+	text-align: right;
+}
+nav ul li #wordparent {
+	min-width: 8em;
+}
+nav ul li .text:not(:empty) {
+	/*background: rgba(255, 255, 255, 0.6);
+	border-radius: 2px;
+	padding: 0.25em 0.5em;*/
+	line-height: 1;
+}
+nav ul li .pg-ruby rt {
+	font-size: 70%;
+}

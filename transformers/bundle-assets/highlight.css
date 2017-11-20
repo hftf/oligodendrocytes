@@ -1,0 +1,13 @@
+/* BUZZ TRACKING */
+
+/* Word highlighting */
+m {
+	cursor: pointer;
+}
+
+m:hover {
+	background: #cf8;
+}
+m.toggle {
+	background: #cdf;
+}

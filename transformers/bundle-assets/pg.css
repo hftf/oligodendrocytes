@@ -1,0 +1,50 @@
+/* RUBY */
+
+ruby {
+	border-bottom: 3px solid #bef;
+}
+rt,
+rp {
+	font-family: 'Novel SansCond Pro', sans-serif;
+	font-size: 100%;
+	font-weight: normal;
+	font-style: normal;
+	color: #58c;
+}
+
+.pg-ruby ruby {
+	ruby-align: space-around;
+	ruby-overhang: auto; /* not supported */
+}
+.pg-ruby rt {
+	font-size: 80%;
+}
+
+.pg-inline rb {
+	padding-right: 0.15em;
+}
+.pg-inline rt,
+.pg-inline rp {
+	font-size: 90%;
+	display: inline;
+}
+
+.pg-hover ruby {
+	position: relative;
+	display: inline-flex;
+	flex-direction: column-reverse;
+}
+.pg-hover ruby rt,
+.pg-hover ruby rp {
+	display: none;
+}
+.pg-hover ruby rt {
+	display: inline;
+	position: absolute;
+	top: -2em;
+	left: 0;
+	background: white;
+	border: 1px solid black;
+	border-radius: 2px;
+	padding: 4px;
+}
