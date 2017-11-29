@@ -53,3 +53,46 @@ rp {
 	border-radius: 2px;
 	padding: 4px;
 }
+
+.pg-1 ruby {
+	border-width: 2px;
+	display: inline-block;
+	line-height: 1;
+}
+.pg-1 rb {
+	margin: 0 0.25em;
+}
+.pg-1 rt {
+	background: #bef;
+	display: inline-block;
+	line-height: 1;
+	font-size: 90%;
+	padding: 0.25em 0.35em;
+	color: #269;
+}
+
+.pg-3 ruby {
+	display: inline-block;
+	line-height: 1;
+	position: relative;
+	cursor: help;
+}
+.pg-3 rb {
+	margin: 0 0.25em;
+}
+.pg-3 rt {
+	padding: 0.25em 0.35em 0.1em;
+	display: inline-block;
+	line-height: 1;
+	position: absolute;
+	bottom: -1.35em;
+	left: 0;
+	font-size: 90%;
+	opacity: 0;
+	-webkit-transition: opacity 0.1s ease, background-color 0.1s ease;
+	transition: opacity 0.1s ease, background-color 0.1s ease;
+}
+.pg-3 ruby:hover rt {
+	opacity: 1;
+	background: #bef;
+}
