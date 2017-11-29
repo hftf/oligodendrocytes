@@ -100,6 +100,7 @@ the “bergin</b> <span class="s1"><b>[BERG-in]</b></span> <b>boy” accidentall
 <p class="p1 answer">ANSWER: J. M. <span class="s2"><b>Coetzee</b></span> <span class="s1">[coot-ZEE-uh or coot-zee]</span>
 Luis Buñuel, <i>L’Âge d’Or</i> <span class="s2"><b>[lodge dor]</b></span>. For 10
 Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
+Luis Buñuel, <i>L’Âge–d’Or</i> (“lodge dor”). For 10
 '''
 
 zz=1

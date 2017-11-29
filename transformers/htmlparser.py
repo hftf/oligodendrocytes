@@ -5,7 +5,7 @@ from HTMLParser import HTMLParser
 import re
 
 # TODO not sure if we should treat nbsp as same word, just like we do inside the PG
-SPACES = u'[  ]+'
+SPACES = u'[  –]+'
 
 class UnbalancedError(Exception):
 	pass
