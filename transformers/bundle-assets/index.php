@@ -17,6 +17,7 @@ foreach ($packet_data as $packet) {
 
 ?>
 </ul>
-<p>Please make sure to use a <strong>modern, up-to-date browser</strong> (such as Google Chrome; do not use Internet Explorer) to view the packets.</p>
+<p>Please make sure to use a <strong>modern, up-to-date browser</strong> (such as Google Chrome; do not use Internet Explorer) to view the online packets.</p>
+<!-- <p><a href="password-pdfs.zip">A zip of the packets as password-protected PDFs, intended for use as a backup only. Download at the beginning of the day.</a></p> -->
 </body>
 </html>
