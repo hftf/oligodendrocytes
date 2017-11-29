@@ -2,8 +2,9 @@
 
 /* Standard page width */
 body {
-	width: 7.8in;
+	max-width: 8in;
 	margin: 4em auto;
+	padding: 0 1em;
 	line-height: 1.5;
 	font-size: 12pt;
 	-webkit-font-smoothing: subpixel-antialiased;
@@ -38,6 +39,10 @@ p {
 	right: 0;
 	padding: 0.4em;
 	background: rgba(249, 236, 229, 0.9);
+}
+@media screen and (max-width: 800px) {
+	#head { height: 5em; }
+	body { margin-top: 7em; }
 }
 #head > p > * {
 	margin: 0 1em;
