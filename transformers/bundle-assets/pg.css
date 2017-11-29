@@ -1,7 +1,9 @@
 /* RUBY */
 
 ruby {
-	border-bottom: 3px solid #bef;
+	border-width: 0 0 3px 0;
+	border-style: solid;
+	border-color: #bef;
 }
 rt,
 rp {
@@ -12,6 +14,7 @@ rp {
 	color: #58c;
 }
 
+/* ruby */
 .pg-ruby ruby {
 	ruby-align: space-around;
 	ruby-overhang: auto; /* not supported */
@@ -20,6 +23,7 @@ rp {
 	font-size: 80%;
 }
 
+/* inline */
 .pg-inline rb {
 	padding-right: 0.15em;
 }
@@ -29,6 +33,7 @@ rp {
 	display: inline;
 }
 
+/* hover */
 .pg-hover ruby {
 	position: relative;
 	display: inline-flex;

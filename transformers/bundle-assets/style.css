@@ -1,44 +1,8 @@
-/* BASIC TYPOGRAPHY */
 @import url('fonts.css');
 
-@import url('highlight.css');
+@import url('main.css');
 @import url('header.css');
 @import url('footer.css');
+
+@import url('highlight.css');
 @import url('pg.css');
-
-/* Standard page width */
-body {
-	max-width: 8in;
-	margin: 5em auto 5em;
-	padding: 2em 1em;
-	line-height: 1.5;
-	font-family: 'Novel Sans Pro', sans-serif;
-	font-size: 12pt;
-	-webkit-font-smoothing: subpixel-antialiased;
-}
-
-/* Space between paragraphs */
-p {
-	margin: 0.25em 0 !important;
-}
-
-strong, b {
-	/*font-weight: 600;*/
-}
-
-/* MAIN */
-main p, main span {
-	font-family: inherit !important;
-	line-height: inherit !important;
-}
-main p {
-	font-size: inherit !important;
-}
-
-main, .text {
-	font-family: 'Times', 'Times New Roman', serif;
-}
-
-#bonuses {
-	margin-top: 4em !important;
-}
