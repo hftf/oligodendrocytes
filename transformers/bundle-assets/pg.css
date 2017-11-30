@@ -101,6 +101,13 @@ main.pg-ruby {
 	opacity: 1;
 	background: #bef;
 }
+
+
+/**/
+.pg-uc span.pg-stress {
+	text-transform: lowercase;
+	font-variant-caps: all-small-caps;
+}
 .pg-or {
 	font-style: italic;
 	font-weight: 300;

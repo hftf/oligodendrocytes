@@ -121,6 +121,12 @@ bracket_color  = '\033[103;4m'*zz
 space_color    = '\033[103;4m'*zz
 reset_color    = '\033[0m'*zz
 
+def wrap_caps(b):
+	return re.sub('[A-Z]{2,}', '<span class="pg-stress">\g<0></span>', b)
+
+def middot(b):
+	return re.sub('-', u'·', b)
+
 def word_count(b):
 	b_first_or_pos = re.search(PG_OR, b)
 	if b_first_or_pos:
@@ -164,7 +170,9 @@ def html_span_to_ruby(contents):
 
 		b_word_count = word_count(b)
 
+		# b = b_middot = middot(b)
 		b = b_rp_or = rp_or(b)
+		# b = b_wrap_caps = wrap_caps(b)
 
 		last_newline_pos = prev.rfind('\n') + 1
 		prev1 = prev[:last_newline_pos]
