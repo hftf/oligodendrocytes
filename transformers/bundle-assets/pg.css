@@ -99,3 +99,8 @@ main.pg-ruby {
 	opacity: 1;
 	background: #bef;
 }
+.pg-or {
+	font-style: italic;
+	font-weight: 300;
+	padding: 0 1px;
+}

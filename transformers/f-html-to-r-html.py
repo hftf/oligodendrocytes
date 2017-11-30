@@ -46,13 +46,19 @@ SPACE_NONBSP = u'[ ]'
 SPACES_NONBSP= SPACE_NONBSP + '+'
 
 if use_paren_quote:
-	PG_BRACKET_S = u'[\(]“'
-	PG_BRACKET_E = u'”[\)]'
-	PG_MIDDLE    = u'[^”\)]+'
+	QUOTE_S = u'“'
+	QUOTE_E = u'”'
+	PG_BRACKET_S = u'[\(]' + QUOTE_S
+	PG_BRACKET_E = QUOTE_E + u'[\)]'
+	PG_MIDDLE    = u'[^\)]+'
 else:
+	QUOTE_S = u''
+	QUOTE_E = u''
 	PG_BRACKET_S = '[\(\[]'
 	PG_BRACKET_E = '[\)\]]'
 	PG_MIDDLE    = '[^\)\]]+'
+
+PG_OR = QUOTE_E + ur' or ' + QUOTE_S
 
 if use_tags:
 	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
@@ -74,7 +80,6 @@ else:
 
 	PGB = PG_SB + PG_M + PG_EB
 
-# TODO eventually do something with ' or ': Pho [Fo or Fuh]
 # TODO eventually boundary symbols like “”‘’ can be left out of rb
 # TODO remove </b> <b> at end
 
@@ -101,6 +106,7 @@ the “bergin</b> <span class="s1"><b>[BERG-in]</b></span> <b>boy” accidentall
 Luis Buñuel, <i>L’Âge d’Or</i> <span class="s2"><b>[lodge dor]</b></span>. For 10
 Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>L’Âge–d’Or</i> (“lodge dor”). For 10
+Luis Buñuel, <i>foo</i> (“foo” or “fu”). For 10
 space, grapheme 2 words: St. John (“SIN jun”)
 nbsp,  grapheme 2 words: St. John (“SIN jun”)
 nnbsp, grapheme 1 word:  St. John (“SIN-jun”)
@@ -112,6 +118,23 @@ contents_color = '\033[102;4m'*zz
 bracket_color  = '\033[103;4m'*zz
 space_color    = '\033[103;4m'*zz
 reset_color    = '\033[0m'*zz
+
+def word_count(b):
+	b_first_or_pos = re.search(PG_OR, b)
+	if b_first_or_pos:
+		b = b[:b_first_or_pos.start()]
+	space_count = 1 + len(re.findall(SPACES_NONBSP, b))
+	return space_count
+
+def rp_or(b):
+	return re.sub(PG_OR, ' <span class="pg-or">or</span> ', b)
+	# TODO eventually do something like:
+	# <ruby> <rb>...</rb> <rp>(</rp>
+	#  <rt><span>“</span> ... <span>”</span><span> or </span> ...
+	# or completely dispense with all rendered “”
+
+	# <rp> doesn't work because another <rb> is implied:
+	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
 def html_span_to_ruby(contents):
 	instances = re.finditer(PGB, contents)
@@ -132,12 +155,14 @@ def html_span_to_ruby(contents):
 		eb = match.group('eb')
 		es = match.group('es')
 
-		space_count = 1 + len(re.findall(SPACES_NONBSP, b))
+		b_word_count = word_count(b)
+
+		b = b_rp_or = rp_or(b)
 
 		last_newline_pos = prev.rfind('\n') + 1
 		prev1 = prev[:last_newline_pos]
 		prev2 = prev[last_newline_pos:]
-		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(space_count)
+		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(b_word_count)
 
 		# for caver stuff only
 		a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
