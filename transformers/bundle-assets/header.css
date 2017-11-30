@@ -63,8 +63,7 @@ nav ul li > a:hover {
 }
 nav ul li #location {
 	display: inline-block;
-	min-width: 2em;
-	text-align: right;
+	min-width: 2.5em;
 }
 nav ul li #wordparent {
 	min-width: 8em;

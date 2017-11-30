@@ -116,8 +116,8 @@ function setHandler() {
 			function(m) { m.removeAttribute('class'); }
 		);
 
-		w.textContent = 'none';
-		l.textContent = '';
+		w.textContent = '';
+		l.textContent = 'none';
 
 		try {
 			delete window.localStorage[page_key];
