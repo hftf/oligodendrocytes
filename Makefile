@@ -51,10 +51,10 @@ $(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
 
 
 %.xml: %.pxml
-	pxslcc -h $< > $@
+	pxslcc -h "$<" > "$@"
 
 %.xsl: %.pxsl transformers/xslt2.edf
-	pxslcc -hx --add=$(word 2,$^) $< > $@
+	pxslcc -hx --add=$(word 2,$^) "$<" > "$@"
 
 
 PACKETS=$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT))
@@ -74,10 +74,9 @@ reset:
 
 $(info Making: $(MAKECMDGOALS))
 
-# TODO fix $@, etc. to "$@"
 # (o.html stands for original.html)
 %.o.html: %.docx transformers/docx-to-o-html.sh
-	$(word 2,$^) $< > $@
+	$(word 2,$^) "$<" > "$@"
 
 ifeq ($(SOURCE_EXT),.md)
 NATIVE_DEP_EXT=.md
@@ -88,13 +87,13 @@ NATIVE_FLAGS:=-f html -t native
 endif
 
 %.native: %$(NATIVE_DEP_EXT)
-	pandoc -o $@ $< $(NATIVE_FLAGS)
+	pandoc -o "$@" "$<" $(NATIVE_FLAGS)
 
 %.md: %.o.html
-	pandoc -o $@ $< -f html -t markdown
+	pandoc -o "$@" "$<" -f html -t markdown
 
 %.md.nowrap: %.o.html
-	pandoc -o $@ $< -f html -t markdown --no-wrap
+	pandoc -o "$@" "$<" -f html -t markdown --no-wrap
 
 
 -include makefiles/f.mk
