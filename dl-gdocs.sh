@@ -22,16 +22,25 @@ DATE_DOCS_DIR="$DOCS_DIR"$DATE/ # packets/docs/yyyy-mm-dd/
 
 mkdir -p $TEMP_DOCS_DIR
 mkdir -p $DATE_DOCS_DIR
-rm -f $TEMP_DOCS_DIR*
 
-echo "fetching docs into $TEMP_DOCS_DIR"
-skicka download -download-google-apps-files "$GDOCS_FOLDER_NAME" "$TEMP_DOCS_DIR"
+if [ 1 ]; then
+    rm -f $TEMP_DOCS_DIR*
+
+    echo "fetching docs into $TEMP_DOCS_DIR"
+    skicka download -download-google-apps-files "$GDOCS_FOLDER_NAME" "$TEMP_DOCS_DIR"
+fi
 
 echo
 echo "changing filenames and copying into $DATE_DOCS_DIR"
 for DOC in $TEMP_DOCS_DIR*; do
     OLDNAME=${DOC##*\/}
-    NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START:$PACKET_FILENAME_TO_SLUG_LENGTH}
+
+    if [ "$PACKET_FILENAME_TO_SLUG_LENGTH" -eq "0" ]; then
+        NEWNAME=$OLDNAME
+    else
+        NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START:$PACKET_FILENAME_TO_SLUG_LENGTH}
+    fi
+
     if [ ! -z "$NEWNAME" ]; then
         NEWPATH=$DATE_DOCS_DIR$NEWNAME.docx
         printf "copying %-42s → \"$NEWNAME\"\n" "\"$OLDNAME\""
