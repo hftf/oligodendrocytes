@@ -59,6 +59,7 @@ else:
 	PG_MIDDLE    = '[^\)\]]+'
 
 PG_OR = QUOTE_E + ur' or ' + QUOTE_S
+PG_BRACKET_INSTRUCTION = '[\[]' + u'(?P<in>emphasize|read slowly)' + '[\]]\s'
 
 if use_tags:
 	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
@@ -107,6 +108,7 @@ Luis Buñuel, <i>L’Âge d’Or</i> <span class="s2"><b>[lodge dor]</b></span>.
 Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>L’Âge–d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>foo</i> (“foo” or “fu”). For 10
+foo [read slowly] bar [emphasize] baz
 space, grapheme 2 words: St. John (“SIN jun”)
 nbsp,  grapheme 2 words: St. John (“SIN jun”)
 nnbsp, grapheme 1 word:  St. John (“SIN-jun”)
@@ -126,6 +128,9 @@ def word_count(b):
 	space_count = 1 + len(re.findall(SPACES_NONBSP, b))
 	return space_count
 
+def bracket_instruction(b):
+	return re.sub(PG_BRACKET_INSTRUCTION, u'<small class="bracket-instruction">(\g<in>)</small> ', b)
+
 def rp_or(b):
 	return re.sub(PG_OR, ' <span class="pg-or">or</span> ', b)
 	# TODO eventually do something like:
@@ -137,6 +142,8 @@ def rp_or(b):
 	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
 def html_span_to_ruby(contents):
+	contents = bracket_instruction(contents)
+
 	instances = re.finditer(PGB, contents)
 	lastMatch = 0
 	formattedText = ''

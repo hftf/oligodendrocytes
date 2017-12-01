@@ -66,7 +66,7 @@ fs.readFile(
 		// todo .s1
 		.removeBdry('rt, rtc, rp')
 		// Don't count words that are part of a pronunciation guide
-		.addAvoid('span.s1, rt, rtc, rp')
+		.addAvoid('span.s1, .bracket-instruction, rt, rtc, rp')
 		.replace(findExcluded, replace);
 
 		process.stdout.write(fib.render());

@@ -5,6 +5,7 @@ ruby {
 	border-style: solid;
 	border-color: #bef;
 }
+.bracket-instruction,
 rt,
 rp {
 	font-family: 'Novel SansCond Pro', sans-serif;
@@ -30,6 +31,7 @@ main.pg-ruby {
 .pg-inline rb {
 	padding-right: 0.15em;
 }
+.bracket-instruction,
 .pg-inline rt,
 .pg-inline rp {
 	font-size: 90%;
