@@ -41,6 +41,8 @@ for DOC in $TEMP_DOCS_DIR*; do
         NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START:$PACKET_FILENAME_TO_SLUG_LENGTH}
     fi
 
+    NEWNAME=${NEWNAME// /_}
+
     if [ ! -z "$NEWNAME" ]; then
         NEWPATH=$DATE_DOCS_DIR$NEWNAME.docx
         printf "copying %-42s → \"$NEWNAME\"\n" "\"$OLDNAME\""
