@@ -19,6 +19,7 @@ from caverphone import caverphone
 
 import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
 filename_in = sys.argv[1]
 filename_out = filename_in.replace('.f.', '.r.')
@@ -101,7 +102,7 @@ Luis Buñuel, <i>L’Âge d’Or</i> <span class="s2"><b>[lodge dor]</b></span>.
 Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
 '''
 
-zz=0
+zz=1
 ruby_tag_color = '\033[107;4m'*zz
 contents_color = '\033[102;4m'*zz
 bracket_color  = '\033[103;4m'*zz
@@ -134,6 +135,7 @@ def html_span_to_ruby(contents):
 		prev2 = prev[last_newline_pos:]
 		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(space_count)
 
+		# for caver stuff only
 		a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
 		a_phonetic = caverphone(a_stripped)
 		b_stripped = unidecode(re.sub('<[^<]+?>', '', b))
@@ -142,23 +144,36 @@ def html_span_to_ruby(contents):
 		ratio = Levenshtein.ratio(a_phonetic, b_phonetic)
 		# sys.stderr.write( '%-20s\t%-12s\t%-36s\t%-12s\t%2d\t%0.2f\n' % (a_stripped, a_phonetic, b_stripped, b_phonetic, distance, ratio) )
 
+		ap = ' '*(33-len(a))
+		bp = ' '*(33-len(b))
+		ruby_tuples = [
+			(             '' , '<ruby>'       ),
+			( ruby_tag_color , '<rb>'         ),
+			( contents_color , a              ),
+			( ruby_tag_color , '</rb>'        ),
+			( reset_color+ap , ''             ),
+			( ruby_tag_color , '<rp>'         ),
+			(    space_color , ss             ),
+			(  bracket_color , sb             ),
+			( ruby_tag_color , '</rp><rt>'    ),
+			( contents_color , b              ),
+			( ruby_tag_color , '</rt><rp>'    ),
+			(  bracket_color , eb             ),
+			( ruby_tag_color , '</rp>'        ),
+			( reset_color+bp , '</ruby>'      ),
+			(  bracket_color , closing_tags   ),
+			(    space_color , es             ),
+			(    reset_color , ''             ),
+		]
+		ruby_str       = ''.join([txt     for clr,txt in ruby_tuples])
+		ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
+
 		formattedText += (
 			prev1 +
 			prev2a +
-			ruby_tag_color + '<ruby><rb>'   +
-			contents_color + a              +
-			ruby_tag_color + '</rb><rp>'    +
-			space_color    + ss             +
-			bracket_color  + sb             +
-			ruby_tag_color + '</rp><rt>'    +
-			contents_color + b              +
-			ruby_tag_color + '</rt><rp>'    +
-			bracket_color  + eb             +
-			ruby_tag_color + '</rp></ruby>' +
-			bracket_color  + closing_tags   +
-			space_color    + es             +
-			reset_color
+			ruby_str
 		)
+		sys.stderr.write(ruby_str_color + "\n")
 
 		lastMatch = end
 	formattedText += contents[lastMatch:]
