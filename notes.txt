@@ -1,0 +1,61 @@
+# PGs
+kegelstatt” [].
+nbsp
+
+# Project
+rename vars
+(1) actual compile.sh
+remove w and x shit
+support ie
+copy superpower from minkowski '.tu span b'
+move O, S, S2 into tournaments
+move *-packets
+
+# Interface
+(2) finish fibrio
+(4) add tests
+highlight active custom style (radio button)
+localstorage custom style
+rename :not():not() to .item
+hover jump button
+>>>>>>>>>>>>>>>>show # words in TUs
+more commands…
+(5) offline cache
+PG lineheight
+
+DONE >>>>>>>>>>>> add BAD TU value error
+DONE >>>>>>>>>>>> add packet ID to scoresheets and meta
+
+# Defer
+eventually annotation (shift+click?) for typos to revisit - but will have to be separate from buzz points (bonuses don't have them)
+answerline fancy segments
+>>>>>>>>  packet title in fixed header
+>>>>>>>>>>>> packet.php , not exposed w.html
+x >> More than 12 rooms in detailed stats meta page
+x >> Scores pivot more than 4 rows
+>> more than 5 players don't automate to 20 TUH
+>>> <nobr> hyphens
+
+# Misc?
+online scheduling
+calc swings
+>>>>>>>>>> packet sub ordering. need to include this in demo
+
+x if many rooms, extend category down in TU nrm, B nrm
+
+# instructions etc.
+add eddie instrucs later
+
+> interactive
+
+Diff different versions of sets to find examples of nonos
+sequence alignment
+
+# Checks
+id=bonuses exists
+
+
+Q: Where do you want me to send my love letters, job offerings, cheques, birthday gifts and whatnot?
+
+
+https://stackoverflow.com/questions/21718481/report-for-exceptions-from-google-analytics-analytics-js-exception-tracking
