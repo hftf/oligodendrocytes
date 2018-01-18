@@ -18,7 +18,7 @@ $packet_password = $packet['password'];
 if (isset($_POST['password'])) {
 	$password = $_POST['password'];
 
-	if ($password == $packet_password) {
+	if (strtolower($password) == strtolower($packet_password)) {
 		header('Location: ' . $packet_file);
 		// include($packet_file);
 	}
@@ -30,7 +30,7 @@ else {
 ?>
 <html>
 <body>
-<form method="post" action="">
+<form method="post" action="" autocomplete="off">
 <p>Please enter the password for <?php echo $packet_name; ?>.</p>
 <p>
 <input type="text" name="password" value="" />
