@@ -109,6 +109,8 @@ Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>L’Âge–d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>foo</i> (“foo” or “fu”). For 10
 foo [read slowly] bar [emphasize] baz
+is nicknamed “Kegelstatt” (“KAY-gull-shtott”). Haydn
+is nicknamed “Kegelstatt (“KAY-gull-shtott”).” Haydn
 space, grapheme 2 words: St. John (“SIN jun”)
 nbsp,  grapheme 2 words: St. John (“SIN jun”)
 nnbsp, grapheme 1 word:  St. John (“SIN-jun”)
