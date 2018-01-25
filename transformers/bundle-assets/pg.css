@@ -22,6 +22,9 @@ rp {
 .pg-ruby rt {
 	font-size: 80%;
 }
+main.pg-ruby {
+	line-height: 1.75;
+}
 
 /* inline */
 .pg-inline rb {
