@@ -3,6 +3,10 @@
 /* Word highlighting */
 m {
 	cursor: pointer;
+
+	/* Prevent breaking of hyphenated words (<nobr>) */
+	/* Obviously this only works for tossups as of now */
+	white-space: nowrap;
 }
 
 m:hover {
