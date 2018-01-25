@@ -1,6 +1,7 @@
 # PGs
 kegelstatt” [].
 nbsp
+switcher should use [“ or (“ style from document
 
 # Project
 rename vars
@@ -25,9 +26,13 @@ PG lineheight
 
 DONE >>>>>>>>>>>> add BAD TU value error
 DONE >>>>>>>>>>>> add packet ID to scoresheets and meta
+feature detection (localstorage, js fns) - sorry your browser is too out of date
+NO BLOCKING OF ANALYTICS
+<link rel="canonical" href="..." />
 
 # Defer
 eventually annotation (shift+click?) for typos to revisit - but will have to be separate from buzz points (bonuses don't have them)
+  https://web.hypothes.is/faq/
 answerline fancy segments
 >>>>>>>>  packet title in fixed header
 >>>>>>>>>>>> packet.php , not exposed w.html
@@ -35,16 +40,53 @@ x >> More than 12 rooms in detailed stats meta page
 x >> Scores pivot more than 4 rows
 >> more than 5 players don't automate to 20 TUH
 >>> <nobr> hyphens
+	can't hyphens none for bonuses
+answers.sh : nbsp to sp
+
+open-data/annotated-packets p[class], s.s1 -> u
+
+
+# scoresheet
+x >>>>>>>>>>>>>>>>>>>>>> NO Bonus 21 when tiebreaker
+x >>>> bounceback column M, notes column N
+x >>>>>>> no error 2 buzz points - detect at end
+x skinnier
+x swap pos of notes and bzpts
+x fix bad buzz point error
+x TU data from cols E-G not A-C
+x make it cut paste Proof : DG column - #Ref use OFFSET? no. Use INDEX?
+x -> aseem suggests making the error obvious
+x Schedule error caused by #REF different from other errors
+x maybe allow editing on packet number?
+x concat list of errors
+x maybe sort the 2 bzpts
+x move cats and authors in data spreadsheet
+x detailed stats: unhide 15 stuff (Teams-cats, Players, pivots)
+x add vulch
+
+script : update detailed stats formula ={ } if # rooms change
+detailed stats: unhide 15 stuff (Teams-cats, Players, pivots)
+add vulch
 
 # Misc?
 online scheduling
 calc swings
 >>>>>>>>>> packet sub ordering. need to include this in demo
 
+x new spreadsheets for EFT sites
+x get Wao, nats proofreading fixes posted
 x if many rooms, extend category down in TU nrm, B nrm
 
 # instructions etc.
+x rename mod scoresheets - keep prefix Room n
+x no dual author WX/YZ
+x accidental conferring
+x (accidental buzz) (conferring) (no answer) (incorrect pronunciation) ", then" for prompt ";" for two negs-> not anymore
+x no profanity
+protested correct answer by other team
 add eddie instrucs later
+condition: avoid pseudonyms. quizbowl should be a professional activity. if you must, (both player/team) must be in quotes
+no extra blank lines to do page breaks
 
 > interactive
 
@@ -53,9 +95,24 @@ sequence alignment
 
 # Checks
 id=bonuses exists
-
-
-Q: Where do you want me to send my love letters, job offerings, cheques, birthday gifts and whatnot?
+bold space between words, between word and PG
 
 
 https://stackoverflow.com/questions/21718481/report-for-exceptions-from-google-analytics-analytics-js-exception-tracking
+
+http://www.cs.cmu.edu/~rcm/papers/proposal/proposal.html
+Lightweight Structured Text Processing
+
+https://github.com/textlint/textlint
+https://github.com/GitbookIO/rousseau
+https://github.com/btford/write-good
+https://github.com/hoodiehq/hoodie
+https://github.com/diasks2/pragmatic_segmenter
+
+https://github.com/thoas/django-sluggable
+
+# client side encryption
+https://github.com/robinmoisson/staticrypt
+
+https://github.com/standard/standard#is-there-an-automatic-formatter
+
