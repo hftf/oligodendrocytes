@@ -8,10 +8,10 @@ PREFIX="$@"
 # TODO one-click fixes
 
 NONOS1="or ten point| each, [^BPn]|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
-NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |foremention|accept either"
-NONOS3="\.[A-Z]|\s[A-Z]{,3}\.\s[A-Z]|[0-9]-[0-9]|\. [a-z]|([^,] f|[^.!*\"”] F)or 10 points| points:|for 10 points each:|10 point[^s]"
+NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |foremention|accept either|accept also|by asking"
+NONOS3="\.[A-Z]|\s[A-Z]{,3}\.\s[A-Z]|[0-9]-[0-9]|\. [a-z]|([^,] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]"
 NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|[^0-9][.!?] [0-9]|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^( *]“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”| |\s\s|'|\"|\.\*\* \(|\\[^*\n$]|[^!.] | $|  |  "
+NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^( *]“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|'|\"|\.\*\* \(|\\[^*\n$]|[^!.] | $|  |  "
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5"
 
 OKAYS="\S[[(]|[])]\S|\([^\][^*]|[^*]\*th[ie]s| each\."
@@ -28,6 +28,8 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 #|[A-Z]\w+-[A-Z][a-z]|\([Tac-z]|[^.]”?\)$|[aA][wW][-”]|[!?.]” [a-z]|reasonable|clear[ -]knowledge|synonym|underlined|possess|minus|s’\s|
 # NONOS4:teenth, tieth -> ~~[ -]century
 # power that doesn't end at (*)
+# ANSWER: ([Tt]he|[Aa])\b
+# ”\w
 
 # extremely naive: '\s[\(\[](?! ... )[^\)\]]+[\)\]]'
 # keep: [this author] [his namesake unit] [here] [these things] [this]
@@ -93,6 +95,9 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # et. al (etc.)
 # WWI
 # points each,
+
+# regexes for fixing straight quotes to smart quotes automatically http://smartquotesjs.com/
+# regexes for moving punctuation inside annotation https://github.com/jgm/pandoc-citeproc/issues/256
 
 
 #echo
