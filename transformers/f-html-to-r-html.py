@@ -26,11 +26,11 @@ filename_out = filename_in.replace('.f.', '.r.')
 with io.open(filename_in, 'r', encoding='utf-8') as file_in:
 	contents = file_in.read()
 
-if 0:
+if 1:
 	# default
 	use_tags = False
 	use_paren_quote = True
-if 1:
+if 0:
 	# eft
 	use_tags = True
 	use_paren_quote = False

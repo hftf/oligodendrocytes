@@ -76,7 +76,7 @@ class LastNParser(HTMLParser):
 
 		return (done, stack[-1][0])
 
-if 0:
+if 1 and __name__ == '__main__':
 	zz=1
 	colorCmd = '\033[107;4m'*zz
 	resetCmd = '\033[0m'*zz
