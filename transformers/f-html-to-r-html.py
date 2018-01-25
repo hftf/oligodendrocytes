@@ -101,6 +101,9 @@ the “bergin</b> <span class="s1"><b>[BERG-in]</b></span> <b>boy” accidentall
 Luis Buñuel, <i>L’Âge d’Or</i> <span class="s2"><b>[lodge dor]</b></span>. For 10
 Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10
 Luis Buñuel, <i>L’Âge–d’Or</i> (“lodge dor”). For 10
+space, grapheme 2 words: St. John (“SIN jun”)
+nbsp,  grapheme 2 words: St. John (“SIN jun”)
+nnbsp, grapheme 1 word:  St. John (“SIN-jun”)
 '''
 
 zz=1

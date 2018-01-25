@@ -4,7 +4,13 @@
 from HTMLParser import HTMLParser
 import re
 
-# TODO not sure if we should treat nbsp as same word, just like we do inside the PG
+# Character 	Treatment inside PG 	Treatment outside PG
+#           	(SPACES_NONBSP)     	(SPACES, below)
+
+# SPACE ( ) 	separate word       	separate word
+# NDASH (–) 	same word           	separate word
+# NBSP  ( ) 	same word           	separate word, kept together visually
+# NNBSP ( ) 	same word           	same word,     kept together visually
 SPACES = u'[  –]+'
 
 class UnbalancedError(Exception):
