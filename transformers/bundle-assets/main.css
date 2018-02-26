@@ -9,6 +9,7 @@ body {
 	font-family: 'Novel Sans Pro', sans-serif;
 	font-size: 12pt;
 	-webkit-font-smoothing: subpixel-antialiased;
+	text-decoration-skip-ink: none;
 }
 
 /* Space between paragraphs */
