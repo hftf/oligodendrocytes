@@ -138,6 +138,10 @@ function selectorLastM(selectF) {
 			function (b) { return Array.from(b.querySelectorAll('m')).pop(); }
 		);
 		lastM = lastM.filter(function(x) { return x; }).pop();
+		if (!lastM) {
+			console.warn(p);
+			return '';
+		}
 		return lastM.getAttribute('v');
 	});
 }
