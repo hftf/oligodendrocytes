@@ -35,6 +35,11 @@ echo "changing filenames and copying into $DATE_DOCS_DIR"
 for DOC in $TEMP_DOCS_DIR*; do
     OLDNAME=${DOC##*\/}
 
+    if [ "${OLDNAME: -5}" == ".docx" ]; then
+        echo "skipping \"$OLDNAME\": probably an imported Word doc, not a native Google Doc"
+        continue
+    fi
+
     if [ "$PACKET_FILENAME_TO_SLUG_LENGTH" -eq "0" ]; then
         NEWNAME=$OLDNAME
     else
