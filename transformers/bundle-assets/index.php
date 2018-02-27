@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html>
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-8654955-5"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-8654955-5');
+</script>
+
+<title>List of packets</title>
+</head>
 <body>
 <p>Moderators must keep URLs and passwords a secret.<br />
 Do not share them with any player, even after the tournament!</p>
