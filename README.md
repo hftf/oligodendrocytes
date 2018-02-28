@@ -24,8 +24,8 @@ Will likely be superseded by a script (see `compile.sh`)
   * <code>tournaments/_name_/defs.mk</code>
   * <code>tournaments/_name_/metadata.xsl</code>
   * <code>tournaments/metadata.xsl</code>
-2. Run `make reset` to download the packets from Google Docs.
+2. Run `make reset` to download the packets from Google Docs (requires `skicka`).
   * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
-3. Run `make pdfs`.
+3. Run `make htmls` to generate the web interface for each packet.
   * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
-    * `html`,  `f.html`, `md`, `md.nowrap`, `qbml`, `tex`, `tossup.answers`, `bonus.answers`, etc.
+    * `md`, `md.nowrap`, `txt`, etc.
