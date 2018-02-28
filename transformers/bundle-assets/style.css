@@ -72,19 +72,24 @@ m.toggle {
 /* RUBY */
 
 ruby {
-	ruby-align: space-around;
-	ruby-overhang: auto; /* not supported */
 	border-bottom: 3px solid #bef;
 }
-
-rt, rp {
-	font-size: 80%;
+rt,
+rp {
+	font-family: 'Novel SansCond Pro', sans-serif;
+	font-size: 100%;
 	font-weight: normal;
 	font-style: normal;
-	font-family: 'Novel SansCond Pro', sans-serif;
 	color: #58c;
 }
 
+.pg-ruby ruby {
+	ruby-align: space-around;
+	ruby-overhang: auto; /* not supported */
+}
+.pg-ruby rt {
+	font-size: 80%;
+}
 
 /* SCROLL */
 
