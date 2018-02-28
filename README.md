@@ -29,3 +29,7 @@ Will likely be superseded by a script (see `compile.sh`)
 3. Run `make htmls` to generate the web interface for each packet.
   * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
     * `md`, `md.nowrap`, `txt`, etc.
+4. [TODO] Run `make answers` to extract the question metadata from the packets.
+  * The metadata can then be inserted into the meta spreadsheet.
+5. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
+6. [TODO] Run `make upload` to upload a bundle to a web server.
