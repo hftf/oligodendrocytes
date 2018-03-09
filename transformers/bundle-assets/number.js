@@ -197,10 +197,17 @@ function selectorLastM(selectF) {
 }
 
 function showPrompt() {
+	var setHasPowers = true, tab;
+
 	// :scope not supported in IE, but this code doesn't matter for moderators
 	var pw = selectorLastM(function(p) { return p.querySelectorAll(':scope > b, :scope > strong'); });
 	var w  = selectorLastM(function(p) { return [p]; });
-	var tab = pw.map(function(v, i) { return v + '\t' + w[i]; }).join('\n');
+
+	if (setHasPowers) {
+		tab = pw.map(function(v, i) { return v + '\t' + w[i]; }).join('\n');
+	} else {
+		tab = w.map(function(v, i) { return v; }).join('\n');
+	}
 	window.prompt('', tab);
 }
 
