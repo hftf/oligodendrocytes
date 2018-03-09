@@ -198,7 +198,7 @@ function selectorLastM(selectF) {
 
 function showPrompt() {
 	// :scope not supported in IE, but this code doesn't matter for moderators
-	var pw = selectorLastM(function(p) { return p.querySelectorAll(':scope > b'); });
+	var pw = selectorLastM(function(p) { return p.querySelectorAll(':scope > b, :scope > strong'); });
 	var w  = selectorLastM(function(p) { return [p]; });
 	var tab = pw.map(function(v, i) { return v + '\t' + w[i]; }).join('\n');
 	window.prompt('', tab);
