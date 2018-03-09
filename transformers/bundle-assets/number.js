@@ -40,6 +40,25 @@ function setLocalStorage() {
 	try {
 		window.localStorage[page_key] = JSON.stringify(all_marks);
 	} catch (e) {}
+	showStatus();
+}
+function showStatus() {
+	var all_marks;
+	try {
+		all_marks = JSON.parse(window.localStorage[page_key]);
+	} catch (e) {
+		all_marks = [];
+	}
+
+	var numBuzzes = all_marks.reduce(function(acc, el) { return acc + el.length; }, 0);
+	var numTUWithBuzzes = all_marks.reduce(function(acc, el) { return acc + (el.length > 0); }, 0);
+	var message = numBuzzes + ' buzz' +
+		(numBuzzes == 1 ? ' has' : 'es on ' + numTUWithBuzzes + ' tossup' + (numTUWithBuzzes == 1 ? '' : 's') + ' have') +
+		' been stored in your browser’s localStorage';
+	
+	var s = document.getElementById('status');
+	s.textContent = numBuzzes + ' stored';
+	s.setAttribute('title', message);
 }
 function getFromLocalStorage() {
 	try {
@@ -56,6 +75,7 @@ function getFromLocalStorage() {
 			});
 		});
 	} catch (e) {}
+	showStatus();
 }
 
 function getPs() {
@@ -70,6 +90,10 @@ function setHandler() {
 
 	function toggleM(m) {
 		var p = m.closest('p.tu');
+
+		// TODO check p.marked instead of class (word may have multiple parts):
+		// <i><m v="101" class="toggle">n</m></i><m v="101">-plus-one</m>
+		// right now it's possible to click the same word twice
 
 		if (m.className === 'toggle') {
 			m.removeAttribute('class');
@@ -123,6 +147,7 @@ function setHandler() {
 			delete window.localStorage[page_key];
 		} catch (e) {}
 
+		showStatus();
 		e.preventDefault();
 	}
 

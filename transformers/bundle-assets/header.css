@@ -68,6 +68,9 @@ nav ul li #location {
 nav ul li #wordparent {
 	min-width: 8em;
 }
+nav ul li #status {
+	min-width: 5em;
+}
 nav ul li .text:not(:empty) {
 	/*background: rgba(255, 255, 255, 0.6);
 	border-radius: 2px;
