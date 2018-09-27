@@ -60,7 +60,7 @@ else:
 	PG_MIDDLE    = '[^\)\]]+'
 
 PG_OR = QUOTE_E + ur' or ' + QUOTE_S
-PG_BRACKET_INSTRUCTION = '[\[]' + u'(?P<in>emphasize|read slowly)' + '[\]]\s'
+PG_BRACKET_INSTRUCTION = '[\[\(]' + u'(?P<in>emphasize[^\]\)]*|pause|read slowly[^\]\)]*)' + '[\]\)]'
 
 if use_tags:
 	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
@@ -73,6 +73,8 @@ if use_tags:
 
 	PGB = PG_SB + PG_M + PG_EB
 
+	PG_BRACKET_INSTRUCTION = PG_TAG_S + EXTRA_TAGS + PG_BRACKET_INSTRUCTION + EXTRA_TAGS + PG_TAG_E + '\s'
+
 else:
 	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
 	         '(?P<sb>' + PG_BRACKET_S + ')'
@@ -81,6 +83,9 @@ else:
 	         '(?P<es>' + SPACEM       + ')'
 
 	PGB = PG_SB + PG_M + PG_EB
+
+	PG_BRACKET_INSTRUCTION = PG_BRACKET_INSTRUCTION + '\s'
+
 
 # TODO eventually boundary symbols like “”‘’ can be left out of rb
 # TODO remove </b> <b> at end
