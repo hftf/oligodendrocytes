@@ -1,4 +1,3 @@
-export LC_ALL=C
 PREFIX="$@"
 
 # TODO Remove hardcoding, remove [^stuff]
@@ -9,13 +8,14 @@ PREFIX="$@"
 
 NONOS1="or ten point| each, [^BPn]|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
 NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |foremention|accept either|accept also|by asking"
-NONOS3="\.[A-Z]|\s[A-Z]{,3}\.\s[A-Z]|[0-9]-[0-9]|\. [a-z]|([^,] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]"
+NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]"
 NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|[^0-9][.!?] [0-9]|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^( *]“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|'|\"|\.\*\* \(|\\[^*\n$]|[^!.] | $|  |  "
-NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5"
+NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|'|\"|\.\*\* \(|[\.,] \*\*\(|\\[^*\n$]| $|  |  "
+NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*"
+NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
 
-OKAYS="\S[[(]|[])]\S|\([^\][^*]|[^*]\*th[ie]s| each\."
-OKAYS2="\[[A-Z]|-\s|\s-|[^0-9  ]/|/[^0-9  ]"
+OKAYS="\S[[(]|[])]\S|\([^\][^*]| each\.|[^.!?”] "
+OKAYS2="\[[A-Z]|-\s|\s-|[^0-9  ]/|/[^0-9  ]|(^|[^*])\*th[ie]s"
 
 grep --color=always -EHn "$NONOS" $PREFIX*.md
 
