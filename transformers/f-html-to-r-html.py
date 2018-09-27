@@ -26,6 +26,7 @@ filename_out = filename_in.replace('.f.', '.r.')
 
 with io.open(filename_in, 'r', encoding='utf-8') as file_in:
 	contents = file_in.read()
+	sys.stderr.write('\n\n' + filename_in + '\n\n')
 
 if 1:
 	# default
@@ -190,23 +191,25 @@ def html_span_to_ruby(contents):
 		ratio = Levenshtein.ratio(a_phonetic, b_phonetic)
 		# sys.stderr.write( '%-20s\t%-12s\t%-36s\t%-12s\t%2d\t%0.2f\n' % (a_stripped, a_phonetic, b_stripped, b_phonetic, distance, ratio) )
 
-		ap = ' '*(33-len(a))
-		bp = ' '*(33-len(b))
+		ap = ' '*(41-len(a))
+		bp = ' '*(41-len(b))
+		def h(a):
+			return a
 		ruby_tuples = [
-			(             '' , '<ruby>'       ),
-			( ruby_tag_color , '<rb>'         ),
+			(             '' , h('<ruby>')       ),
+			( ruby_tag_color , h('<rb>')         ),
 			( contents_color , a              ),
-			( ruby_tag_color , '</rb>'        ),
+			( ruby_tag_color , h('</rb>')        ),
 			( reset_color+ap , ''             ),
-			( ruby_tag_color , '<rp>'         ),
+			( ruby_tag_color , h('<rp>')         ),
 			(    space_color , ss             ),
 			(  bracket_color , sb             ),
-			( ruby_tag_color , '</rp><rt>'    ),
+			( ruby_tag_color , h('</rp><rt>')    ),
 			( contents_color , b              ),
-			( ruby_tag_color , '</rt><rp>'    ),
+			( ruby_tag_color , h('</rt><rp>')    ),
 			(  bracket_color , eb             ),
-			( ruby_tag_color , '</rp>'        ),
-			( reset_color+bp , '</ruby>'      ),
+			( ruby_tag_color , h('</rp>')        ),
+			( reset_color+bp , h('</ruby>')      ),
 			(  bracket_color , closing_tags   ),
 			(    space_color , es             ),
 			(    reset_color , ''             ),
