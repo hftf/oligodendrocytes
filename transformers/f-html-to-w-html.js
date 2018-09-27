@@ -31,6 +31,22 @@ function findExclude(regexFind, regexExclude) {
 	);
 }
 
+function decodeEntities(result) {
+	if (typeof result === 'string') {
+		result = result.replace(/&#x([0-9a-f]{1,6});/ig, function (entity, code) {
+			code = parseInt(code, 16);
+
+			// don't unescape ascii characters, assuming that all ascii characters
+			// are encoded for a good reason
+			if (code < 0x80)
+				return entity;
+
+			return String.fromCodePoint(code);
+	    })
+	}
+
+	return result;
+}
 
 fs.readFile(
 	url,
@@ -69,6 +85,6 @@ fs.readFile(
 		.addAvoid('span.s1, .bracket-instruction, rt, rtc, rp')
 		.replace(findExcluded, replace);
 
-		process.stdout.write(fib.render());
+		process.stdout.write(decodeEntities(fib.render()));
 	}
 );
