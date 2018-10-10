@@ -4,13 +4,25 @@
 from HTMLParser import HTMLParser
 import re
 
-# Character 	Treatment inside PG 	Treatment outside PG
-#           	(SPACES_NONBSP)     	(SPACES, below)
+# Character 	Treatment outside PG (grapheme)          	Treatment inside PG (phonetic)
+#           	(SPACES, below)                         	(SPACES_NONBSP)
 
-# SPACE ( ) 	separate word       	separate word
-# NDASH (–) 	same word           	separate word
-# NBSP  ( ) 	same word           	separate word, kept together visually
-# NNBSP ( ) 	same word           	same word,     kept together visually
+# SPACE ( ) 	separate word                           	separate word
+# NDASH (–) 	separate word                           	same word
+# NBSP  ( ) 	separate word, kept together visually   	same word
+# NNBSP ( ) 	same word,     kept together visually   	same word
+
+# This means that if you want to extract PGs, just counting the number of SPACEs in each
+# is insufficient. SPACE, NDASH, and NBSP are used as word separators in running text.
+
+# Examples:
+
+# SPACE in grapheme (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”)
+# NBSP  in grapheme (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”)
+# NNBSP in grapheme (1 word) ,  HYPH  in phonetic (1 word):  	 St. John (“SIN-jun”)
+# NDASH in grapheme (2 words),  SPACE in phonetic (2 words): 	 Foo–Barr (“foo bar”)
+# “I”   as grapheme (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”)
+
 SPACES = u'[  –]+'
 
 class UnbalancedError(Exception):
@@ -38,7 +50,8 @@ class LastNParser(HTMLParser):
 
 	def last_n_words(self, n):
 		(x, y) = self.start_pos_of_nth_last_word(n)
-		return (self.contents[:x], self.contents[x:y], self.contents[y:])
+		last_n_words = (self.contents[:x], self.contents[x:y], self.contents[y:])
+		return last_n_words
 
 	def start_pos_of_nth_last_word(self, n):
 		ls = self.ls
@@ -90,10 +103,17 @@ if 1 and __name__ == '__main__':
 	# parser = LastNParser('One morning, when <i>Gregor Samsa</i>')
 	test = u'Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10'
 	test = u'power after overcoming Xiàng Yǔ’s</b> <span class="s2"><b>[shyong yoo’s]</b></span> <b>state of (*)</b> Chu.'
-	parser = LastNParser(test)
-	for i in range(10):
-		x,y,z = parser.last_n_words(i)
-		print
-		print i, colorCmd + x + resetCmd
-		print i, ' '*len(x) + colorCmd + y + resetCmd
-		print i, ' '*len(x+y) + colorCmd + z + resetCmd
+	tests = [
+		u'-1 0 1</i> 2</b>',
+		u'-1 0 1</b> 2',
+		u'-1 0</b> 1 2',
+		u'-1 0 <b>1 2',
+	]
+	for test in tests:
+		parser = LastNParser(test)
+		for i in range(3):
+			x,y,z = parser.last_n_words(i)
+			print
+			print i, colorCmd + x + resetCmd
+			print i, ' '*len(x) + colorCmd + y + resetCmd
+			print i, ' '*len(x+y) + colorCmd + z + resetCmd
