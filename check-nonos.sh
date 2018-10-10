@@ -1,4 +1,5 @@
 PREFIX="$@"
+GREP_COLOR='1;4;31;103'
 
 # TODO Remove hardcoding, remove [^stuff]
 # TODO separate file with list of regexes with description, example, priority, category
@@ -7,11 +8,11 @@ PREFIX="$@"
 # TODO one-click fixes
 
 NONOS1="or ten point| each, [^BPn]|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
-NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |foremention|accept either|accept also|by asking"
-NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]"
+NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |foremention|accept either|accept also|by asking|by saying|some questions|[\[ ]Edited|prompt or"
+NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]|points each,\s*$"
 NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|[^0-9][.!?] [0-9]|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’| ”|’\.|[^!]’,|”\.|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|'|\"|\.\*\* \(|[\.,] \*\*\(|\\[^*\n$]| $|  |  "
-NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*"
+NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’[^0-9]| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|'|\"|\.\*\* \(|[\.,] \*\*\(|\\[^*\n$]|\\[[APOD]| $|  |  |\s\*+$|\*\* \*\*"
+NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w+\."
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
 
 OKAYS="\S[[(]|[])]\S|\([^\][^*]| each\.|[^.!?”] "
