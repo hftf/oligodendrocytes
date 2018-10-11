@@ -154,6 +154,7 @@ function setHandler() {
 	function copyBuzzPoints(e) {
 		var line_ending = (navigator.platform.indexOf('Win') !== -1) ? '\r\n' : '\n';
 		var string = mapTU(function(p) {
+			// need null check here
 			var marked_vs = p.marked.map(function(m) { return m.getAttribute('v'); });
 			// sort by index (instead of by time)
 			marked_vs.sort(function(v1, v2) {
@@ -164,7 +165,7 @@ function setHandler() {
 			return marked_vs.join('\t');
 		}).join(line_ending);
 		clipboard.writeText(string);
-		window.alert('The buzz points have been copied! Go to the scoresheet to paste them.');
+		window.alert('The buzz points have been copied! Go to the right side of the scoresheet to paste them.');
 		e.preventDefault();
 	}
 
