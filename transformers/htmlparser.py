@@ -4,7 +4,7 @@
 from HTMLParser import HTMLParser
 import re
 
-# Character 	Treatment outside PG (grapheme)          	Treatment inside PG (phonetic)
+# Character 	Treatment outside PG (orthographic)     	Treatment inside PG (phonetic)
 #           	(SPACES, below)                         	(SPACES_NONBSP)
 
 # SPACE ( ) 	separate word                           	separate word
@@ -17,11 +17,11 @@ import re
 
 # Examples:
 
-# SPACE in grapheme (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”)
-# NBSP  in grapheme (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”)
-# NNBSP in grapheme (1 word) ,  HYPH  in phonetic (1 word):  	 St. John (“SIN-jun”)
-# NDASH in grapheme (2 words),  SPACE in phonetic (2 words): 	 Foo–Barr (“foo bar”)
-# “I”   as grapheme (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”)
+# SPACE in orthographic (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”)
+# NBSP  in orthographic (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”), Eamon de Valera (“EH-min deh vuh-LEH-ruh”)
+# NNBSP in orthographic (1 word) ,  HYPH  in phonetic (1 word):  	 St. John (“SIN-jun”), Beaux Arts (“boh-ZARR”)
+# NDASH in orthographic (2 words),  SPACE in phonetic (2 words): 	 Foo–Barr (“foo bar”)
+# “I”   as orthographic (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”), Guigues IV (“GEEG the fourth”), Renaud-Barrault (“ruh-NO bah-RO”)
 
 SPACES = u'[  –]+'
 

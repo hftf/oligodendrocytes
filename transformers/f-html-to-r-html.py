@@ -120,6 +120,10 @@ is nicknamed “Kegelstatt (“KAY-gull-shtott”).” Haydn
 space, grapheme 2 words: St. John (“SIN jun”)
 nbsp,  grapheme 2 words: St. John (“SIN jun”)
 nnbsp, grapheme 1 word:  St. John (“SIN-jun”)
+The Professor (*)</b> One-Word (“two words”). This
+The Professor</b> (*) One-Word (“two words”). This
+The Professor a</b> c One-Word (“two words”). This
+solo <span class="s1"><b>(read slowly)</b></span> <span class="s2"></span>long
 '''
 
 zz=1
