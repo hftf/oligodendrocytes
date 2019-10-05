@@ -80,3 +80,13 @@ nav ul li .text:not(:empty) {
 nav ul li .pg-ruby rt {
 	font-size: 70%;
 }
+
+.blink {
+	background-color: rgba(199, 184, 160, 1);
+	animation: blink 1.2s infinite;
+}
+@keyframes blink {
+	0% { background-color: rgba(199, 184, 169, 0); }
+	50% { background-color: rgba(199, 184, 169, 1); }
+	100% { background-color: rgba(199, 184, 169, 0); }
+}

@@ -80,7 +80,10 @@ function getFromLocalStorage() {
 
 function getPs() {
 	// queue of toggled words
-	mapTU(function(p) { p.marked = []; });
+	mapTU(function(p, i) {
+		p.marked = [];
+		p.last = (i >= 19); // at least 20th TU (0-indexed)
+	});
 }
 
 function setHandler() {
@@ -88,9 +91,7 @@ function setHandler() {
 	var w = document.getElementById('word');
 	var l = document.getElementById('location');
 
-	function toggleM(m) {
-		var p = m.closest('p.tu');
-
+	function toggleM(m, p) {
 		// TODO check p.marked instead of class (word may have multiple parts):
 		// <i><m v="101" class="toggle">n</m></i><m v="101">-plus-one</m>
 		// right now it's possible to click the same word twice
@@ -119,9 +120,11 @@ function setHandler() {
 				w.textContent = m.textContent;
 				l.textContent = m.getAttribute('v');
 
-				toggleM(m);
+				var p = m.closest('p.tu');
+				toggleM(m, p);
 
 				setLocalStorage();
+				dirty(true + p.last);
 			}
 		}
 		e.stopPropagation();
@@ -129,6 +132,15 @@ function setHandler() {
 
 	document.getElementById('reset').addEventListener('click', clearAllBuzzes, false);
 	document.getElementById('copy').addEventListener('click', copyBuzzPoints, false);
+
+	window.addEventListener('beforeunload', function (event) {
+		if (window.dirty) {
+			document.getElementById('copy').className = 'blink';
+
+			event.preventDefault();
+			event.returnValue = '';
+		}
+	});
 
 	function clearAllBuzzes(e) {
 		var really = window.confirm('Are you sure you want to clear all buzzes?');
@@ -148,6 +160,7 @@ function setHandler() {
 		} catch (e) {}
 
 		showStatus();
+		dirty(false);
 		e.preventDefault();
 	}
 
@@ -166,7 +179,18 @@ function setHandler() {
 		}).join(line_ending);
 		clipboard.writeText(string);
 		window.alert('The buzz points have been copied! Go to the right side of the scoresheet to paste them.');
+		dirty(false);
 		e.preventDefault();
+	}
+
+	function dirty(newDirty) {
+		window.dirty = newDirty;
+		if (!newDirty) {
+			document.getElementById('copy').className = '';
+		}
+		else if (newDirty >= 2) {
+			document.getElementById('copy').className = 'blink';
+		}
 	}
 
 	arrayFrom(
