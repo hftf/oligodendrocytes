@@ -1,5 +1,5 @@
 .SUFFIXES:
-.PHONY: meta all formats
+.PHONY: meta all formats most
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html
 SHELL=bash
 
@@ -62,6 +62,8 @@ FORMATS=$(PACKETS:$(SOURCE_EXT)=.$(1))
 
 formats: $(call FORMATS,$(EXT))
 # usage: `make formats EXT=html`
+
+most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call FORMATS,f.html)
 
 
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
