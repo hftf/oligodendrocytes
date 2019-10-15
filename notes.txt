@@ -29,11 +29,30 @@ DONE >>>>>>>>>>>> add packet ID to scoresheets and meta
 feature detection (localstorage, js fns) - sorry your browser is too out of date
 NO BLOCKING OF ANALYTICS
 <link rel="canonical" href="..." />
+automatically record audio
+x maybe after tossup 20: alert if you navigate away but haven't exported yet
+firefox outline hover bug
 
 # Defer
-eventually annotation (shift+click?) for typos to revisit - but will have to be separate from buzz points (bonuses don't have them)
+eventually annotation (shift+click? - different mode, can't click both) for typos to revisit - but will have to be separate from buzz points (bonuses don't have them)
+  workaround: can temporarily hide annotations by clicking eye
   https://web.hypothes.is/faq/
+  idea: "Report issue with slide" https://github.com/puppetlabs/showoff
 answerline fancy segments
+	A
+	accept either name
+	or:
+		..., equivalents
+	accept, but do not reveal:
+	prompt on:
+	in place of "", accept:
+	until "" is read, accept:
+	after "" is read, accept:
+	do not accept:
+	by asking:
+	(Extra note.)
+Set name, packet name, UI version number, in fixed header
+Packet name in <title> tag
 >>>>>>>>  packet title in fixed header
 >>>>>>>>>>>> packet.php , not exposed w.html
 x >> More than 12 rooms in detailed stats meta page
@@ -64,6 +83,8 @@ x move cats and authors in data spreadsheet
 x detailed stats: unhide 15 stuff (Teams-cats, Players, pivots)
 x add vulch
 
+no bounceback for negged TB 21
+
 script : update detailed stats formula ={ } if # rooms change
 detailed stats: unhide 15 stuff (Teams-cats, Players, pivots)
 add vulch
@@ -76,6 +97,7 @@ calc swings
 x new spreadsheets for EFT sites
 x get Wao, nats proofreading fixes posted
 x if many rooms, extend category down in TU nrm, B nrm
+x regex escape metacharacters in Meta template, Pts column
 
 # instructions etc.
 x rename mod scoresheets - keep prefix Room n
@@ -90,8 +112,15 @@ no extra blank lines to do page breaks
 
 > interactive
 
+error handling in number.js -> null got into p.marked somehow
+
 Diff different versions of sets to find examples of nonos
 sequence alignment
+
+Automatic TTS: "Proof-listening"
+https://weston.ruter.net/2018/02/21/spoken-word-read-along-tts/
+Weston Ruter "Spoken Word" script
+https://github.com/westonruter/spoken-word
 
 # Checks
 id=bonuses exists
@@ -109,10 +138,16 @@ https://github.com/btford/write-good
 https://github.com/hoodiehq/hoodie
 https://github.com/diasks2/pragmatic_segmenter
 
+https://github.com/ianstormtaylor/slate
+good wysiwyg editor
+
 https://github.com/thoas/django-sluggable
 
 # client side encryption
 https://github.com/robinmoisson/staticrypt
 
 https://github.com/standard/standard#is-there-an-automatic-formatter
+automatically fix issues
 
+Question management:
+- diffstat of changes between questions, total diffstat between set editions
