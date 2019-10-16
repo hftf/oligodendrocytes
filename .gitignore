@@ -1,11 +1,13 @@
 node_modules/
 
-old/
-tournaments/
-
-*packets/
 O/
 S*/
+old*/
+tournaments/
+
+bundles/
+*packets/
+bundles*.zip
 *packets.zip
 .DS_Store
 
