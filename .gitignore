@@ -10,6 +10,7 @@ bundles/
 bundles*.zip
 *packets.zip
 .DS_Store
+experiments/
 
 *.xsl
 *.xml
