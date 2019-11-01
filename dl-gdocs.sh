@@ -25,7 +25,7 @@ mkdir -p $DATE_DOCS_DIR
 
 if [ 1 ]; then
     echo "clearing old docs in $PACKETS_DIR, $TEMP_DOCS_DIR, $DATE_DOCS_DIR"
-    rm -f $PACKETS_DIR*.docx $TEMP_DOCS_DIR* $DATE_DOCS_DIR*.docx
+    rm -rf $PACKETS_DIR*.docx $TEMP_DOCS_DIR* $DATE_DOCS_DIR*.docx
 
     echo "fetching docs into $TEMP_DOCS_DIR"
     skicka download -download-google-apps-files "$GDOCS_FOLDER_NAME" "$TEMP_DOCS_DIR"
