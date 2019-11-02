@@ -56,9 +56,11 @@ function showStatus() {
 		(numBuzzes == 1 ? ' has' : 'es on ' + numTUWithBuzzes + ' tossup' + (numTUWithBuzzes == 1 ? '' : 's') + ' have') +
 		' been stored in your browser’s localStorage';
 	
-	var s = document.getElementById('status');
-	s.textContent = numBuzzes + ' stored';
-	s.setAttribute('title', message);
+	try {
+		var s = document.getElementById('status');
+		s.textContent = numBuzzes + ' stored';
+		s.setAttribute('title', message);
+	} catch (e) {}
 }
 function getFromLocalStorage() {
 	try {
@@ -130,8 +132,10 @@ function setHandler() {
 		e.stopPropagation();
 	}
 
-	document.getElementById('reset').addEventListener('click', clearAllBuzzes, false);
-	document.getElementById('copy').addEventListener('click', copyBuzzPoints, false);
+	try {
+		document.getElementById('reset').addEventListener('click', clearAllBuzzes, false);
+		document.getElementById('copy').addEventListener('click', copyBuzzPoints, false);
+	} catch (e) {}
 
 	window.addEventListener('beforeunload', function (event) {
 		if (window.dirty) {
@@ -167,7 +171,7 @@ function setHandler() {
 	function copyBuzzPoints(e) {
 		var line_ending = (navigator.platform.indexOf('Win') !== -1) ? '\r\n' : '\n';
 		var string = mapTU(function(p) {
-			// need null check here
+			// TODO need null check here
 			var marked_vs = p.marked.map(function(m) { return m.getAttribute('v'); });
 			// sort by index (instead of by time)
 			marked_vs.sort(function(v1, v2) {
