@@ -5,18 +5,18 @@ Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Conve
 
 ---
 
-### Instructions
+## Instructions (how to)
 
 Will likely be superseded by a script (see `compile.sh`)
 
-#### Add a tournament
+### Add a tournament
 
 1. Create the folder <code>tournaments/_name_/</code>.
 2. Create the file <code>tournaments/_name_/settings.pxml</code>.
 3. Create the file <code>tournaments/_name_/order.txt</code>.
 4. Replace the contents of `tournaments/current.txt` with <code>_name_</code>.
 
-#### Build
+### Build the tournament
 
 1. Run `make meta` to generate these files:
   * <code>tournaments/_name_/settings.xml</code>
@@ -29,7 +29,13 @@ Will likely be superseded by a script (see `compile.sh`)
 3. Run `make htmls` to generate the web interface for each packet.
   * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
     * `md`, `md.nowrap`, `txt`, etc.
-4. [TODO] Run `make answers` to extract the question metadata from the packets.
-  * The metadata can then be inserted into the meta spreadsheet.
-5. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
-6. [TODO] Run `make upload` to upload a bundle to a web server.
+  * Or run in parallel: `make -j4 most; make formats EXT=r.html; make htmls`.
+4. [TODO] Run `make check` to check for problems.
+   If there are problems, revise and return to step 2.
+5. [TODO] Run `make answers` to extract the question metadata from the packets.
+	* In your browser, open each `.w.html` file with `?q` appended to the URL.
+  * Copy the word count metadata from the pop-up prompt.
+  * Paste both the question and word count metadata into the data spreadsheet.
+6. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
+7. [TODO] Run `make zips` to create the zips of the packets for use as a backup.
+8. [TODO] Run `make upload` to upload a bundle to a web server.
