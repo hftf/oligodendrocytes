@@ -33,10 +33,16 @@ Will likely be superseded by a script (see `compile.sh`)
    * Or run in parallel: `make -j4 most; make formats EXT=r.html; make htmls`.
 4. [TODO] Run `make check` to check for problems.
    If there are problems, revise and return to step 2.
-5. [TODO] Run `make answers` to extract the question metadata from the packets.
+
+### Deploy the tournament
+
+1. [TODO] Run `make answers` to extract the question metadata from the packets.
+   * Copy the question metadata from <code>tournaments/_name_/\*.answers</code>.
+   * Paste the question metadata into the data spreadsheet.
+2. [TODO] Run `make words` to extract the word count metadata from the packets.
    * In your browser, open each `.w.html` file with `?q` appended to the URL.
-   * Copy the word count metadata from the pop-up prompt.
-   * Paste both the question and word count metadata into the data spreadsheet.
-6. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
-7. [TODO] Run `make zips` to create the zips of the packets for use as a backup.
-8. [TODO] Run `make upload` to upload a bundle to a web server.
+   * Copy the word count metadata from the pop-up prompts and concatenate.
+   * Paste the word count metadata into the data spreadsheet.
+3. [TODO] Run `make zips` to create the zips of the packets for use as a backup.
+4. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
+5. [TODO] Run `make upload` to upload a bundle to a web server.
