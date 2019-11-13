@@ -9,6 +9,10 @@ Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Conve
 
 Will likely be superseded by a script (see `compile.sh`)
 
+### Install dependencies
+
+1. Install pandoc, pxslcc, saxon, skicka, and drive. See reqs.md for details.
+
 ### Add a tournament
 
 1. Create the folder <code>tournaments/_name_/</code>.

@@ -33,6 +33,12 @@ skicka ls
 # authorize in browser
 ```
 
+### drive
+
+```
+go get -u github.com/odeke-em/drive/cmd/drive
+```
+
 ### XeLaTeX
 [Download](https://tug.org/mactex/)
 
