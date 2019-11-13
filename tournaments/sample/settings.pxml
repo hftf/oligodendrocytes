@@ -1,5 +1,12 @@
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
+# Copy this file to your tournament folder.
+# Currently, the only settings used are:
+#   set/io/in/source-ext
+#   set/io/in/gdocs-folder-name
+#   set/io/in/packet-filename-to-slug/start
+#   set/io/in/packet-filename-to-slug/length
+
 ### Toggle comments to use xsl
 # set -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 set
@@ -22,12 +29,16 @@ set
     in
       order <<order.txt>>
 
+      # If not using Google Docs
       source-ext <<.md>>
 
       ### Uncomment to use Google Docs
+      # Path to the folder of packets in your Google Drive
       # gdocs-folder-name <<Quizbowl/Tournaments/Tournament name/Packets>>
       # source-ext <<.docx>>
 
+      # For slicing packet filenames (e.g. from "Packet 01" to "01")
+      # Set length to 0 to disable
       packet-filename-to-slug
         start <<0>>
         length <<2>>
