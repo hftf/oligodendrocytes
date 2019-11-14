@@ -36,8 +36,8 @@ Will likely be superseded by a script (see `compile.sh`)
 
 ### Deploy the tournament
 
-1. [TODO] Run `make answers` to extract the question metadata from the packets.
-   * Copy the question metadata from <code>tournaments/_name_/\*.answers</code>.
+1. Run `make answers` to extract the question metadata from the packets.
+   * Copy the question metadata from <code>tournaments/_name_/packets/\*.answers</code>.
    * Paste the question metadata into the data spreadsheet.
 2. [TODO] Run `make words` to extract the word count metadata from the packets.
    * In your browser, open each `.w.html` file with `?q` appended to the URL.

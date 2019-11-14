@@ -1,5 +1,6 @@
 .SUFFIXES:
-.PHONY: meta all formats most
+.PHONY: meta all formats most \
+	answers
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html
 SHELL=bash
 
@@ -54,8 +55,13 @@ formats: $(call FORMATS,$(EXT))
 most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call FORMATS,f.html)
 
 
+# TODO should these depend on any packet files, or it doesn't matter because phony?
+answers: transformers/answers.sh $(call FORMATS,md.nowrap)
+	$< $(PACKETS_DIR)
+
+
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
-# tossup.answers bonus.answers; basically all except doc
+# basically all except doc
 clean:
 	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md
 
