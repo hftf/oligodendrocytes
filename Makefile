@@ -21,7 +21,6 @@ endif
 CURR_DIR:=$(TOURNAMENTS_DIR)$(CURR_TOURNAMENT)/
 CURR_DIR_CACHE:=$(CURR_DIR)$(CACHE)
 PACKETS_DIR:=$(CURR_DIR)packets/
-METADATA_XSL=$(TOURNAMENTS_DIR)$(CACHE)metadata.xsl
 SETTINGS_XML=$(CURR_DIR)settings.xml
 $(info $(shell echo -e "\033[0;37;44m $(CURR_TOURNAMENT) \033[0m"))
 
@@ -30,24 +29,13 @@ ifneq ($(MAKECMDGOALS),clean-meta)
 -include $(CURR_DIR_CACHE)vars.mk
 endif
 
-META:=$(addprefix $(CURR_DIR_CACHE),vars.mk deps.mk metadata.xsl) $(METADATA_XSL)
+META:=$(addprefix $(CURR_DIR_CACHE),vars.mk)
 meta: $(META)
 clean-meta:
 	rm -vf $(META)
 
 $(CURR_DIR_CACHE)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
 	xsltproc -o $@ $^
-	echo "-include $(CURR_DIR_CACHE)deps.mk" >> $@
-
-$(CURR_DIR_CACHE)deps.mk: $(ORDER) mk-deps.awk $(CURR_DIR_CACHE)vars.mk
-	awk -f $(word 2,$^) $< > $@
-
-$(CURR_DIR_CACHE)metadata.xsl: $(SETTINGS_XML) transformers/settings-to-metadata.xsl
-	saxon -o:$@ $^
-
-$(METADATA_XSL): $(CURR_DIR_CACHE)metadata.xsl
-	mkdir -p $(dir $@)
-	cp $< $@
 
 
 %.xml: %.pxml
@@ -100,5 +88,3 @@ endif
 
 -include makefiles/f.mk
 -include makefiles/nlp-parser.mk
--include makefiles/x.mk
--include makefiles/qbml-tex.mk
