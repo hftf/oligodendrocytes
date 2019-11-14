@@ -3,8 +3,8 @@
 %.txt: %.docx transformers/docx-to-txt.sh
 	$(word 2,$^) "$<" > "$@"
 
-%.txt.unparsed: %.txt transformers/docx-to-txt-unparsed.sh
+%.txt.clean: %.txt transformers/txt-to-txt-clean.sh
 	$(word 2,$^) "$<" > "$@"
 
-%.txt.parsed: %.txt.unparsed
+%.txt.parsed: %.txt.clean
 	lexparser.sh "$<" > "$@"
