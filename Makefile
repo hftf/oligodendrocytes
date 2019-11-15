@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
-	answers
+	check answers
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html
 SHELL=bash
 
@@ -56,6 +56,9 @@ most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call
 
 
 # TODO should these depend on any packet files, or it doesn't matter because phony?
+check: check-nonos.sh $(call FORMATS,md)
+	./$< $(PACKETS_DIR)
+
 answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 	$< $(PACKETS_DIR)
 
