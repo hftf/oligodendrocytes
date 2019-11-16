@@ -29,8 +29,8 @@ set
     in
       order <<order.txt>>
 
-      # If not using Google Docs
-      source-ext <<.md>>
+      ### Uncomment if not using Google Docs
+      # source-ext <<.md>>
 
       ### Uncomment to use Google Docs
       # Path to the folder of packets in your Google Drive

@@ -59,6 +59,7 @@ most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call
 check: check-nonos.sh $(call FORMATS,md)
 	./$< $(PACKETS_DIR)
 
+# TODO split up with intermediate dependencies
 answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 	$< $(PACKETS_DIR)
 

@@ -26,7 +26,7 @@ filename_out = filename_in.replace('.f.', '.r.')
 
 with io.open(filename_in, 'r', encoding='utf-8') as file_in:
 	contents = file_in.read()
-	sys.stderr.write('\n\n' + filename_in + '\n\n')
+	#sys.stderr.write('\n\n' + filename_in + '\n\n')
 
 if 1:
 	# default
