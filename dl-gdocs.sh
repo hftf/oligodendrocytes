@@ -41,15 +41,16 @@ for DOC in $TEMP_DOCS_DIR*; do
         continue
     fi
 
-    if [ "$PACKET_FILENAME_TO_SLUG_START" -eq "0" ]; then
-        NEWNAME=$OLDNAME
-    else
+    # commented out 2020-03-05
+    #if [ "$PACKET_FILENAME_TO_SLUG_START" -eq "0" ]; then
+    #    NEWNAME=$OLDNAME
+    #else
         if [ "$PACKET_FILENAME_TO_SLUG_LENGTH" -eq "0" ]; then
             NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START}
         else
             NEWNAME=${OLDNAME:$PACKET_FILENAME_TO_SLUG_START:$PACKET_FILENAME_TO_SLUG_LENGTH}
         fi
-    fi
+    #fi
 
     NEWNAME=${NEWNAME// /_}
 
