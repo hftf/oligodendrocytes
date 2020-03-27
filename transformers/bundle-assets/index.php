@@ -73,7 +73,7 @@ Insert a <u>comment</u> for: Notifying me of anomalies, such as thrown out or mi
 <p>Annotations can be useful for alerting the editors, and other moderators around the world, about an issue in the packets.<br />
 If you would like to annotate the online packets, you will need a <a href="https://web.hypothes.is/">Hypothesis</a> account.</p>
 <ol>
-<li>Join the tournament’s private annotation group using the invitation link.</li>
+<li>Join the tournament’s private annotation group using the invitation link provided by the TD.</li>
 <li>Select the tournament’s private annotation group in the annotation sidebar. <em>Do not make any public annotations.</em></li>
 <li>After the tournament, you will be asked to delete your annotations.</li>
 </ol>
