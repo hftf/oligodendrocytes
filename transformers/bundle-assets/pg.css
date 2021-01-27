@@ -19,6 +19,7 @@ rp {
 .pg-ruby ruby {
 	ruby-align: space-around;
 	ruby-overhang: auto; /* not supported */
+	line-height: 2.25;
 }
 .pg-ruby rt {
 	font-size: 80%;
