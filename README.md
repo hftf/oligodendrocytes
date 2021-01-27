@@ -3,8 +3,6 @@ oligodendrocytes
 
 Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Convert Yesterday's Tournament, Etc. into Standard formats
 
----
-
 ## Instructions (how to)
 
 Will likely be superseded by a script (see `compile.sh`)
@@ -12,6 +10,7 @@ Will likely be superseded by a script (see `compile.sh`)
 ### Install dependencies
 
 1. Install pandoc, pxslcc, saxon, skicka, and drive. See reqs.md for details.
+qpdf, gnu coreutils? gsed brew install gnu-sed, ack, textutil (docx -> html, docx -> txt), python (unicodecsv, lxml, unidecode, slugify, python-levenshtein), node.js (fibrio: npm install)
 
 ### Add a tournament
 
@@ -44,5 +43,10 @@ Will likely be superseded by a script (see `compile.sh`)
    * Copy the word count metadata from the pop-up prompts and concatenate.
    * Paste the word count metadata into the data spreadsheet.
 3. [TODO] Run `make zips` to create the zips of the packets for use as a backup.
+   * for now, cd and zip
 4. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
+   * for now, csv passwords
+   * for now, cp assets, cp bundle
+   * fonts css not included
 5. [TODO] Run `make upload` to upload a bundle to a web server.
+   * for now, scp
