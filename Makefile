@@ -58,7 +58,7 @@ most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call
 # TODO should these depend on any packet files, or it doesn't matter because phony?
 check: check-nonos.sh $(call FORMATS,md)
 	./$< $(PACKETS_DIR)
-check2: check-nonos-2.sh
+check2: check-nonos-2.sh $(call FORMATS,f.html) $(call FORMATS,md.nowrap) $(call FORMATS,txt) answers
 	./$< $(PACKETS_DIR)
 
 # TODO split up with intermediate dependencies

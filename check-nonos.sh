@@ -7,25 +7,31 @@ GREP_COLOR='1;4;31;103'
 # TODO sort by packet, nono
 # TODO one-click fixes
 
-NONOS1="or ten point| each, [^BPn]|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
-NONOS2="ANSWER:\S|ANSWER[^:]|Answer:|ANWER|ASNWER|(?<!or )prompt on (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |before mention|until mention|foremention|accept either|accept also|by asking|by saying|with “|some questions|[\[ ]Edited|prompt or|, (prompt|accept| do not accept)| (alone|by itself|by themselves)\]"
-NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|10 point[^s]|points each,\s*$"
+NONOS1="or ten point| each, [^BPn]| each;|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
+NONOS2="ANSWER:\S|ANSWER[^:]|[Aa]nswer:|ANWER|ASNWER|accpet|prmopt|propmt|(?<!or )(prompt on|do not accept) (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |before it is read|before mention|until mention|foremention|accept either|accept also|some questions|[\[ ]Edited|accept of|prompt or|, (prompt|accept| do not accept)| (alone|by itself|by themselves)\]|prompt on just|either order|(either|any) (underlined ?)(name|part|portion)|accept answer|in place of (?!“)"
+NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|For 10 points each[^:]|10 point[^s]|points each,\s*$|.\[10\]|10 points ?(-|–|—)"
 NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|[^0-9][.!?] [0-9]|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’[^0-9]| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|·|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\[^*\n$]|\\[[APOD]|	| $| \(|  |  |\s\*+$|\*\* \*\*"
-NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w+\.| \\\\<"
+NONOS5="[^0-9]--|––|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’[^0-9]| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\[^*\n$<>]|\\[[APOD]|	| $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*"
+NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.| \\\\<"
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
+
+NONOS7="TB\d?\.|[Tt]iebreaker|[<[(]Edit|by asking|by saying|with “(?!\w+[.,!?]?”)|(by asking|with), “|(by asking|with),? “[A-Z](?!\w+[.,!?]?”)"
+NONOS8="possess(?!ion)|lead-?in\b|x-ray|‘[Ee]m\b"
+NONOS9="\] \([a-z]|\((emphasize|pause|read slowly)|[[(]emphasi(?!ze\b)|\(“the-|(ooh|eeh)\b"
+NONOS="$NONOS|$NONOS7|$NONOS8|$NONOS9"
 
 OKAYS="\S[[(]|[])]\S|\([^\][^*]| each\.|[^.!?”] "
 OKAYS2="\[[A-Z]|-\s|\s-|[^0-9  ]/|/[^0-9  ]|(^|[^*])\*th[ie]s"
 
-grep --color=always -EHn "$NONOS" $PREFIX*.md
+# put -H back
+grep --color=always -Pn "$NONOS" $PREFIX*.md
 
 # ﬀﬁﬂﬃﬄ
 # NONOS2: accept or| mention|or prompt|reveal|
 # NONOS2: search for ", or" without false positives
 # more Dr. Mr. X etc. need nbsp
 # Titles like Foo? Bar! need nbsp
-# add quizbowlese: towards, possess, conflict, titular
+# add quizbowlese: towards, possess, conflict, titular, utilize, polity
 #|[A-Z]\w+-[A-Z][a-z]|\([Tac-z]|[^.]”?\)$|[aA][wW][-”]|[!?.]” [a-z]|reasonable|clear[ -]knowledge|synonym|underlined|possess|minus|s’\s|
 # NONOS4:teenth, tieth -> ~~[ -]century
 # power that doesn't end at (*)
@@ -58,18 +64,10 @@ grep --color=always -EHn "$NONOS" $PREFIX*.md
 # JR-esque pronoun emphasis
 # \*(this|these)
 
-# doubly-eponymous en-dash
-# [A-Z][a-z]+-[A-Z][a-z]+
-# need to use unicode uppercase/lowercase
-
 # double words
 # the the, the a, and and, of of, a the, the in
 # duplicate words
 # '\b(\w+)\s\1\b'
-
-# which instead of that
-# ack -i '(?<!(?:.....,|....,"|..,”|... (?:in|of|to|at|on)|.. (?:for|and|but)|. from|. with|. upon| among| under| after|during|hrough)) which'
-# Tregex: SBAR !$,, /,/ & < (WHNP <<: which)
 
 # that,: It indicates that, in the 17th century, ...
 
@@ -120,9 +118,9 @@ grep --color=always -EiHn "\*\*\*\*" $PREFIX*.md || :
 
 
 echo
-echo '"answers required." "Description acceptable." and titles with ending punctuation'
+echo 'ending punctuation inside italics (false positives: titles, "answers required.", "Description acceptable.")'
 echo "[,.?!]*"
-grep --color=always -PiHn "(?<!\.\w)[.,?!]\*(?!\*)" $PREFIX*.md || :
+grep --color=always -PiHn "(?<!\.\w|answers required|acceptable)[.,?!]\*(?!\*)" $PREFIX*.md || :
 
 
 # echo
