@@ -124,6 +124,9 @@ The Professor (*)</b> One-Word (“two words”). This
 The Professor</b> (*) One-Word (“two words”). This
 The Professor a</b> c One-Word (“two words”). This
 solo <span class="s1"><b>(read slowly)</b></span> <span class="s2"></span>long
+ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> (“lay-AH-koh-on”) <i>and His Sons</i>
+ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>(“lay-AH-koh-on”) and His Sons</i>
+ANSWER: <span class="s1"><b><i>Laocoön</i></b></span><i> (“lay-AH-koh-on”) and His Sons</i>
 '''
 
 zz=1

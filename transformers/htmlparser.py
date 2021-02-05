@@ -21,9 +21,11 @@ import re
 # NBSP  in orthographic (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”), Eamon de Valera (“EH-min deh vuh-LEH-ruh”)
 # NNBSP in orthographic (1 word) ,  HYPH  in phonetic (1 word):  	 St. John (“SIN-jun”), Beaux Arts (“boh-ZARR”)
 # NDASH in orthographic (2 words),  SPACE in phonetic (2 words): 	 Foo–Barr (“foo bar”)
-# “I”   as orthographic (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”), Guigues IV (“GEEG the fourth”), Renaud-Barrault (“ruh-NO bah-RO”)
+# “I”   as orthographic (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”), Guigues IV (“GEEG the fourth”), Renaud-Barrault (“ruh-NO bah-RO”)
 
-SPACES = u'[  –]+'
+# Further documentation: https://minkowski.space/quizbowl/pronouncing-dictionary/writing-pgs.html#special
+
+SPACES = u'[  –‒]+'
 
 class UnbalancedError(Exception):
 	pass
@@ -73,7 +75,10 @@ class LastNParser(HTMLParser):
 				if len(stack) == 1:
 					# raise UnbalancedError(token[2], self.contents)
 					# TODO deal with string that ends with start tag
-					done = ls[i + 1][1]
+					try:
+						done = ls[i + 1][1]
+					except IndexError:
+						done = ''
 					break
 				elif stack[-1][1] == token[2]:
 					stack.pop()
@@ -108,6 +113,8 @@ if 1 and __name__ == '__main__':
 		u'-1 0 1</b> 2',
 		u'-1 0</b> 1 2',
 		u'-1 0 <b>1 2',
+		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>word',
+		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>'
 	]
 	for test in tests:
 		parser = LastNParser(test)
