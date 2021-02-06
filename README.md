@@ -39,7 +39,7 @@ Will likely be superseded by a script (see `compile.sh`)
 1. Run `make answers` to extract the question metadata from the packets.
    * Copy the question metadata from <code>tournaments/_name_/packets/\*.answers</code>.
    * Paste the question metadata into the data spreadsheet.
-2. [TODO] Run `make words` to extract the word count metadata from the packets.
+2. Run `make words` to extract the word count metadata from the packets. Or:
    * In your browser, open each `.w.html` file with `?q` appended to the URL.
    * Copy the word count metadata from the pop-up prompts and concatenate.
    * Paste the word count metadata into the data spreadsheet.

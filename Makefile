@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
-	check check2 answers
+	check check2 answers words
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html
 SHELL=bash
 
@@ -63,6 +63,9 @@ check2: check-nonos-2.sh $(call FORMATS,f.html) $(call FORMATS,md.nowrap) $(call
 
 # TODO split up with intermediate dependencies
 answers: transformers/answers.sh $(call FORMATS,md.nowrap)
+	$< $(PACKETS_DIR)
+
+words: transformers/words.sh $(call FORMATS,w.html)
 	$< $(PACKETS_DIR)
 
 
