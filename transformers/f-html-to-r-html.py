@@ -13,8 +13,8 @@ import io
 from unidecode import unidecode
 from htmlparser import LastNParser
 
-import Levenshtein
-from caverphone import caverphone
+# import Levenshtein
+# from caverphone import caverphone
 
 
 import codecs
@@ -195,12 +195,12 @@ def html_span_to_ruby(contents):
 		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(b_word_count)
 
 		# for caver stuff only
-		a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
-		a_phonetic = caverphone(a_stripped)
-		b_stripped = unidecode(re.sub('<[^<]+?>', '', b))
-		b_phonetic = caverphone(b_stripped)
-		distance = Levenshtein.distance(a_phonetic, b_phonetic)
-		ratio = Levenshtein.ratio(a_phonetic, b_phonetic)
+		# a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
+		# a_phonetic = caverphone(a_stripped)
+		# b_stripped = unidecode(re.sub('<[^<]+?>', '', b))
+		# b_phonetic = caverphone(b_stripped)
+		# distance = Levenshtein.distance(a_phonetic, b_phonetic)
+		# ratio = Levenshtein.ratio(a_phonetic, b_phonetic)
 		# sys.stderr.write( '%-20s\t%-12s\t%-36s\t%-12s\t%2d\t%0.2f\n' % (a_stripped, a_phonetic, b_stripped, b_phonetic, distance, ratio) )
 
 		ap = ' '*(41-len(a))
