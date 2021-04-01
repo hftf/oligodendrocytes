@@ -71,6 +71,13 @@ check 2 answers "Count of unique categories" "" "" \
 check 2 answers "Count of unique authors" "" "" \
  "cat __ | cut -f3 | sort | uniq -c | sort -nrk1"
 
+check 2 answers "Long answers" "" "" \
+ "awk 'BEGIN { FS=OFS=\"\t\" } { for (i=5; i<=NF; i++) if (length(\$i) >= 30) print \$1,gensub(/^.+\\/(.+)\\..+$/,\"\\\\1\",\"g\",FILENAME),\$2,length(\$i),\$i}' __"
+check 2 answers "Special characters in parsed tags or answers" \
+ Check "If should be removed" \
+ "ack '[\\\\()[\\]]' __"
+
+
 check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
  "wc -l __"
@@ -84,7 +91,7 @@ check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
 
 check 3 md "${UL}which${NL} vs. ${UL}that${NL}" \
  Check "If ${UL}which${NL} should be replaced by ${UL}that${NL} (false positives: quotations)" \
- "ack --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among|around|during|hrough|ithout)) which' __"
+ "ack --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among| about|around|during|hrough|ithout|toward)) which' __"
 # TODO: add past|across
 # TODO: not followed by (states|says|etc.) that
 # TODO: which should be always lowercase
@@ -107,7 +114,7 @@ check 1 o.html "Extra CSS rules" "" "" \
 # NOTE: ack can't do --passthru and --range-* simultaneously
 
 check 1 f.html "Extra CSS classes" "" "" \
- "ack --color -C1 '[\".](s[2-9]|p[4-9])' __"
+ "ack --color -C1 '[\".](s[2-9]|p[4-9]|Apple-(?!converted-space))' __"
 
 # for i in $PREFIX*.o.html; do awk '/<style/ {a=1} /<\/style/ {a=0} a' $i | grep -vf tournaments/nasat18/ok-styles.txt | ack -o '[^.]+(?= {)' | tr '\n' '|' | xargs -I '{}' ack -C2 "'[.\"]({}%@)'" "$i"; done
 
@@ -126,10 +133,6 @@ dont
 # TODO: check caverphone - PGs that may be wrong (number of words too short/long)
 # see instrucs in htmlparser
 
-
-#check 3 'answers*' "Brackets in parsed tags or answers" \
-# Check "If should be removed" \
-# "ack --color '[()[\]]' __"
 
 # check 1
 ack '[^>]&lt;' $PREFIX*.o.html
