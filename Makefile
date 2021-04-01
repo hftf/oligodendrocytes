@@ -1,7 +1,7 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
 	check check2 answers words
-.PRECIOUS: %.native %.md %.md.nowrap %.o.html
+.PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
 SHELL=bash
 
 
@@ -83,8 +83,12 @@ $(info Making: $(MAKECMDGOALS))
 PANDOC:=pandoc
 
 # (o.html stands for original.html)
-%.o.html: %.docx transformers/docx-to-o-html.sh
+%.p.o.html: %.docx transformers/docx-to-o-html-pandoc.sh
 	$(word 2,$^) "$<" > "$@"
+%.t.o.html: %.docx transformers/docx-to-o-html-textutil.sh
+	$(word 2,$^) "$<" > "$@"
+%.o.html: %.p.o.html
+	cp "$<" "$@"
 
 %.md: %.o.html
 	$(PANDOC) -o "$@" "$<" -f html -t markdown
