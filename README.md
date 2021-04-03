@@ -19,20 +19,20 @@ Will likely be superseded by a script (see `compile.sh`)
 2. Create the file <code>tournaments/_name_/settings.pxml</code>.
    * See <code>tournaments/sample/settings.pxml</code> for an example.
 3. Replace the contents of `tournaments/current.txt` with <code>_name_</code>.
+4. Run `make meta` to generate these files:
+   * <code>tournaments/_name_/settings.xml</code>
+   * <code>tournaments/_name_/vars.mk</code>
 
 ### Build the tournament
 
-1. Run `make meta` to generate these files:
-   * <code>tournaments/_name_/settings.xml</code>
-   * <code>tournaments/_name_/vars.mk</code>
-2. Run `make reset` to download the packets from Google Docs (requires `skicka`).
+1. Run `make reset` to download the packets from Google Docs (requires `skicka`).
    * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
-3. Run `make htmls` to generate the web interface for each packet.
+2. Run `make htmls` to generate the web interface for each packet.
    * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
      * `md`, `md.nowrap`, `txt`, etc.
    * Or run in parallel: `make -j4 most; make formats EXT=r.html; make htmls`.
-4. Run `make check` and `make check2` to check for problems.
-   If there are problems, revise and return to step 2.
+3. Run `make check` and `make check2` to check for problems.
+   If there are problems, revise and return to step 1.
 
 ### Deploy the tournament
 
