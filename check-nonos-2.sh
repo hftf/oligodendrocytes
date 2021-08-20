@@ -78,6 +78,10 @@ check 2 answers "Special characters in parsed tags or answers" \
  "ack '[\\\\()[\\]]' __"
 
 
+check 2 md.nowrap "Bonus marker count" \
+  Check "Should have the same number of each marker" \
+ "ack -h -o '^\[(?:10)?[emh\S]*' __ | sort | uniq -c"
+
 check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
  "wc -l __"
