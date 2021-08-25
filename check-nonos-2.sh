@@ -177,7 +177,11 @@ check 4 txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)"
 # TODO: he him his [this
 
 check 5 md.nowrap "List of all non-ASCII characters" "" "" \
- "grep --color -Poh '[^\\x00-\\x7F]' __ | sort | uniq | tr -d '\n'; echo"
+ "grep -Poh '[^\\x00-\\x7F]' __ | sort | uniq | tr -d '\n'; echo"
+
+check 5 md "List instances of most non-ASCII characters" "" "" \
+ "ack --color -P '[^\\x00-\\x7F\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\xFF ​–—‘’“”…]' __"
+
 
 # check 5 log "Obsolete LaTeX checks" "" "" \
 #  "grep --color -EHnA4 'Missing|erfull' __"
