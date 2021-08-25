@@ -172,7 +172,7 @@ dont1
 
 check 4 txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)" \
  Check "If the pronoun can be moved earlier instead" \
- "ack --color -io --range-end='Bonuses' '^\d+\. (?>(?> [([].*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+' __"
+ "ack --color -io --range-end='Bonuses' '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+' __"
 # "ack -i --range-end='Bonuses' '^\d+\. .*?\K(?:this|these)(*PRUNE)(?<=.{70}) \S+' __"
 # TODO: he him his [this
 
