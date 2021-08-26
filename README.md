@@ -51,24 +51,80 @@ qpdf, gnu coreutils? gsed brew install gnu-sed, ack, textutil (docx -> html, doc
 5. [TODO] Run `make upload` to upload a bundle to a web server.
    * for now, scp
 
-## Project history and status
+## Project status
 
 This project is a janky pile of scripts in many programming languages
 hacked together incrementally over many years intended for personal use.
-It makes many assumptions about the computing environment (e.g. Mac OS, Python 2).
+It makes many hardcoded assumptions about the computing environment (e.g. Mac OS, Python 2)
+and about the formatting of quizbowl packets.
 It is not polished, robust, or well-documented.
 
 Using it may require advanced technical knowledge, familiarity with a command line, or debugging skills.
 Use at your own risk. Please do not wait until the last minute to test it or to seek help.
 
+### Project history
+
+This project is a palimpsest.
+
+It arose out of two primordial projects of mine
+for representing and rendering quizbowl packets:
+an XML/XSLT-based schema called QBML (May 2008)
+and a LaTeX class called packet.cls (March 2013).
+
+In February 2014, I hitched up a program
+to fetch Docx packets from Google Docs
+and pass them through a pipeline of formats –
+HTML, QBML (XML), LaTeX – to produce nicely typeset PDFs.
+
+I tried attaching a tooltip to each word of a tossup
+to display its word number (in the final PDFs)
+in my second attempt to enable the collection of buzz location data,
+after a bare first prototype in HTML/JS (February 2012).
+
+This misguided elaborate approach,
+using `xsl:analyze-string` to [tokenize mixed content in XSLT]
+(https://stackoverflow.com/questions/36354299/tokenize-mixed-content-in-xslt)
+and produce intermediate "WQBML",
+failed not only due to differences in PDF viewer abilities,
+but because I was more worried about [restoring kerning]
+(https://tex.stackexchange.com/questions/164158/restore-kerning-across-empty-groups).
+
+Growing bored of typography-for-its-own-sake,
+and annoyed at folly for not solving an actual problem well,
+making it pretty, fiddling, isn't the job.
+
+enjoy writing questions for practice and vanity in Markdown
+
+Shift strategy
+Oct 2015 abandon PDF, quite elegant incredibly simple client-side script (number.js) to do the valued work; build pipeline
+
+approach Modern form
+To overcome browser incompatibility,
+(even simple!) was replaced with pre-computed
+Oct 2017
+
+rudimentary linter to check style and formatting, pronunciation guides
 
 xml tex - too strict. docx > html > tweak w scripts gives flexibility at expense of strict error guarding
+
+
+i do think some improvements to improve readability and typography, but very low priority. not paged document
+
+note that docx conversion (pandoc) is lossy/philosophically opinionated by intent/structural.
+textutil (Mac only) basically preserves everything in the docx but is not necessarily semantic
 
 docx 
 
 flow.tikz diagram here
 
-note that docx conversion (pandoc) is lossy/philosophically opinionated by intent.
+> transformers
+> SOURCE_EXT docx default
+> chamfered = dependency of make check
+
+O=original
+F=formatted, wraps with a template with a header and footer
+R=ruby, parses finds PGs (pronunciation guides) and converts to ruby
+W=words adds tags around each word in tossups
 
 ## License
 
