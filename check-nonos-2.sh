@@ -58,7 +58,7 @@ pcregrep --color -M '<p> ' $PREFIX!(*.o).html
 
 check 1 o.html "Soft line breaks (or <br> in HTML)" \
  Remedy "Replace with paragraphs in source document" \
- "ack --color -C1 '<br>$' __"
+ "ack --group --color -C1 '<br>$' __"
 
 check 1 f.html "Count of ${UL}tu\"${NL}, ${UL}bonus\"${NL}, and ${UL}ANSWER:${NL}" \
  Check "All counts should equal 120 (20 tu + 20 bonus + 80 answer)" \
@@ -75,7 +75,7 @@ check 2 answers "Long answers" "" "" \
  "awk 'BEGIN { FS=OFS=\"\t\" } { for (i=5; i<=NF; i++) if (length(\$i) >= 30) print \$1,gensub(/^.+\\/(.+)\\..+$/,\"\\\\1\",\"g\",FILENAME),\$2,length(\$i),\$i}' __"
 check 2 answers "Special characters in parsed tags or answers" \
  Check "If should be removed" \
- "ack '[\\\\()[\\]]' __"
+ "ack --group --color '[\\\\()[\\]]' __"
 
 
 check 2 md.nowrap "Bonus marker count" \
@@ -95,7 +95,7 @@ check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
 
 check 3 md "${UL}which${NL} vs. ${UL}that${NL}" \
  Check "If ${UL}which${NL} should be replaced by ${UL}that${NL} (false positives: quotations)" \
- "ack --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among| about|around|during|hrough|ithout|toward)) which' __"
+ "ack --group --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among| about|around|during|hrough|ithout|toward)) which' __"
 # TODO: add past|across
 # TODO: not followed by (states|says|etc.) that
 # TODO: which should be always lowercase
@@ -114,11 +114,11 @@ check 1 o.html "Extracting contents of <style> tags" \
  "awk 'FNR==1{printf \"\033[1;32m\n\" FILENAME \"\033[0m\n\"} /<style/,/<\\/style>/' __"
 
 check 1 o.html "Extra CSS rules" "" "" \
- "ack --color -v \"\`tr '\n' '|' < transformers/ok-styles.txt\`\" --range-start='<style' --range-end='</style' __"
+ "ack --group --color -v \"\`tr '\n' '|' < transformers/ok-styles.txt\`\" --range-start='<style' --range-end='</style' __"
 # NOTE: ack can't do --passthru and --range-* simultaneously
 
 check 1 f.html "Extra CSS classes" "" "" \
- "ack --color -C1 '[\".](s[2-9]|p[4-9]|Apple-(?!converted-space))' __"
+ "ack --group --color -C1 '[\".](s[2-9]|p[4-9]|Apple-(?!converted-space))' __"
 
 # for i in $PREFIX*.o.html; do awk '/<style/ {a=1} /<\/style/ {a=0} a' $i | grep -vf tournaments/nasat18/ok-styles.txt | ack -o '[^.]+(?= {)' | tr '\n' '|' | xargs -I '{}' ack -C2 "'[.\"]({}%@)'" "$i"; done
 
@@ -143,7 +143,7 @@ ack '[^>]&lt;' $PREFIX*.o.html
 
 check 3 o.html "Bold tag interrupted" \
  Check "If should be removed" \
- "ack --color '<p class=\"p1[^\"]*\">\d.*</b>.*<b>[^<]' __"
+ "ack --group --color '<p class=\"p1[^\"]*\">\d.*</b>.*<b>[^<]' __"
 
 # TODO: count tags (valid) - need commas
 ack --color -c -h '\\<(.*)\\>' $PREFIX*.md
@@ -154,25 +154,25 @@ function dont1() {
 # TODO: should be nowrap
 check 3 md "Hyphen between two capitalized words" \
  Check "If an en dash should be used for doubly eponymous" \
- "ack --color '\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+' __"
+ "ack --group --color '\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+' __"
 
 # TODO: should be nowrap
 # TODO: pipe out to http://jwilk.net/software/anorack
 #   anorack | while IFS=: read -r f l e; do echo -e "\n$f:$l\n$e"; sed -n "${l}p" $f; done
 check 3 md "Wrong usage of a/an" \
  Check "If ${UL}a${NL} + vowel or ${UL}an${NL} + consonant usage is correct (false positives: initialisms, silent H, consonantal U, medial A)" \
- "ack --color '\b[Aa] [()\[\]\\\\* ]*+[AEIOUaeiou]| an [()\[\]\\\\* ]*+(?!1[18])[^aeiouAEIOU<“]' __"
+ "ack --group --color '\b[Aa] [()\[\]\\\\* ]*+[AEIOUaeiou]| an [()\[\]\\\\* ]*+(?!1[18])[^aeiouAEIOU<“]' __"
 # TODO: fix for Packet by Columbia A and Texas A
 
 check 4 md.nowrap "Short sentences starting with “That”" \
  Check "If a semicolon should connect the previous sentence instead (false positives: initials)" \
- "ack --color -o '\. That.{0,70}\.\S*' __"
+ "ack --group --color -o '\. That.{0,70}\.\S*' __"
 }
 dont1
 
 check 4 txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)" \
  Check "If the pronoun can be moved earlier instead" \
- "ack --color -io --range-end='Bonuses' '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+' __"
+ "ack --group --color -io --range-end='Bonuses' '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+' __"
 # "ack -i --range-end='Bonuses' '^\d+\. .*?\K(?:this|these)(*PRUNE)(?<=.{70}) \S+' __"
 # TODO: he him his [this
 
