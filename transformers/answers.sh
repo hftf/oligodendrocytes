@@ -28,7 +28,7 @@ C_2a_ACTAG() { ack -h --output=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            
 #C_2a_ACTAG() { ack -h --output=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
 R_3a_ANSLN='^ ?ANSWER: (.*?)(?: \\<| \[|$)'
 C_3a_ANSLN() { ack -h --output='$1'      "$R_3a_ANSLN"                          "$@"; }
-C_3b_CLEAN() { sed -E -e 's/ (\*\*)?\([^)][^)]+\)(\*\*)?//g' -e 's/(\*\*)?\([^)][^)]+\)(\*\*)? //g' | perl -pe 's/(?<!\\)\*//g;' -pe 's/\\\*/\*/g' ;}
+C_3b_CLEAN() { sed -E -e 's/ (\*\*)?\([^)]([^()]|\([^)]+\))+\)(\*\*)?//g' -e 's/(\*\*)?\([^)][^)]+\)(\*\*)? //g' | perl -pe 's/(?<!\\)\*//g;' -pe 's/\\\*/\*/g' ;}
 # C_4a_CLEAN() { cat; } # sed -E    's/ (\*\*)?\([^)]+\)(\*\*)?//' ;} # need (?!\t) ?
 # TODO 3b [^)]{2,}
 # TODO 3b [[(]
