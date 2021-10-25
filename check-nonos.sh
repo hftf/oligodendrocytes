@@ -12,7 +12,7 @@ NONOS2="ANSWER:\S|ANSWER[^:]|[Aa]nswer:|ANWER|ASNWER|accpet|prmopt|propmt|(?<!or
 NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|For 10 points each[^:]|10 point[^s]|points each,\s*$|.\[10\]|10 points ?(-|–|—)|, for 10 points,"
 NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|unnamed|[^0-9][.!?] [0-9]|^[0-9]+\.\S| ​|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
 NONOS5="[^0-9]--|––|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’[^0-9]| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\\*\*\*\)|\\\\(?!~)[^*\n$<>]|\\[[APOD]|	|^ | $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*"
-NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.| \\\\<"
+NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.| \\\\<|]\*+$"
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
 
 NONOS7="TB\d?\.|[Tt]iebreaker|[<[(]Edit|by asking|by saying|with “(?!\w+[.,!?]?”)|(by asking|with), “|(by asking|with),? “[A-Z](?!\w+[.,!?]?”)"

@@ -75,7 +75,7 @@ check 2 answers "Long answers" "" "" \
  "awk 'BEGIN { FS=OFS=\"\t\" } { for (i=5; i<=NF; i++) if (length(\$i) >= 30) print \$1,gensub(/^.+\\/(.+)\\..+$/,\"\\\\1\",\"g\",FILENAME),\$2,length(\$i),\$i}' __"
 check 2 answers "Special characters in parsed tags or answers" \
  Check "If should be removed" \
- "ack --group --color '[\\\\()[\\]]' __"
+ "ack --group --color '[\\\\()[\\]#_*^~]' __"
 
 
 check 2 md.nowrap "Bonus marker count" \
@@ -95,7 +95,7 @@ check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
 
 check 3 md "${UL}which${NL} vs. ${UL}that${NL}" \
  Check "If ${UL}which${NL} should be replaced by ${UL}that${NL} (false positives: quotations)" \
- "ack --group --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among| about|around|during|hrough|ithout|toward)) which' __"
+ "ack --group --color -i '(?<!(?:....(?:.,|,[\"”])|... (?:in|of|to|at|on|by)|.. (?:for|and|but)|. (?:from|with|upon|into|onto|over)| after| under| among| about| above| below|around|during|hrough|ithout|toward)) which' __"
 # TODO: add past|across
 # TODO: not followed by (states|says|etc.) that
 # TODO: which should be always lowercase
