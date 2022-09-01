@@ -11,7 +11,7 @@ Will likely be superseded by a script (see `compile.sh`)
 
 ### Install dependencies
 
-1. Install pandoc, pxslcc, saxon, gdrive, and drive. See reqs.md for details.
+1. Install pandoc, pxslcc, saxon, and drive. See reqs.md for details.
 
 ### Add a tournament
 
@@ -25,7 +25,7 @@ Will likely be superseded by a script (see `compile.sh`)
 1. Run `make meta` to generate these files:
    * <code>tournaments/_name_/settings.xml</code>
    * <code>tournaments/_name_/vars.mk</code>
-2. Run `make reset` to download the packets from Google Docs (requires `gdrive`).
+2. Run `make reset` to download the packets from Google Docs (requires `drive`).
    * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
 3. Run `make htmls` to generate the web interface for each packet.
    * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:

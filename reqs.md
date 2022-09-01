@@ -21,12 +21,6 @@ cabal install
 brew install saxon
 ```
 
-### gdrive
-
-```
-brew install gdrive
-```
-
 ### drive
 
 ```

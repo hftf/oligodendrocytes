@@ -35,6 +35,7 @@ set
       ### Uncomment to use Google Docs
       # Path to the folder of packets in your Google Drive
       # gdocs-folder-name <<Quizbowl/Tournaments/Tournament name/Packets>>
+      # gdocs-folder-id <<1abcdefghijklmnopqrstuvwxyzABCDEF>>
       # source-ext <<.docx>>
 
       # For slicing packet filenames (e.g. from "Packet 01" to "01")
