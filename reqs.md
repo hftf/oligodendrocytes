@@ -21,16 +21,10 @@ cabal install
 brew install saxon
 ```
 
-### Skicka
-[Download Go](https://golang.org/dl/)
+### gdrive
 
 ```
-brew install mercurial
-go get github.com/google/skicka
-# set GOPATH in .profile and add GOPATH/bin to PATH
-skicka init
-skicka ls
-# authorize in browser
+brew install gdrive
 ```
 
 ### drive

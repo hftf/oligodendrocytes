@@ -75,7 +75,7 @@ clean:
 	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md *.md.nowrap *.txt
 
 reset:
-	./dl-gdocs.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
+	./dl-gdocs-gdrive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 $(info Making: $(MAKECMDGOALS))
 
