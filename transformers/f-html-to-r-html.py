@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # http://mashimonator.weblike.jp/storage/library/20090118_001/demo/ruby2/index.html
