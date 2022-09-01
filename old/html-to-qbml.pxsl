@@ -107,7 +107,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
   template p[text()='Tossups']
     variable ps following-sibling::p
-    for-each <(<<$ps[(preceding-sibling::p[1])[br] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
+    for-each <(<<$ps[(preceding-sibling::p[1])[not(text())] and (following-sibling::p[text()='Bonuses'] or not($ps[text()='Bonuses']))]>>)>
       tossup -id={substring-before(text()[1],$list-punct)}
         variable byline substring-before(substring-after(following-sibling::p[2],$byline-prefix),$byline-suffix)
         variable author substring-before($byline,$byline-infix)
@@ -129,9 +129,9 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
             with-param p following-sibling::p[1]
 
   template p[text()='Bonuses']
-    for-each <(<<following-sibling::p[(preceding-sibling::p[1])[br and not(normalize-space(text()))]]>>)>
+    for-each <(<<following-sibling::p[(preceding-sibling::p[1])[not(text())]]>>)>
       bonus -id={substring-before(text()[1],$list-punct)}
-        variable cur generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1])
+        variable cur generate-id(preceding::p[not(text())][1])
 
         variable byline substring-before(substring-after(following-sibling::p[7],$byline-prefix),$byline-suffix)
         variable author substring-before($byline,$byline-infix)
@@ -144,7 +144,7 @@ stylesheet -version=2.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
 
         stem
           ,strip . $list-punct
-        for-each <(<<following-sibling::p[generate-id(preceding::br[ancestor::p[1][not(normalize-space(text()))]][1]) = $cur and starts-with(text()[1], '[10]')]>>)>
+        for-each <(<<following-sibling::p[generate-id(preceding::p[not(text())][1]) = $cur and starts-with(text()[1], '[10]')]>>)>
           part -value=10
             question
               ,strip . $bonus-prefix

@@ -79,6 +79,9 @@ reset:
 
 $(info Making: $(MAKECMDGOALS))
 
+
+PANDOC:=pandoc
+
 # (o.html stands for original.html)
 %.o.html: %.docx transformers/docx-to-o-html.sh
 	$(word 2,$^) "$<" > "$@"
@@ -92,13 +95,13 @@ NATIVE_FLAGS:=-f html -t native
 endif
 
 %.native: %$(NATIVE_DEP_EXT)
-	pandoc -o "$@" "$<" $(NATIVE_FLAGS)
+	$(PANDOC) -o "$@" "$<" $(NATIVE_FLAGS)
 
 %.md: %.o.html
-	pandoc -o "$@" "$<" -f html -t markdown
+	$(PANDOC) -o "$@" "$<" -f html -t markdown
 
 %.md.nowrap: %.o.html
-	pandoc -o "$@" "$<" -f html -t markdown --no-wrap
+	$(PANDOC) -o "$@" "$<" -f html -t markdown --no-wrap
 
 
 -include makefiles/f.mk
