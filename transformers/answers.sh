@@ -22,12 +22,12 @@ LIMIT=""
 # 2a sgi         $'$2\t$1'
 # 2a regionals18 --output=$'\t$1' '\\<(.*)\\>'
 
-C_1a_Q_NUM() { ack -H --output='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\. ' $LIMIT "$@"; }
-C_1b_P_LET() { ack    --output=$'$1\t$2' '/([^\W_]+)[^\s/:]+:\d+:(\d+)$'            ; }
-C_2a_ACTAG() { ack -h --output=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            "$@"; }
-#C_2a_ACTAG() { ack -h --output=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
+C_1a_Q_NUM() { rg -H --no-heading -or='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\. ' $LIMIT "$@"; }
+C_1b_P_LET() { rg    -or=$'$1\t$2' '/([^\W_]+)[^\s/:]+:\d+:(\d+)$'            ; }
+C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            "$@"; }
+#C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
 R_3a_ANSLN='^ ?ANSWER: (.*?)(?: \\<| \[|$)'
-C_3a_ANSLN() { ack -h --output='$1'      "$R_3a_ANSLN"                          "$@"; }
+C_3a_ANSLN() { rg -I -or='$1'      "$R_3a_ANSLN"                          "$@"; }
 C_3b_CLEAN() { sed -E -e 's/ (\*\*)?\([^)]([^()]|\([^)]+\))+\)(\*\*)?//g' -e 's/(\*\*)?\([^)][^)]+\)(\*\*)? //g' | perl -pe 's/(?<!\\)\*//g;' -pe 's/\\\*/\*/g' ;}
 # C_4a_CLEAN() { cat; } # sed -E    's/ (\*\*)?\([^)]+\)(\*\*)?//' ;} # need (?!\t) ?
 # TODO 3b [^)]{2,}

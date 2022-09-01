@@ -1,3 +1,9 @@
+### ack
+
+Running ack on UTF-8 files is not compatible as of Perl 5.30.
+Need to find a replacement. Maybe ripgrep?
+Need --sort=path.
+
 ### Pandoc
 [Download](https://github.com/jgm/pandoc/releases)
 
