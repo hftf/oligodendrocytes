@@ -31,8 +31,8 @@ Will likely be superseded by a script (see `compile.sh`)
    * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
      * `md`, `md.nowrap`, `txt`, etc.
    * Or run in parallel: `make -j4 most; make formats EXT=r.html; make htmls`.
-4. Run `make check` and `make check2` to check for problems.
-   If there are problems, revise and return to step 2.
+4. Run `make check`, `make check2`, and `make check3` to check for problems.
+   * If there are problems, revise and return to step 2.
 
 ### Deploy the tournament
 

@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
-	check check2 answers words
+	check check2 check3 answers words
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
 SHELL=bash
 
@@ -59,6 +59,8 @@ most: $(call FORMATS,o.html) $(call FORMATS,md) $(call FORMATS,md.nowrap) $(call
 check: check-nonos.sh $(call FORMATS,md)
 	./$< $(PACKETS_DIR) | cat -n
 check2: check-nonos-2.sh most answers
+	./$< $(PACKETS_DIR) | cat -n
+check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 	./$< $(PACKETS_DIR) | cat -n
 
 # TODO split up with intermediate dependencies

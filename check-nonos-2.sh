@@ -1,51 +1,4 @@
-shopt -s extglob
-PREFIX="$@"
-GREP_COLOR='1;4;31;103'
-# seemingly adds Unicode support for ack
-export PERL_UNICODE=SAD
-
-BOLD=`tput bold`
-REV=`tput setaf 4``tput rev`
-CLR=`tput setaf 4`
-REG=`tput sgr0`
-RED=`tput setaf 9``tput rev`
-GREY=`tput setab 15`
-NAVY=`tput setaf 18`
-BLUE=`tput setaf 12`
-GREEN=`tput setab 10`
-UL=`tput smul`
-NL=`tput rmul`
-
-function check {
-	priority=$1
-	extension=$2
-	checkname=$3
-	checktype=$4
-	checkdesc=$5
-	command=$6
-	set -f
-	wildcard=*.
-
-	PCLR=$GREEN; if [ $priority -eq 1 ]; then PCLR=$RED; fi
-	printf "$BLUE%-10s$REG $BOLD$PCLR P$priority $REG$BOLD$REV $checkname $REG\n" $extension
-	if [ -n "$checkdesc" ]; then
-		printf "%-10s $CLR $checkdesc $REG\n" "$checktype:"
-	fi
-
-	# TODO: if command has no output, don't print
-	if [ -n "$command" ]; then
-		commandescaped=${command//\\/\\\\}
-		commandescaped=${commandescaped//\%/\%\%}
-		commandpretty=${commandescaped/__/$NAVY$PREFIX$wildcard$BLUE$extension$REG$GREY}
-		printf "%-10s $GREY $commandpretty $REG\n\n" "Command:"
-		set +f
-		# set -x
-		fullcommand=${command/__/$PREFIX$wildcard$extension}
-		eval "${fullcommand//\\/\\}"
-		# { set +x; } 2>/dev/null
-	fi
-	echo -e "\n"
-}
+source check-nonos-utils.sh
 
 # check 9 f.html "test for quoting"  "" "" "ack --color ' id=\"bonuses\"|'\' __"
 # check 9 f.html "test for escaping" "" "" "echo '\n\\n\\\n\\\\n \\x7F'"
@@ -109,20 +62,6 @@ check 3 md "${UL}which${NL} vs. ${UL}that${NL}" \
 # TODO: add non-
 # TODO: add languagetool
 # TODO: add [] - see docx-to-unparsed.sh
-
-# Should probably still run textutil docx and check this even if using pandoc
-check 1 o.html "Extracting contents of <style> tags" \
- Check "Each <style> tag should contain only 4 lines, starting with:  ${UL}p.p1${NL}, ${UL}p.p2${NL}, ${UL}p.p3${NL}, ${UL}span.s1${NL}" \
- "awk 'FNR==1{printf \"\033[1;32m\n\" FILENAME \"\033[0m\n\"} /<style/,/<\\/style>/' __"
-
-check 1 o.html "Extra CSS rules" "" "" \
- "rg --heading --color=always -v \"\`tr '\n' '|' < transformers/ok-styles.txt\`\" --range-start='<style' --range-end='</style' __"
-# NOTE: ack can't do --passthru and --range-* simultaneously
-
-check 1 f.html "Extra CSS classes" "" "" \
- "rg --heading --color=always -P -C1 '[\".](s[2-9]|p[4-9]|Apple-(?!converted-space))' __"
-
-# for i in $PREFIX*.o.html; do awk '/<style/ {a=1} /<\/style/ {a=0} a' $i | grep -vf tournaments/nasat18/ok-styles.txt | ack -o '[^.]+(?= {)' | tr '\n' '|' | xargs -I '{}' ack -C2 "'[.\"]({}%@)'" "$i"; done
 
 }
 dont
