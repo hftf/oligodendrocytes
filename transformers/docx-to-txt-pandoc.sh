@@ -1,3 +1,3 @@
 FILENAME="$1"
 
-textutil -convert txt "$FILENAME" -stdout
+pandoc "$FILENAME" -f docx+empty_paragraphs -t plain
