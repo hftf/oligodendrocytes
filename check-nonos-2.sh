@@ -35,11 +35,12 @@ function check {
 	# TODO: if command has no output, don't print
 	if [ -n "$command" ]; then
 		commandescaped=${command//\\/\\\\}
+		commandescaped=${commandescaped//\%/\%\%}
 		commandpretty=${commandescaped/__/$NAVY$PREFIX$wildcard$BLUE$extension$REG$GREY}
-		fullcommand=${command/__/$PREFIX$wildcard$extension}
 		printf "%-10s $GREY $commandpretty $REG\n\n" "Command:"
 		set +f
 		# set -x
+		fullcommand=${command/__/$PREFIX$wildcard$extension}
 		eval "${fullcommand//\\/\\}"
 		# { set +x; } 2>/dev/null
 	fi
@@ -175,10 +176,12 @@ dont1
 
 check 4 txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)" \
  Check "If the pronoun can be moved earlier instead" \
- "rg --heading --color=always -P -n -io '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+' __"
+ "rg --heading --color=always -P -n -ior '\$a►\$b' '^(?P<a>\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?&r)).){70}.*?)(?P<b>(?P<r>this|these) \S+(?!.*points each))' __ | awk '/[0-9]. /{o=\$0;\$1=\"\";match(\$0,\"^[^►]*\");printf(\"%4s %s\n\",RLENGTH-1,o);next}{print}'"
 # reimplement ack's --range-end='Bonuses' for rg
 # "ack -i --range-end='Bonuses' '^\d+\. .*?\K(?:this|these)(*PRUNE)(?<=.{70}) \S+' __"
+# "sed '/^Bonuses/Iq' __ | rg --color=always -P -n -io '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+'"
 # TODO: he him his [this
+# TODO: ignore *Note to ... .*
 
 check 5 md.nowrap "List of all non-ASCII characters" "" "" \
  "grep -Poh '[^\\x00-\\x7F]' __ | sort | uniq | tr -d '\n'; echo"
