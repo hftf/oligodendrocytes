@@ -15,6 +15,9 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
       value-of <(,v)>
       text <<&#xa;>>
 
+    ,line TOURNAMENT_NAME <()> <( <<concat(
+      ../metadata/year, ' ', ../metadata/name)
+    >> )>
     ,line SOURCE_EXT <()> in/source-ext
     ,line DL_GDOCS_ARGS <()> <( <<concat(
       '"', in/gdocs-folder-id, '" ',

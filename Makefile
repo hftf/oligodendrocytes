@@ -84,7 +84,7 @@ PANDOC:=pandoc
 
 # (o.html stands for original.html)
 %.p.o.html: %.docx transformers/docx-to-o-html-pandoc.sh transformers/template.o.html
-	$(word 2,$^) "$<" $(word 3,$^) > "$@"
+	$(word 2,$^) "$<" $(word 3,$^) "$(TOURNAMENT_NAME)" > "$@"
 %.t.o.html: %.docx transformers/docx-to-o-html-textutil.sh
 	$(word 2,$^) "$<" > "$@"
 %.o.html: %.p.o.html
