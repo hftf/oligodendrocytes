@@ -86,17 +86,6 @@ PANDOC:=pandoc
 %.o.html: %.docx transformers/docx-to-o-html.sh
 	$(word 2,$^) "$<" > "$@"
 
-ifeq ($(SOURCE_EXT),.md)
-NATIVE_DEP_EXT=.md
-NATIVE_FLAGS:=
-else
-NATIVE_DEP_EXT=.o.html
-NATIVE_FLAGS:=-f html -t native
-endif
-
-%.native: %$(NATIVE_DEP_EXT)
-	$(PANDOC) -o "$@" "$<" $(NATIVE_FLAGS)
-
 %.md: %.o.html
 	$(PANDOC) -o "$@" "$<" -f html -t markdown
 
@@ -104,5 +93,6 @@ endif
 	$(PANDOC) -o "$@" "$<" -f html -t markdown --no-wrap
 
 
+-include makefiles/native.mk
 -include makefiles/f.mk
 -include makefiles/t.mk
