@@ -4,9 +4,72 @@
 	<meta charset="utf-8" />
 	<meta name="generator" content="pandoc, oligodendrocytes" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-	<title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+	<title>$if(title-prefix)$$title-prefix$ – Packet $endif$$pagetitle$</title>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://hypothes.is/embed.js"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-8654955-5"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'UA-8654955-5');
+	</script>
+
+	<link href="style.css" rel="stylesheet">
 </head>
 <body>
+
+<header>
+<nav>
+<ul>
+	<li><label>Navigation</label><ul>
+		<li><a href="./">←  Packets</a></li><!--
+		--><li><a href="https://minkowski.space/quizbowl/manuals/scorekeeping/moderator.html">Instructions</a></li>
+	</ul></li><!--
+	--><li><label>Last buzz point</label><ul>
+		<li><span id="location">none</span></li><!--
+		--><li><span id="wordparent"><span id="word" class="text"></span></span></li>
+	</ul></li><!--
+	--><li><label>Buzz points</label><ul>
+		<li><a href="#" id="copy"><b>Export</b></a></li><!--
+		--><li><a href="#" id="reset">Reset</a></li><!--
+		--><li><span id="status">0 stored</span></li>
+	</ul></li><!--
+	--><li><label>Customize style</label>
+		<ul class="style-switcher">
+			<li><a href="#" class="pg-ruby" title="Ruby (supralinear annotations)">
+				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+			</a></li><!--
+			--><li><a href="#" class="pg-inline" title="Inline">
+				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+			</a></li>
+		</ul>
+	</li>
+</ul>
+</nav>
+</header>
+
+<main id="main" class="pg-ruby">
 $body$
+</main>
+
+<footer id="toggle" class="down"><!-- TODO rename -->
+	<div>
+		<span class="arr"><span class="up">↑</span><span class="down">↓</span></span><!--
+		--><span class="clm">Jump to<br><!--
+		--><span class="up">tossups</span><span class="down">bonuses</span></span><!--
+		--><kbd>J</kbd>
+	</div>
+</footer>
+<div id="line">Previous scroll position</div>
+
+<script src="number.js"></script>
+<script src="scroll.js"></script>
+<script src="load.js"></script>
+<!--[if gte IE 9]><!-->
+<script src="clipboard-polyfill.js"></script>
+<!--<![endif]-->
 </body>
 </html>

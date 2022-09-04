@@ -1,7 +1,7 @@
 .PRECIOUS: %.f.html %.r.html
 
-%.p.f.html: %.o.html transformers/o-html-to-f-html-pandoc.sh transformers/top-1.html transformers/top-2.html transformers/bottom.html
-	$(word 2,$^) "$<" > "$@"
+%.p.f.html: %.o.html transformers/o-html-to-f-html-pandoc.sh transformers/template.o.html
+	$(word 2,$^) "$<" $(word 3,$^) "$(TOURNAMENT_NAME)" > "$@"
 %.t.f.html: %.o.html transformers/o-html-to-f-html-textutil.sh transformers/top-1.html transformers/top-2.html transformers/bottom.html
 	$(word 2,$^) "$<" > "$@"
 %.f.html: %.p.f.html
