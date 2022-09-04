@@ -91,10 +91,10 @@ PANDOC:=pandoc
 	cp "$<" "$@"
 
 %.md: %.o.html
-	$(PANDOC) -o "$@" "$<" -f html -t markdown
+	$(PANDOC) -o "$@" "$<" -f html -t markdown-bracketed_spans-native_spans-smart
 
 %.md.nowrap: %.o.html
-	$(PANDOC) -o "$@" "$<" -f html -t markdown --no-wrap
+	$(PANDOC) -o "$@" "$<" -f html -t markdown-bracketed_spans-native_spans-smart --wrap=none
 
 
 -include makefiles/native.mk
