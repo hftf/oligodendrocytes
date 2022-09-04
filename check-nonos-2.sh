@@ -43,7 +43,7 @@ function check {
 		eval "${fullcommand//\\/\\}"
 		# { set +x; } 2>/dev/null
 	fi
-	echo
+	echo -e "\n"
 }
 
 # check 9 f.html "test for quoting"  "" "" "ack --color ' id=\"bonuses\"|'\' __"
@@ -51,10 +51,10 @@ function check {
 dont() {
 
 # don't
-pcregrep --color -M '<p><br /></p>\n<p>[^TB].*?</p>\n<p>[^A[]' $PREFIX!(*.o).html
-pcregrep --color -M '(?<!<p>)<br />' $PREFIX!(*.o).html
-pcregrep --color -M '<br />(?!</p>)' $PREFIX!(*.o).html
-pcregrep --color -M '<p> ' $PREFIX!(*.o).html
+pcregrep --color=always -M '<p><br /></p>\n<p>[^TB].*?</p>\n<p>[^A[]' $PREFIX!(*.o).html
+#pcregrep --color=always -M '(?<!<p>)<br />' $PREFIX!(*.o).html
+#pcregrep --color=always -M '<br />(?!</p>)' $PREFIX!(*.o).html
+pcregrep --color=always -M '<p> ' $PREFIX!(*.o).html
 
 check 1 o.html "Soft line breaks (or <br> in HTML)" \
  Remedy "Replace with paragraphs in source document" \
@@ -80,13 +80,13 @@ check 2 answers "Special characters in parsed tags or answers" \
 
 check 2 md.nowrap "Bonus marker count" \
   Check "Should have the same number of each marker" \
- "rg -I -o '^\\\\?\[(?:10)?[emh\S]*' __ | sort | uniq -c"
+ "rg -I -o '^\\\\?\[(?:10)?[emhEMH\S]*' __ | sort | uniq -c"
 
 check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
  "wc -l __"
 
-check 2 md "Serial comma" "" "" "grep --color=always -Hn ',\s+\S+[^,]\s+and\s' __"
+check 2 md "Serial comma" "" "" "grep --color=always -Hn ',\s+\S+[^,]\s+(and|or)\s' __"
 
 check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
  Check "If the question can be improved another way" \
@@ -147,7 +147,8 @@ check 3 o.html "Bold tag interrupted" \
  "rg --heading --color=always '<p( class=\"p1[^\"]*\")?>\d.*</(b|strong)>.*<(b|strong)>[^<]' __"
 
 # TODO: count tags (valid) - need commas
-rg --color=always -c -I '\\<(.*)\\>' $PREFIX*.md
+check 4 md "Count tags" "" "" \
+ "rg --color=always -c '\\\\<(.*)\\\\>' __"
 
 # exit
 
@@ -156,14 +157,14 @@ function dont1() {
 # TODO: should be nowrap
 check 3 md "Hyphen between two capitalized words" \
  Check "If an en dash should be used for doubly eponymous" \
- "rg --heading --color=always '\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+' __"
+ "rg --heading --color=always -P '(?!Naveh-Benjamin|Co-Head)\p{Lu}\p{Ll}+-\p{Lu}\p{Ll}+' __"
 
 # TODO: should be nowrap
 # TODO: pipe out to http://jwilk.net/software/anorack
 #   anorack | while IFS=: read -r f l e; do echo -e "\n$f:$l\n$e"; sed -n "${l}p" $f; done
 check 3 md "Wrong usage of a/an" \
  Check "If ${UL}a${NL} + vowel or ${UL}an${NL} + consonant usage is correct (false positives: initialisms, silent H, consonantal U, medial A)" \
- "rg --heading --color=always -P '\b[Aa] [()\[\]\\\\* ]*+[AEIOUaeiou]| an [()\[\]\\\\* ]*+(?!1[18])[^aeiouAEIOU<“]' __"
+ "rg --heading --color=always -P '\b[Aa] (?![\\\\[(]*emphasize)[()\[\]\\\\* ]*+(?!(?i)(uni(?:vers|form)|union|uniqu|utopi|Euro|USA?|[U][A-Z]*\b))[AEIOUaeiou]| an [()\[\]\\\\* ]*+(?!1[18]|8|[HS][A-Z]*\b)[^aeiouAEIOUéÉ<“]' __"
 # TODO: fix for Packet by Columbia A and Texas A
 
 check 4 md.nowrap "Short sentences starting with “That”" \
@@ -201,3 +202,8 @@ check 5 md "List instances of most non-ASCII characters" "" "" \
 # TODO: grep " >"
 # TODO: grep "[(this|etc)"
 # TODO: grep "(?)" power marks
+# TODO: questions or bonus parts that don't end in punctuation mark
+
+# words.sh: add report with histogram; number of PGs (per packet)
+
+# rg --color=always 'Answer ' $PREFIX*.md.nowrap

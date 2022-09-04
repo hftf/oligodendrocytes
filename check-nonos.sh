@@ -8,11 +8,11 @@ GREP_COLOR='1;4;31;103'
 # TODO one-click fixes
 
 NONOS1="or ten point| each, [^BPn]| each;|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
-NONOS2="ANSWER:\S|ANSWER[^:]|[Aa]nswer:|ANWER|ASNWER|accpet|prmopt|propmt|(?<!or )(prompt on|do not accept) (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT |before it is read|before mention|until mention|foremention|accept either|accept also|also accept|some questions|[\[ ]Edited|accept of|prompt or|, (prompt|accept| do not accept)| (alone|by itself|by themselves)\]|prompt on just|either order|(either|any) (underlined ?)(name|part|portion)|accept answer|in place of (?!“)"
-NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. [a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|For 10 points each[^:]|10 point[^s]|points each,\s*$|.\[10\]|10 points ?(-|–|—)|, for 10 points,"
-NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|unnamed|[^0-9][.!?] [0-9]|^[0-9]+\.\S| ​|[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|––|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|“ |‘ | ’[^0-9]| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\\*\*\*\)|\\\\(?!~)[^*\n$<>.\[\]]|\\[[APOD]|	|^ | $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*"
-NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.| \\\\<|]\*+$"
+NONOS2="ANSWER:\S|ANSWER[^:]|[Aa]nswer:|ANWER|ASNWER|accpet|prmopt|propmt|(?<!or )(prompt on|do not accept) (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT | NOT|before it is read|before mention|until mention|foremention|accept either|accept also|also accept|some questions|[\[ ]Edited|accept of|prompt or|, (prompt|accept| do not accept)| (alone|by itself|by themselves)\]|prompt on just|either order|(either|any) (underlined ?)(name|part|portion)|accept answer|in place of (?!“)"
+NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. \**[a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|For 10 points each[^:]|10 point[^s]|points each,\s*$|(?#remove).\[10\]|10 points ?(-|–|—)|, for 10 points,"
+NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|unnamed|[^0-9][.!?] [0-9]|^[0-9]+\.\S| ​|(?#remove)[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
+NONOS5="[^0-9]--|––|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|\S\(“|“ |‘ | ’[^0-9]| ‘[0-9]+s|[a-z]‘s\b| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\\*\*\*\)|\\\\(?!~)[^*\n$<>.\[\]]|\\[[APOD]|	|^ | $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*"
+NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.|(?#remove) \\\\<|]\*+$"
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
 
 NONOS7="TB\d?\.|[Tt]iebreaker|[<[(]Edit|by asking|by saying|with “(?!\w+[.,!?]?”)|(by asking|with), “|(by asking|with),? “[A-Z](?!\w+[.,!?]?”)"
@@ -120,7 +120,7 @@ grep --color=always -EiHn "\*\*\*\*" $PREFIX*.md || :
 echo
 echo 'ending punctuation inside italics (false positives: titles, "answers required.", "Description acceptable.")'
 echo "[,.?!]*"
-grep --color=always -PiHn "(?<!\.\w|answers required|acceptable)[.,?!]\*(?!\*)" $PREFIX*.md || :
+grep --color=always -PiHn "(?<!\.\w|answers required|term required|acceptable)[.,?!]\*(?!\*)" $PREFIX*.md || :
 
 
 # echo
