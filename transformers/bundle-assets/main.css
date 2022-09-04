@@ -22,14 +22,6 @@ strong, b {
 }
 
 /* MAIN */
-main p, main span {
-	font-family: inherit !important;
-	line-height: inherit !important;
-}
-main p {
-	font-size: inherit !important;
-}
-
 main, .text {
 	font-family: 'Times', 'Times New Roman', serif;
 }

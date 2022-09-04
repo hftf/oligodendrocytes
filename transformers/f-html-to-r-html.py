@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # http://mashimonator.weblike.jp/storage/library/20090118_001/demo/ruby2/index.html
@@ -12,14 +12,14 @@ import re
 import io
 from unidecode import unidecode
 from htmlparser import LastNParser
+import json
 
 # import Levenshtein
 # from caverphone import caverphone
 
-
 import codecs
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
-sys.stderr = codecs.getwriter('utf8')(sys.stderr)
+sys.stdout.reconfigure(encoding='utf8')
+sys.stderr.reconfigure(encoding='utf8')
 
 filename_in = sys.argv[1]
 filename_out = filename_in.replace('.f.', '.r.')
@@ -27,6 +27,20 @@ filename_out = filename_in.replace('.f.', '.r.')
 with io.open(filename_in, 'r', encoding='utf-8') as file_in:
 	contents = file_in.read()
 	#sys.stderr.write('\n\n' + filename_in + '\n\n')
+
+# Contents of tournaments/_name_/packets/ipa_pgs.json should look like:
+# {
+#   "Poitiers": "fr: pwa.tje",
+# etc.
+filename_ipa_pgs = re.sub('[^/]+$', 'ipa_pgs.json', filename_in)
+try:
+	with io.open(filename_ipa_pgs, 'r', encoding='utf-8') as file_ipa_pgs:
+		ipa_pgs = json.load(file_ipa_pgs)
+except IOError as error:
+	ipa_pgs = {}
+except ValueError as error:
+	sys.stderr.write('Syntax error in IPA PG json dictionary.\n')
+	raise error
 
 if 1:
 	# default
@@ -59,7 +73,7 @@ else:
 	PG_BRACKET_E = '[\)\]]'
 	PG_MIDDLE    = '[^\)\]]+'
 
-PG_OR = QUOTE_E + ur' or ' + QUOTE_S
+PG_OR = QUOTE_E + u' or ' + QUOTE_S
 PG_BRACKET_INSTRUCTION = '[\[\(]' + u'(?P<in>emphasize[^\]\)]*|pause|read slowly[^\]\)]*)' + '[\]\)]'
 
 if use_tags:
@@ -127,6 +141,10 @@ solo <span class="s1"><b>(read slowly)</b></span> <span class="s2"></span>long
 ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> (“lay-AH-koh-on”) <i>and His Sons</i>
 ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>(“lay-AH-koh-on”) and His Sons</i>
 ANSWER: <span class="s1"><b><i>Laocoön</i></b></span><i> (“lay-AH-koh-on”) and His Sons</i>
+<i>aristeia</i> <i>(“ARR-ih-STEE-ah”)</i>
+<i>aristeia</i>s (“ARR-ih-STEE-ahs”)
+Bussy-Rabutin (“boo-see-rah-boo-tahn”)
+Δ<sup>-</sup> (“delta-minus”), and Ω<sup>-</sup> (“omega-minus”)
 '''
 
 zz=1
@@ -162,6 +180,18 @@ def rp_or(b):
 	# <rp> doesn't work because another <rb> is implied:
 	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
+def lookup_ipa_pg(a):
+	trimmed = re.sub(u'^“|”$', '', re.sub('<[^>]+>', '', a))
+	if trimmed in ipa_pgs:
+		return ipa_pgs[trimmed]
+	else:
+		return None
+def format_ipa_pg(ipa_pg):
+	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
+	ipa_pg = re.sub('^([a-z]+):', lambda x: '<span class="flag">' + ''.join(chr(ord(l) - ord('a') + ord(u'🇦')) for l in x.group(1)) + '</span>', ipa_pg)
+	return ipa_pg
+	# TODO: don't show flag if same as last flag.
+
 def html_span_to_ruby(contents):
 	contents = bracket_instruction(contents)
 
@@ -193,6 +223,10 @@ def html_span_to_ruby(contents):
 		prev1 = prev[:last_newline_pos]
 		prev2 = prev[last_newline_pos:]
 		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(b_word_count)
+
+		ipa_pg = lookup_ipa_pg(a)
+		if ipa_pg:
+			b = '<span class="respell">' + b + '</span><span class="ipa">' + format_ipa_pg(ipa_pg) + '</span>'
 
 		# for caver stuff only
 		# a_stripped = unidecode(re.sub('<[^<]+?>', '', a))

@@ -1,7 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 import re
 
 # Character 	Treatment outside PG (orthographic)     	Treatment inside PG (phonetic)
@@ -35,6 +35,8 @@ class UnbalancedError(Exception):
 
 class LastNParser(HTMLParser):
 	def __init__(self, contents):
+		super().__init__(convert_charrefs=True)
+
 		self.contents = contents
 		self.end = len(contents)
 		self.ls = []
@@ -120,7 +122,7 @@ if 1 and __name__ == '__main__':
 		parser = LastNParser(test)
 		for i in range(3):
 			x,y,z = parser.last_n_words(i)
-			print
-			print i, colorCmd + x + resetCmd
-			print i, ' '*len(x) + colorCmd + y + resetCmd
-			print i, ' '*len(x+y) + colorCmd + z + resetCmd
+			print()
+			print(i, colorCmd + x + resetCmd)
+			print(i, ' '*len(x) + colorCmd + y + resetCmd)
+			print(i, ' '*len(x+y) + colorCmd + z + resetCmd)

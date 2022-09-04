@@ -39,6 +39,25 @@ main.pg-ruby {
 	display: inline;
 }
 
+/* ipa */
+.ipa {
+	font-family: 'Minion 3', 'Brill', serif;
+	font-feature-settings: 'ss06', 'ss20';
+	font-size: 120%;
+	word-spacing: 0.2em;
+	position: relative;
+}
+.pg-ruby .ipa .flag {
+	position: absolute;
+	left: -1.5em;
+}
+.pg-respell .ipa {
+	display: none;
+}
+.pg-ipa .respell {
+	display: none;
+}
+
 /* hover */
 .pg-hover ruby {
 	position: relative;

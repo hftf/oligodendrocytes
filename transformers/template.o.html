@@ -39,11 +39,17 @@
 	</ul></li><!--
 	--><li><label>Customize style</label>
 		<ul class="style-switcher">
-			<li><a href="#" class="pg-ruby" title="Ruby (supralinear annotations)">
+			<li><a href="#" class="pg-ruby" data-unclass="pg-inline" title="Ruby (supralinear annotations)">
 				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
 			</a></li><!--
-			--><li><a href="#" class="pg-inline" title="Inline">
+			--><li><a href="#" class="pg-inline" data-unclass="pg-ruby" title="Inline">
 				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+			</a></li><!--
+			--><li><a href="#" class="pg-respell" data-unclass="pg-ipa" title="Respelling">
+				<span class="text pg-ruby"><ruby><rb>respell</rb><rp> (&#x201C;</rp><rt><span class="respell">re-spell</span><span class="ipa">ɹi&thinsp;spɛɫ</span></rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+			</a></li><!--
+			--><li><a href="#" class="pg-ipa" data-unclass="pg-respell" title="IPA">
+				<span class="text pg-ruby"><ruby><rb>IPA</rb><rp> (&#x201C;</rp><rt><span class="respell">eye-P-A</span><span class="ipa">aɪ&thinsp;pi&thinsp;eɪ</span></rt><rp>&#x201D;)</rp></ruby> when available (experimental)</span>&nbsp;
 			</a></li>
 		</ul>
 	</li>
@@ -51,7 +57,7 @@
 </nav>
 </header>
 
-<main id="main" class="pg-ruby">
+<main id="main" class="pg-ruby pg-respell">
 $body$
 </main>
 

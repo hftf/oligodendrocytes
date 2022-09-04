@@ -7,7 +7,7 @@
 %.f.html: %.p.f.html
 	cp "$<" "$@"
 
-%.r.html: %.f.html transformers/f-html-to-r-html.py transformers/htmlparser.py
+%.r.html: %.f.html transformers/f-html-to-r-html.py transformers/htmlparser.py $(PACKETS_DIR)/ipa_pgs.json
 	$(word 2,$^) "$<" > "$@"
 
 HTMLS:=$(call FORMATS,w.html)

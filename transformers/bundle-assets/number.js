@@ -205,7 +205,8 @@ function setHandler() {
 	);
 
 	function styleSwitcher(e) {
-		main.className = this.className; // TODO id
+		main.classList.remove(this.dataset.unclass);
+		main.classList.add(this.className);
 		e.preventDefault();
 	}
 }
