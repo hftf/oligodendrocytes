@@ -13,8 +13,10 @@ pandoc "$1" -f html+empty_paragraphs -t html+empty_paragraphs \
 	sed -E "s/ ((<[\/][^>]*>)+)/\1 /g" | \
 	sed -E "s/((<[^/][^>]*>)+) / \1/g" | \
 	perl -p -e 's/<br>\n/<\/p>\n<p>/;' \
-	     -p -e 's/<p><\/p>\n//;' |
-	gsed -E -e 's/<p class="p1">ANSWER/<p class="p1 answer">ANSWER/g' \
-	        -e '1,/>(.* )?Bonuses/I s/<p class="p1">([A-Za-z0-9]+\. )/<p class="p1 tu">\1/g' \
-	        -e '/>(.* )?Bonuses/I,$ s/<p class="p1">([A-Za-z0-9]+\. )/<p class="p1 bonus">\1/g' \
+	     -p -e 's/<p><\/p>\n/<p><br><\/p>\n/;' \
+	     -p -e 's/strong>/b>/g;' \
+	     -p -e 's/em>/i>/g;' |
+	gsed -E -e 's/<p>ANSWER/<p class="answer">ANSWER/g' \
+	        -e '1,/>(.* )?Bonuses/I s/<p>([A-Za-z0-9]+\. )/<p class="tu">\1/g' \
+	        -e '/>(.* )?Bonuses/I,$ s/<p>([A-Za-z0-9]+\. )/<p class="bonus">\1/g' \
 	        -e 's/>Bonuses/ id="bonuses"&/I'

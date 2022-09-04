@@ -58,7 +58,7 @@ pcregrep --color -M '<p> ' $PREFIX!(*.o).html
 
 check 1 o.html "Soft line breaks (or <br> in HTML)" \
  Remedy "Replace with paragraphs in source document" \
- "rg --heading --color=always -C1 '<br>$' __"
+ "rg --heading --color=always -C1 '<br(?: /)?>$' __"
 
 check 1 f.html "Count of ${UL}tu\"${NL}, ${UL}bonus\"${NL}, and ${UL}ANSWER:${NL}" \
  Check "All counts should equal 120 (20 tu + 20 bonus + 80 answer)" \
@@ -80,7 +80,7 @@ check 2 answers "Special characters in parsed tags or answers" \
 
 check 2 md.nowrap "Bonus marker count" \
   Check "Should have the same number of each marker" \
- "rg -I -o '^\[(?:10)?[emh\S]*' __ | sort | uniq -c"
+ "rg -I -o '^\\\\?\[(?:10)?[emh\S]*' __ | sort | uniq -c"
 
 check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
@@ -144,7 +144,7 @@ rg '[^>]&lt;' $PREFIX*.o.html
 
 check 3 o.html "Bold tag interrupted" \
  Check "If should be removed" \
- "rg --heading --color=always '<p class=\"p1[^\"]*\">\d.*</b>.*<b>[^<]' __"
+ "rg --heading --color=always '<p( class=\"p1[^\"]*\")?>\d.*</(b|strong)>.*<(b|strong)>[^<]' __"
 
 # TODO: count tags (valid) - need commas
 rg --color=always -c -I '\\<(.*)\\>' $PREFIX*.md

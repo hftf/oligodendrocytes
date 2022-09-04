@@ -3,8 +3,8 @@ EXT=.md.nowrap
 
 # split packets into Tossups and Bonuses
 for i in ${PREFIX}*${EXT}; do
-gsed    -E -e '/^Bonuses/Iq'   $i > $i.tos
-gsed -n -E -e '/^Bonuses/I,$p' $i > $i.bon
+gsed    -E -e '/^Bonuses/Iq;  s/<\/?u>//g' $i > $i.tos
+gsed -n -E -e '/^Bonuses/I,$ {s/<\/?u>//g; p}' $i > $i.bon
 done
 
 LIMIT=""
@@ -22,11 +22,11 @@ LIMIT=""
 # 2a sgi         $'$2\t$1'
 # 2a regionals18 --output=$'\t$1' '\\<(.*)\\>'
 
-C_1a_Q_NUM() { rg -H --no-heading -or='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\. ' $LIMIT "$@"; }
-C_1b_P_LET() { rg    -or=$'$1\t$2' '/([^\W_]+)[^\s/:]+:\d+:(\d+)$'            ; }
+C_1a_Q_NUM() { rg -H --no-heading -or='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\\?\. ' $LIMIT "$@"; }
+C_1b_P_LET() { rg    -or=$'$1\t$2' '/([^\W_]+)[^\s/:]+:(?:\d+:)?(\d+)$'            ; }
 C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            "$@"; }
 #C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
-R_3a_ANSLN='^ ?ANSWER: (.*?)(?: \\<| \[|$)'
+R_3a_ANSLN='^ ?ANSWER: (.*?)(?: \\<| \\?\[|$)'
 C_3a_ANSLN() { rg -I -or='$1'      "$R_3a_ANSLN"                          "$@"; }
 C_3b_CLEAN() { sed -E -e 's/ (\*\*)?\([^)]([^()]|\([^)]+\))+\)(\*\*)?//g' -e 's/(\*\*)?\([^)][^)]+\)(\*\*)? //g' | perl -pe 's/(?<!\\)\*//g;' -pe 's/\\\*/\*/g' ;}
 # C_4a_CLEAN() { cat; } # sed -E    's/ (\*\*)?\([^)]+\)(\*\*)?//' ;} # need (?!\t) ?
