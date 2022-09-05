@@ -3,8 +3,6 @@ GETPASSWORD=$(shell sed -n "s/^[^,]*,\([^,]*\),$(notdir $(1:.password.$(2)=)).*/
 	$(PASSWORDSFILE))
 
 %.password.pdf: %.pdf transformers/password-pdf.sh
-	PASSWORD=$(call GETPASSWORD,$@,pdf)
-	$(word 2,$^) $(PASSWORD) "$<" "$@"
+	$(word 2,$^) "$(call GETPASSWORD,$@,pdf)" "$<" "$@"
 %.password.docx: %.pdf transformers/password-docx.sh
-	PASSWORD=$(call GETPASSWORD,$@,pdf)
-	$(word 2,$^) $(PASSWORD) "$<" "$@"
+	$(word 2,$^) "$(call GETPASSWORD,$@,docx)" "$<" "$@"
