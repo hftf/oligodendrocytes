@@ -20,6 +20,9 @@ set
 
     subtitle <<The subtitle can be plain text>>
 
+    bundle-name <<2015-tournament>>
+    edition <<2015-05-01>>
+
     ### Uncomment to use xsl
     # subtitle
     #   xsl:text <<It can also be marked up with >>

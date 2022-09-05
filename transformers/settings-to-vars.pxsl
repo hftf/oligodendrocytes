@@ -4,9 +4,9 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
   output -method=text -encoding=UTF-8
 
   template /
-    apply-templates set/io
+    apply-templates set
 
-  template io
+  template set
     ,line k p v =
       text
         ,k
@@ -16,11 +16,14 @@ stylesheet -version=1.0 -xmlns:xsl=http://www.w3.org/1999/XSL/Transform -xmlns:o
       text <<&#xa;>>
 
     ,line TOURNAMENT_NAME <()> <( <<concat(
-      ../metadata/year, ' ', ../metadata/name)
+      metadata/year, ' ', metadata/name)
     >> )>
-    ,line SOURCE_EXT <()> in/source-ext
+    ,line BUNDLE_NAME <()> metadata/bundle-name
+    ,line EDITION <()> metadata/edition
+
+    ,line SOURCE_EXT <()> io/in/source-ext
     ,line DL_GDOCS_ARGS <()> <( <<concat(
-      '"', in/gdocs-folder-id, '" ',
-      in/packet-filename-to-slug/start, ' ',
-      in/packet-filename-to-slug/length)
+      '"', io/in/gdocs-folder-id, '" ',
+      io/in/packet-filename-to-slug/start, ' ',
+      io/in/packet-filename-to-slug/length)
     >> )>

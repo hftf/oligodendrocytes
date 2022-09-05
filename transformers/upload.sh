@@ -1,21 +1,19 @@
 PREFIX=$1
+BUNDLE=$2
+EDITION=$3
 
-DATE=`date "+%F"`
-
-EDITION=$DATE
-
-ZIPS="$PREFIX"zips/docxs-$DATE.zip \
-	 "$PREFIX"zips/pdfs-$DATE.zip  \
-	 "$PREFIX"zips/password-pdfs-$DATE.zip
+ZIPS="$PREFIX"zips/docxs-$EDITION.zip \
+	 "$PREFIX"zips/pdfs-$EDITION.zip  \
+	 "$PREFIX"zips/password-pdfs-$EDITION.zip
 
 # manually create folder structure on host
 
-host="myhost.buzz"
-hostpath="path/to"
-# ssh $host "cd $hostpath && cp -R packets packets-$prev_edition"
+HOST="gwinnett"
+HOSTPATH="~/minkowski.space/quizbowl/"
+# ssh $HOST "cd $HOSTPATH/PREFIX && cp -R packets packets-$prev_edition"
 
-scp bundles/$bundle/$edition/html/{*.w.html,*.js,!(fonts).css,*.php,*.png,*.csv} \
- 	$host:$hostpath/"$PREFIX"html/
+scp bundles/$BUNDLE/$EDITION/html/{*.w.html,*.js,!(fonts).css,*.php,*.png,*.csv} \
+ 	$HOST:"$HOSTPATH$PREFIX"html/
 scp $ZIPS \
-	$host:$hostpath/"$PREFIX"html/
+ 	$HOST:"$HOSTPATH$PREFIX"html/
 # specifically to $host:$hostpath/$PREFIX/html/password-pdfs.zip

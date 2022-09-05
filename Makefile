@@ -3,7 +3,7 @@
 	check check2 check3 \
 	answers words zips bundle upload
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
-SHELL=bash
+SHELL=bash -O extglob
 
 
 TOURNAMENTS_DIR=tournaments/
@@ -66,7 +66,7 @@ check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 
 reset:
 	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS) docx
-pdfs:
+reset-pdfs:
 	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS) pdf
 
 # TODO split up with intermediate dependencies
@@ -75,23 +75,24 @@ answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 words:   transformers/words.sh   $(call FORMATS,w.html)
 	$< $(PACKETS_DIR)
 
-DATE=$(shell date "+%F")
-EDITION=$(DATE)
+ifeq ($(EDITION),)
+EDITION=$(shell date "+%F")
+endif
 
 $(PACKETS_DIR)zips/docxs-$(EDITION).zip:         $(call FORMATS,docx)
-	zip $@ $*
+	zip $@ $(PACKETS_DIR)!(*password).docx
 $(PACKETS_DIR)zips/pdfs-$(EDITION).zip:          $(call FORMATS,pdf)
-	zip $@ $*
+	zip $@ $(PACKETS_DIR)!(*password).pdf
 $(PACKETS_DIR)zips/password-pdfs-$(EDITION).zip: $(call FORMATS,password.pdf)
-	zip $@ $*
+	zip $@ $(PACKETS_DIR)*.password.pdf
 zips: $(PACKETS_DIR)zips/docxs-$(EDITION).zip \
 	  $(PACKETS_DIR)zips/pdfs-$(EDITION).zip \
 	  $(PACKETS_DIR)zips/password-pdfs-$(EDITION).zip
 
 bundle:  transformers/bundle.sh
-	#
+	$< $(PACKETS_DIR) $(BUNDLE_NAME) $(EDITION)
 upload:  transformers/upload.sh
-	#
+	$< $(PACKETS_DIR) $(BUNDLE_NAME) $(EDITION)
 
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
 # basically all except doc
