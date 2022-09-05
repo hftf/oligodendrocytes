@@ -43,6 +43,7 @@ Will likely be superseded by a script (see `compile.sh`)
    * In your browser, open each `.w.html` file with `?q` appended to the URL.
    * Copy the word count metadata from the pop-up prompts and concatenate.
    * Paste the word count metadata into the data spreadsheet.
-3. [TODO] Run `make zips` to create the zips of the packets for use as a backup.
-4. [TODO] Run `make bundle` to compile the packets and assets into a bundle.
-5. [TODO] Run `make upload` to upload a bundle to a web server.
+3. Run `make zips` to create the zips of the original packets for use as a backup.
+4. Run `make bundle` to compile the packets and assets into a bundle.
+   * Note: `fonts.css` is not included.
+5. Run `make upload` to upload a bundle to a web server.

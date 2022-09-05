@@ -1,7 +1,7 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
 	check check2 check3 \
-	answers words zips
+	answers words zips bundle upload
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
 SHELL=bash
 
