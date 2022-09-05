@@ -47,7 +47,7 @@ $(CURR_DIR_CACHE)vars.mk: transformers/settings-to-vars.xsl $(SETTINGS_XML)
 	pxslcc -hx --add=$(word 2,$^) "$<" > "$@"
 
 
-PACKETS=$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT))
+PACKETS=$(filter-out %.password$(SOURCE_EXT),$(wildcard $(PACKETS_DIR)*$(SOURCE_EXT)))
 FORMATS=$(PACKETS:$(SOURCE_EXT)=.$(1))
 
 formats: $(call FORMATS,$(EXT))
@@ -74,7 +74,7 @@ answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 	$< $(PACKETS_DIR)
 words:   transformers/words.sh   $(call FORMATS,w.html)
 	$< $(PACKETS_DIR)
-zips:    transformers/zips.sh
+zips:    transformers/zips.sh    $(call FORMATS,docx) $(call FORMATS,pdf) $(call FORMATS,password.pdf)
 	$< $(PACKETS_DIR)
 
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
