@@ -74,8 +74,24 @@ answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 	$< $(PACKETS_DIR)
 words:   transformers/words.sh   $(call FORMATS,w.html)
 	$< $(PACKETS_DIR)
-zips:    transformers/zips.sh    $(call FORMATS,docx) $(call FORMATS,pdf) $(call FORMATS,password.pdf)
-	$< $(PACKETS_DIR)
+
+DATE=$(shell date "+%F")
+EDITION=$(DATE)
+
+$(PACKETS_DIR)zips/docxs-$(EDITION).zip:         $(call FORMATS,docx)
+	zip $@ $*
+$(PACKETS_DIR)zips/pdfs-$(EDITION).zip:          $(call FORMATS,pdf)
+	zip $@ $*
+$(PACKETS_DIR)zips/password-pdfs-$(EDITION).zip: $(call FORMATS,password.pdf)
+	zip $@ $*
+zips: $(PACKETS_DIR)zips/docxs-$(EDITION).zip \
+	  $(PACKETS_DIR)zips/pdfs-$(EDITION).zip \
+	  $(PACKETS_DIR)zips/password-pdfs-$(EDITION).zip
+
+bundle:  transformers/bundle.sh
+	#
+upload:  transformers/upload.sh
+	#
 
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
 # basically all except doc
