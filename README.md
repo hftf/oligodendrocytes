@@ -50,3 +50,27 @@ qpdf, gnu coreutils? gsed brew install gnu-sed, ack, textutil (docx -> html, doc
    * fonts css not included
 5. [TODO] Run `make upload` to upload a bundle to a web server.
    * for now, scp
+
+## Project history and status
+
+This project is a janky pile of scripts in many programming languages
+hacked together incrementally over many years intended for personal use.
+It makes many assumptions about the computing environment (e.g. Mac OS, Python 2).
+It is not polished, robust, or well-documented.
+
+Using it may require advanced technical knowledge, familiarity with a command line, or debugging skills.
+Use at your own risk. Please do not wait until the last minute to test it or to seek help.
+
+
+xml tex - too strict. docx > html > tweak w scripts gives flexibility at expense of strict error guarding
+
+docx 
+
+flow.tikz diagram here
+
+note that docx conversion (pandoc) is lossy/philosophically opinionated by intent.
+
+## License
+
+This project is currently not freely licensed (although you may inspect the source code).
+Contact me for information about licensing.
