@@ -1,4 +1,3 @@
-TO_PDF_WORKFLOW="/Users/ophir/Library/Services/to pdf.workflow/"
 SET_WORD_PASSWORD_WORKFLOW="/Users/ophir/Library/Services/set word password.workflow/"
 
 PASSWORD=$1
