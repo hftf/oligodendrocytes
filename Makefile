@@ -1,6 +1,7 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
-	check check2 check3 answers words
+	check check2 check3 \
+	answers words zips
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
 SHELL=bash
 
@@ -63,21 +64,21 @@ check2: check-nonos-2.sh most answers
 check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 	./$< $(PACKETS_DIR) | cat -n
 
+reset:
+	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
+
 # TODO split up with intermediate dependencies
 answers: transformers/answers.sh $(call FORMATS,md.nowrap)
 	$< $(PACKETS_DIR)
-
-words: transformers/words.sh $(call FORMATS,w.html)
+words:   transformers/words.sh   $(call FORMATS,w.html)
 	$< $(PACKETS_DIR)
-
+zips:    transformers/zips.sh
+	$< $(PACKETS_DIR)
 
 # TODO add md.nowrap md.nowrap.bon md.nowrap.tos o.html f.html r.html txt txt.parsed x.html x.md
 # basically all except doc
 clean:
 	cd $(PACKETS_DIR) && rm -vf *.html* *.native *.md *.md.nowrap *.txt
-
-reset:
-	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
 
 $(info Making: $(MAKECMDGOALS))
 

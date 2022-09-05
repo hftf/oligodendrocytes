@@ -34,6 +34,7 @@ set_both_passwords() {
 	copy_pdf_with_password "$PASSWORD" "$PDF_FILENAME" "$PASSWORD_PDF_FILENAME"
 	set_docx_password "$PASSWORD" "$DOCX_FILENAME" "$PASSWORD_DOCX_FILENAME"
 }
+exit
 
 # docx
 convert_docxs_to_pdfs
