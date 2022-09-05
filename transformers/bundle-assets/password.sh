@@ -31,10 +31,11 @@ set_both_passwords() {
 	DOCX_FILENAME="$PREFIX.docx"
 	PASSWORD_DOCX_FILENAME="$PREFIX.password.docx"
 
+	echo "here"
 	copy_pdf_with_password "$PASSWORD" "$PDF_FILENAME" "$PASSWORD_PDF_FILENAME"
 	set_docx_password "$PASSWORD" "$DOCX_FILENAME" "$PASSWORD_DOCX_FILENAME"
 }
-exit
+return
 
 # docx
 convert_docxs_to_pdfs

@@ -1,7 +1,7 @@
 set -e
 
-if [ $# -ne 4 ]; then
-    echo "Need 4 arguments"
+if [ $# -ne 5 ]; then
+    echo "Need 5 arguments"
     exit 0
 fi
 
@@ -9,6 +9,7 @@ PACKETS_DIR="$1"                # packets/
 GDOCS_FOLDER_ID="$2"
 PACKET_FILENAME_TO_SLUG_START="$3"
 PACKET_FILENAME_TO_SLUG_LENGTH="$4"
+EXTENSION="$5"
 
 if [ -z "$GDOCS_FOLDER_ID" ]; then
     echo "Need Google Drive folder ID."
@@ -26,17 +27,17 @@ mkdir -p $DATE_DOCS_DIR
 
 if [ 1 ]; then
     echo "clearing old docs in $PACKETS_DIR, $TEMP_DOCS_DIR, $DATE_DOCS_DIR"
-    rm -rf $PACKETS_DIR*.docx $TEMP_DOCS_DIR* $DATE_DOCS_DIR*.docx
+    rm -rf $PACKETS_DIR*.$EXTENSION $TEMP_DOCS_DIR* $DATE_DOCS_DIR*.$EXTENSION
 
     echo "fetching docs into $TEMP_DOCS_DIR"
-    drive pull -export docx -exports-dir "$TEMP_DOCS_DIR" -explicitly-export -same-exports-dir -files -verbose -id "$GDOCS_FOLDER_ID"
+    drive pull -export "$EXTENSION" -exports-dir "$TEMP_DOCS_DIR" -explicitly-export -same-exports-dir -files -verbose -id "$GDOCS_FOLDER_ID"
 fi
 
 echo
 echo "changing filenames and copying into $DATE_DOCS_DIR"
 for DOC in $TEMP_DOCS_DIR*; do
     OLDNAME=${DOC##*\/}
-    OLDNAME=${OLDNAME%.docx}
+    OLDNAME=${OLDNAME%.$EXTENSION}
 
     # commented out 2020-03-05
     #if [ "$PACKET_FILENAME_TO_SLUG_START" -eq "0" ]; then
@@ -52,7 +53,7 @@ for DOC in $TEMP_DOCS_DIR*; do
     NEWNAME=${NEWNAME// /_}
 
     if [ ! -z "$NEWNAME" ]; then
-        NEWPATH=$DATE_DOCS_DIR$NEWNAME.docx
+        NEWPATH=$DATE_DOCS_DIR$NEWNAME.$EXTENSION
         printf "copying %-42s → \"$NEWNAME\"\n" "\"$OLDNAME\""
         cp "$DOC" "$NEWPATH" || true
     fi

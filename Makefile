@@ -65,7 +65,9 @@ check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 	./$< $(PACKETS_DIR) | cat -n
 
 reset:
-	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS)
+	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS) docx
+pdfs:
+	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS) pdf
 
 # TODO split up with intermediate dependencies
 answers: transformers/answers.sh $(call FORMATS,md.nowrap)
@@ -103,3 +105,4 @@ PANDOC:=pandoc
 -include makefiles/native.mk
 -include makefiles/f.mk
 -include makefiles/t.mk
+-include makefiles/password.mk
