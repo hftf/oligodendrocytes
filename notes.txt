@@ -5,12 +5,10 @@ switcher should use [“ or (“ style from document
 
 # Project
 rename vars
-(1) actual compile.sh
 remove w and x shit
 support ie
 copy superpower from minkowski '.tu span b'
 move O, S, S2 into tournaments
-move *-packets
 
 # Interface
 (2) finish fibrio
@@ -47,7 +45,6 @@ answerline fancy segments
 	by asking:
 	(Extra note.)
 Set name, packet name, UI version number, in fixed header
-Packet name in <title> tag
 >>>>>>>>  packet title in fixed header
 >>>>>>>>>>>> packet.php , not exposed w.html
 >>> <nobr> hyphens
@@ -58,8 +55,6 @@ open-data/annotated-packets p[class], s.s1 -> u
 
 
 # scoresheet
-x make it cut paste Proof : DG column - #Ref use OFFSET? no. Use INDEX?
-x -> aseem suggests making the error obvious
 
 no bounceback for negged TB 21
 
