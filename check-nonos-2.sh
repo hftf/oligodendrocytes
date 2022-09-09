@@ -10,11 +10,11 @@ pcregrep --color=always -M '<p><br /></p>\n<p>[^TB].*?</p>\n<p>[^A[]' $PREFIX!(*
 #pcregrep --color=always -M '<br />(?!</p>)' $PREFIX!(*.o).html
 pcregrep --color=always -M '<p> ' $PREFIX!(*.o).html
 
-check 1 o.html "Soft line breaks (or <br> in HTML)" \
+check 1 p.o.html "Soft line breaks (or <br> in HTML)" \
  Remedy "Replace with paragraphs in source document" \
  "rg --heading --color=always -C1 '<br(?: /)?>$' __"
 
-check 1 f.html "Count of ${UL}tu\"${NL}, ${UL}bonus\"${NL}, and ${UL}ANSWER:${NL}" \
+check 1 p.f.html "Count of ${UL}tu\"${NL}, ${UL}bonus\"${NL}, and ${UL}ANSWER:${NL}" \
  Check "All counts should equal 120 (20 tu + 20 bonus + 80 answer)" \
  "grep --color=always -E -c 'tu\"|bonus\"|ANSWER: ' __"
 
@@ -40,7 +40,8 @@ check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
  "wc -l __"
 
-check 2 md "Serial comma" "" "" "grep --color=always -Hn ',\s+\S+[^,]\s+(and|or)\s' __"
+check 2 md "Serial comma" "" "" \
+ "grep --color=always -PHn ',\s+\S+[^,]\s+(and|or)\s(?!\S+\\>)' __"
 
 check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
  Check "If the question can be improved another way" \
@@ -80,9 +81,9 @@ dont
 
 
 # check 1
-rg '[^>]&lt;' $PREFIX*.o.html
+rg --color=always '[^>]&lt;' $PREFIX*.o.html
 
-check 3 o.html "Bold tag interrupted" \
+check 3 p.o.html "Bold tag interrupted" \
  Check "If should be removed" \
  "rg --heading --color=always '<p( class=\"p1[^\"]*\")?>\d.*</(b|strong)>.*<(b|strong)>[^<]' __"
 
@@ -113,7 +114,7 @@ check 4 md.nowrap "Short sentences starting with “That”" \
 }
 dont1
 
-check 4 txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)" \
+check 4 p.txt "First full pronoun is too far into tossup (70 chars, ignoring PGs)" \
  Check "If the pronoun can be moved earlier instead" \
  "rg --heading --color=always -P -n -ior '\$a►\$b' '^(?P<a>\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?&r)).){70}.*?)(?P<b>(?P<r>this|these) \S+(?!.*points each))' __ | awk '/[0-9]. /{o=\$0;\$1=\"\";match(\$0,\"^[^►]*\");printf(\"%4s %s\n\",RLENGTH-1,o);next}{print}'"
 # reimplement ack's --range-end='Bonuses' for rg

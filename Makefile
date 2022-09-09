@@ -2,7 +2,9 @@
 .PHONY: meta all formats most \
 	check check2 check3 \
 	answers words zips bundle upload
-.PRECIOUS: %.native %.md %.md.nowrap %.o.html %.p.o.html
+.PRECIOUS: %.native %.md %.md.nowrap %.o.html \
+	%.p.o.html %.p.f.html %.p.txt \
+	%.t.o.html %.t.f.html %.t.txt
 SHELL=bash -O extglob
 
 
