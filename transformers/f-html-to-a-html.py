@@ -12,6 +12,7 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
+# this code currently requires md.nowrap input
 filename_in = sys.argv[1]
 filename_out = filename_in.replace('.f.', '.a.')
 
@@ -41,6 +42,7 @@ fake_contents = u'''--
 	# by asking:
 	# but accept after
 	# accept drugs or medication for treating seizures or epilepsy]
+	# need to deal with ', etc.'
 
 	# TODO PG should not be parsed as note; see Harari
 	# TODO allow nbsp to prevent splitting on "or" or ","
@@ -50,15 +52,24 @@ fake_contents = u'''--
 	# click on which answer was given by team
 	# extra button to click on for discretionary accepts/prompts
 
+	# PG <u>Rijksmuseum</u> (“rikes-museum”)
+	# <u>grass</u> \[prompt on <u>leaf</u>, <u>leaves</u>, <u>sprout</u>s, or <u>spear</u>s\]
+	# <u>OSIRIS-REx</u> \[or the <u>Origins, Spectral Interpretation, Resource Identification, Security, Regolith Explorer</u> spacecraft\]
+
+	# warn if a directive doesn't have a bold, underline, or quotation marks
+
+	# until/after X is read: on hover, highlight part of question text
+
 OR_p = 'or '
 ACCEPT_p = 'accept '
 PROMPT_p = 'prompt on '
 REJECT_p = 'do not accept or prompt on '
+REJECT2_p = 'reject '
 
 
 # ANSWERLINE = '<p class="p1 answer">ANSWER: (.+?)</p>'
 ANSWERLINE = '(?<=^ANSWER: )(.+?)(?=$)'
-ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \[(?P<brackets>[^\]]+)\])?(?: \((?P<note>.+?)\))?$'
+ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: \((?P<note>(?!“).+?)\))?$'
 
 def mysub(match):
 	answerline = match.group(0)
@@ -93,6 +104,8 @@ def mysub(match):
 				answer_clauses['prompt'] += ( split_or_comma(clause[len(PROMPT_p):]) )
 			elif clause.startswith(REJECT_p):
 				answer_clauses['reject'] += ( split_or_comma(clause[len(REJECT_p):]) )
+			elif clause.startswith(REJECT2_p):
+				answer_clauses['reject'] += ( split_or_comma(clause[len(REJECT2_p):]) )
 
 			# but DO NOT REVEAL
 			# until, before, after
@@ -110,13 +123,14 @@ def mysub(match):
 
 		for c in k_clauses:
 			i += 1
-			print '%2d. %-12s %s' % (i, k, c)
+			# print '%2d. %-12s %s' % (i, k, c)
+			print ' %-12s %s' % ( k, c)
 	return 'foo'
 
 def split_or_comma(text):
 	# false positive: "accept sine of x, with any letter in place of x, such as theta"
 	# should serial "or" be required?
-	return re.split(', | or ', text)
+	return re.split(', or |, | or ', text)
 
 def html_fancy_answerline(contents):
 	return re.sub(ANSWERLINE, mysub, contents, flags=re.M)
