@@ -152,10 +152,9 @@ def mysub(match):
 			for c in clause:
 				html += '<li>{c}</li>\n'.format(c=c)
 			html += '</ul></dd>'
-		html += '</dl>'
+		html += '</dl></div>'
 		if note:
-			html += '\n<p class="af-note">{note}</p>\n'.format(note=note)
-		html += '</div>'
+			html += '\n<p class="af-note">{note}</p>'.format(note=note)
 		return html
 
 
@@ -182,6 +181,7 @@ BY_ASKING_p     = r'(?P<d> by asking )(?P<b>.+?)$'
 UNTIL_p         = r'(?P<d> (until|after|before) (read|mention(ed)?))'
 UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> is (read|mention(ed)?))'
 BUT_p           = r'(?P<d> but )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?|after)$'
+MISC_p          = r'(?P<d> \(in that order\))$'
 # AND, OR
 # TODO: until/after X is read: on hover, highlight part of question text
 def advanced(clause):
@@ -191,6 +191,7 @@ def advanced(clause):
 	clause = re.sub(UNTIL_p,         r'<span class="af-directive">\g<d></span>', clause)
 	clause = re.sub(UNTIL_Y_p,       r'<span class="af-directive">\g<d></span><span class="af-until">\g<b></span><span class="af-directive">\g<d2></span>', clause)
 	clause = re.sub(BUT_p,           r'<span class="af-directive">\g<d><span class="af-\g<b>">\g<b></span>\g<d2></span>', clause)
+	clause = re.sub(MISC_p,          r'<span class="af-directive">\g<d></span>', clause)
 	return clause
 
 def html_fancy_answerline(contents):
@@ -281,6 +282,10 @@ if fake:
 			'':       [],
 			'note':   []
 		],
+		# accept the bra times the Hamiltonian times the ket (in that order)
+		# accept expected value or EV in place of “expectation value”
+		# prompt on expectation value or expected value by asking “expectation value of what?”; 
+		# accept organic or alkyl fluorides
 	}
 
 	for (test, expected) in tests.items():

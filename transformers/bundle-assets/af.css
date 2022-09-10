@@ -42,7 +42,7 @@
 .answer-fancy .af-accept { color: #000000; }
 .answer-fancy .af-prompt { color: #31337f; }
 .answer-fancy .af-reject { color: #ff5544; }
-.answer-fancy .af-note   { color: #777; }
+.af-note   { color: #777; }
 
 .answer-fancy .af-dnreveal { color: #ffffff; background-color: #c50f1f; }
 .answer-fancy .af-inplace  { color: #000000; }
