@@ -16,3 +16,6 @@ htmls: $(HTMLS)
 # TODO depends on node
 %.w.html: %.r.html transformers/f-html-to-w-html.js
 	$(word 2,$^) "$<" > "$@"
+
+%.a.html: %.w.html transformers/f-html-to-a-html.py
+	$(word 2,$^) "$<" > "$@"

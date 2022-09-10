@@ -36,6 +36,7 @@ function check {
 	if [ -n "$command" ]; then
 		commandescaped=${command//\\/\\\\}
 		commandescaped=${commandescaped//\%/\%\%}
+		# TODO escape ANSI colors
 		commandpretty=${commandescaped/__/$NAVY$PREFIX$wildcard$BLUE$extension$REG$GREY}
 		printf "%-10s $GREY $commandpretty $REG\n\n" "Command:"
 		set +f

@@ -133,8 +133,8 @@ def mysub(match):
 		return answer_clauses
 	else:
 		note = answer_clauses.pop('note')
-		html = original_answerline
-		html += '\n<div class="answer-fancy"><dl>\n'
+		html = '<details><summary>{oa}</summary>\n'.format(oa=original_answerline)
+		html += '<div class="answer-fancy"><dl>\n'
 		for k, clause in answer_clauses.items():
 			if clause == []:
 				continue
@@ -152,9 +152,10 @@ def mysub(match):
 			for c in clause:
 				html += '<li>{c}</li>\n'.format(c=c)
 			html += '</ul></dd>'
-		html += '</dl></div>'
+		html += '</dl>\n'
 		if note:
-			html += '\n<p class="af-note">{note}</p>'.format(note=note)
+			html += '<p class="af-note">{note}</p>\n'.format(note=note)
+		html += '</div></details>\n'
 		return html
 
 
@@ -286,6 +287,10 @@ if fake:
 		# accept expected value or EV in place of “expectation value”
 		# prompt on expectation value or expected value by asking “expectation value of what?”; 
 		# accept organic or alkyl fluorides
+		# prompt on specific dialects like <u>Moroccan</u> or <u>Egyptian</u> that do not mention <b><u>Arabic</u></b>
+		#   both for the assert
+		# accept heart failure with preserved or reduced ejection fraction or HFpEF or HFrEF
+		# accept end rhyme or other forms
 	}
 
 	for (test, expected) in tests.items():

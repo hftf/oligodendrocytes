@@ -1,6 +1,21 @@
+/*details summary { cursor: pointer; }*/
+details       summary { cursor: zoom-in; }
+details[open] summary { cursor: zoom-out; }
+
+details summary::marker { 
+	color: #999;
+}
+details summary > p {
+	display: inline;
+}
+/*	font-family: 'Novel SansCond Pro', sans-serif;
+	color: #999;
+*/
+
 .answer-fancy {
 	border: 1px solid #ddd;
 	line-height: 1.4;
+	margin-left: 1.69em;
 }
 .answer-fancy dl {
 	display: grid;
@@ -12,7 +27,7 @@
 .answer-fancy > dl,
 .answer-fancy > p {
 	margin: 0;
-	padding: 0.75em;
+	padding: 0.75em 1em;
 }
 .answer-fancy > p {
 	border-top: 1px solid #ddd;

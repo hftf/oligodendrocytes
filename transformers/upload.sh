@@ -14,7 +14,7 @@ HOST="gwinnett"
 HOSTPATH="~/minkowski.space/quizbowl/"
 # ssh $HOST "cd $HOSTPATH/PREFIX && cp -R packets packets-$prev_edition"
 
-scp bundles/$BUNDLE/$EDITION/html/{*.w.html,*.js,!(fonts).css,*.php,*.png,*.csv} \
+scp bundles/$BUNDLE/$EDITION/html/{*.w.html,*.a.html,*.js,!(fonts).css,*.php,*.png,*.csv} \
  	$HOST:"$HOSTPATH$PREFIX"html/
 #scp $ZIPS \
 # 	$HOST:"$HOSTPATH$PREFIX"html/
