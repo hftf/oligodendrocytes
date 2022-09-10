@@ -19,4 +19,4 @@ pandoc "$1" -f html+empty_paragraphs -t html+empty_paragraphs \
 	gsed -E -e 's/<p>ANSWER/<p class="answer">ANSWER/g' \
 	        -e '1,/>(.* )?Bonuses/I s/<p>([A-Za-z0-9]+\. )/<p class="tu">\1/g' \
 	        -e '/>(.* )?Bonuses/I,$ s/<p>([A-Za-z0-9]+\. )/<p class="bonus">\1/g' \
-	        -e 's/>Bonuses/ id="bonuses"&/I'
+	        -e 's/>Bonuses<\/p/ id="bonuses"&/I'
