@@ -14,7 +14,7 @@ body {
 
 /* Space between paragraphs */
 p {
-	margin: 0.25em 0 !important;
+	margin: 0.25em 0;
 }
 
 strong, b {
@@ -27,7 +27,7 @@ main, .text {
 }
 
 #bonuses {
-	margin-top: 4em !important;
+	margin-top: 4em;
 }
 
 ins {
