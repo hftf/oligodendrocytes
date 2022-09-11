@@ -1,13 +1,9 @@
 /*details summary { cursor: pointer; }*/
 details       summary { cursor: zoom-in; }
 details[open] summary { cursor: zoom-out; }
-
-details summary::marker { 
-	color: #999;
-}
-details summary > p {
-	display: inline;
-}
+details[open] summary { color: #999; }
+details summary::marker { color: #999; }
+details summary > p { display: inline; }
 /*	font-family: 'Novel SansCond Pro', sans-serif;
 	color: #999;
 */
