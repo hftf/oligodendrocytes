@@ -181,7 +181,7 @@ def rp_or(b):
 	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
 def lookup_ipa_pg(a):
-	trimmed = re.sub(u'^“|”$', '', re.sub('<[^>]+>', '', a))
+	trimmed = re.sub(u'^“|”$|’s$', '', re.sub('<[^>]+>', '', a))
 	if trimmed in ipa_pgs:
 		return ipa_pgs[trimmed]
 	else:
@@ -261,7 +261,8 @@ def html_span_to_ruby(contents):
 			(    reset_color , ''             ),
 		]
 		ruby_str       = ''.join([txt     for clr,txt in ruby_tuples])
-		ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
+		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
+		ruby_str_color = ''.join(['%-40s' % (re.sub('(<[^>]+>)+', ' • ', txt)) for clr,txt in ruby_tuples if clr == contents_color])
 
 		formattedText += (
 			prev1 +
