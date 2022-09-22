@@ -27,12 +27,12 @@ bracket_color  = '\033[103;4m'*zz
 space_color    = '\033[103;4m'*zz
 reset_color    = '\033[0m'*zz
 
-OR_p = 'or '
-ACCEPT_p = 'accept '
-PROMPT_p = 'prompt on '
-ANTIPROMPT_p = 'anti-prompt on ' # TODO regex: anti-?prompt
-REJECT_p = 'do not accept or prompt on '
-REJECT2_p = 'reject '
+OR_p = 'or'
+ACCEPT_p = 'accept'
+PROMPT_p = 'prompt on'
+ANTIPROMPT_p = 'anti-prompt on' # TODO regex: anti-?prompt
+REJECT_p = 'do not accept or prompt on'
+REJECT2_p = 'reject'
 ACCEPT_f = lambda a: '<b>' in a and '<u>' in a
 PROMPT_f = lambda a: '<b>' not in a and '<u>' in a
 REJECT_f = lambda a: '<b>' not in a and '<u>' not in a and '“' in a
@@ -90,23 +90,23 @@ def mysub(match):
 		for clause in brackets_split:
 			# print clause
 			if   clause.startswith(OR_p):
-				s = split_or_comma(clause[len(OR_p):],     ACCEPT_f)
+				s = split_or_comma(clause[len(OR_p):].lstrip(),     ACCEPT_f)
 				answer_clauses['or']     += s
 			elif clause.startswith(ACCEPT_p):
-				s = split_or_comma(clause[len(ACCEPT_p):], ACCEPT_f)
+				s = split_or_comma(clause[len(ACCEPT_p):].lstrip(), ACCEPT_f)
 				answer_clauses['accept'] += s
 				# accept either
 			elif clause.startswith(PROMPT_p):
-				s = split_or_comma(clause[len(PROMPT_p):], PROMPT_f)
+				s = split_or_comma(clause[len(PROMPT_p):].lstrip(), PROMPT_f)
 				answer_clauses['prompt'] += s
 			elif clause.startswith(ANTIPROMPT_p):
-				s = split_or_comma(clause[len(ANTIPROMPT_p):], PROMPT_f)
+				s = split_or_comma(clause[len(ANTIPROMPT_p):].lstrip(), PROMPT_f)
 				answer_clauses['anti-prompt'] += s
 			elif clause.startswith(REJECT_p):
-				s = split_or_comma(clause[len(REJECT_p):], REJECT_f)
+				s = split_or_comma(clause[len(REJECT_p):].lstrip(), REJECT_f)
 				answer_clauses['reject'] += s
 			elif clause.startswith(REJECT2_p):
-				s = split_or_comma(clause[len(REJECT2_p):], REJECT_f)
+				s = split_or_comma(clause[len(REJECT2_p):].lstrip(), REJECT_f)
 				answer_clauses['reject'] += s
 			else:
 				answer_clauses[''] += clause
@@ -193,7 +193,8 @@ def split_or_comma(text, must_match):
 
 
 	matches = re.finditer(
-		r'(?P<sep>, or | or |, )|(?P<c>(?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|(?!, or )(?!, (?! or ))(?!(?<!word forms) or (?!word forms)).)+)',
+		# TODO should (...) be an atomic unit?
+		r'(?P<sep>, or | or |, )|(?P<c>((?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|“[^”]+”)|(?!, or )(?!, (?! or |etc.))(?!(?<!word forms) or (?!word forms)).)+)',
 		text
 	)
 	sys.stderr.write('__')
