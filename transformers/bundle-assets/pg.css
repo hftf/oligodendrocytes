@@ -25,7 +25,7 @@ rp {
 	font-size: 80%;
 }
 main.pg-ruby {
-	line-height: 1.75;
+	line-height: 1.85;
 }
 
 /* inline */
@@ -41,7 +41,7 @@ main.pg-ruby {
 
 /* ipa */
 .ipa {
-	font-family: 'Minion 3', 'Brill', serif;
+	font-family: 'Brill', 'Minion 3', serif;
 	font-feature-settings: 'ss06', 'ss20';
 	font-size: 120%;
 	word-spacing: 0.2em;
@@ -50,6 +50,7 @@ main.pg-ruby {
 .pg-ruby .ipa .flag {
 	position: absolute;
 	left: -1.5em;
+	font-size: 85%;
 }
 .pg-respell .ipa {
 	display: none;

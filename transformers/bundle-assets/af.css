@@ -1,8 +1,11 @@
 /*details summary { cursor: pointer; }*/
+details       summary { margin: 0 -0.5em; padding: 0 0.5em; }
 details       summary { cursor: zoom-in; }
+details       summary:hover { background: #fff3f3; }
 details[open] summary { cursor: zoom-out; }
 details[open] summary { color: #999; }
 details summary::marker { color: #999; }
+details summary:hover::marker { color: #000; }
 details summary > p { display: inline; }
 /*	font-family: 'Novel SansCond Pro', sans-serif;
 	color: #999;
