@@ -187,9 +187,15 @@ def lookup_ipa_pg(a):
 	else:
 		return None
 def format_ipa_pg(ipa_pg):
+	# transform syllable breaks to thin spaces
 	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
-	ipa_pg = re.sub('^([a-z]+):', lambda x: '<span class="flag">' + ''.join(chr(ord(l) - ord('a') + ord(u'🇦')) for l in x.group(1)) + '</span>', ipa_pg)
-	return ipa_pg
+
+	# extract flag
+	match = re.match(r'^(?P<code>[a-z]+):|', ipa_pg)
+	flag = None
+	if match.group('code'):
+		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦')) for l in match.group('code'))
+	return flag, ipa_pg[match.end():]
 	# TODO: don't show flag if same as last flag.
 
 def html_span_to_ruby(contents):
@@ -226,7 +232,12 @@ def html_span_to_ruby(contents):
 
 		ipa_pg = lookup_ipa_pg(a)
 		if ipa_pg:
-			b = '<span class="respell">' + b + '</span><span class="ipa">' + format_ipa_pg(ipa_pg) + '</span>'
+			flag, ipa_pg_formatted = format_ipa_pg(ipa_pg)
+			flag_html = '<span class="flag">' + flag + '</span>' if flag else ''
+			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + '</span>'
+		else:
+			flag, ipa_pg_formatted = '', ''
+			bb = b
 
 		# for caver stuff only
 		# a_stripped = unidecode(re.sub('<[^<]+?>', '', a))
@@ -251,7 +262,7 @@ def html_span_to_ruby(contents):
 			(    space_color , ss             ),
 			(  bracket_color , sb             ),
 			( ruby_tag_color , h('</rp><rt>')    ),
-			( contents_color , b              ),
+			( contents_color , bb             ),
 			( ruby_tag_color , h('</rt><rp>')    ),
 			(  bracket_color , eb             ),
 			( ruby_tag_color , h('</rp>')        ),
@@ -262,7 +273,9 @@ def html_span_to_ruby(contents):
 		]
 		ruby_str       = ''.join([txt     for clr,txt in ruby_tuples])
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
-		ruby_str_color = ''.join(['%-40s' % (re.sub('(<[^>]+>)+', ' • ', txt)) for clr,txt in ruby_tuples if clr == contents_color])
+		def s(x):
+			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
+		ruby_str_color = '%s %s %-5s %s' % (s(a) + ap, s(b) + bp, flag, re.sub(' ', '  ', ipa_pg_formatted))
 
 		formattedText += (
 			prev1 +
