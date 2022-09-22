@@ -32,11 +32,14 @@ ACCEPT_p = 'accept '
 PROMPT_p = 'prompt on '
 REJECT_p = 'do not accept or prompt on '
 REJECT2_p = 'reject '
+ACCEPT_f = lambda a: '<b>' in a and '<u>' in a
+PROMPT_f = lambda a: '<b>' not in a and '<u>' in a
+REJECT_f = lambda a: '<b>' not in a and '<u>' not in a and '“' in a
+NOTE_f   = lambda a: not a.startswith('(“')
 
-
-ANSWERLINE = '^<p class="answer">ANSWER: (.+?)</p>'
+ANSWERLINE = '^<p class="(?:p1 )?answer">ANSWER: (.+?)</p>'
 # ANSWERLINE = '(?<=^ANSWER: )(.+?)(?=$)'
-ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: (?P<note>\((?!“).+?\)))?$'
+ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: (?P<note>\((?!“|[a-z]).+?\)))?$'
 
 def termformat(s):
 	s = re.sub(r'\*\*(.+?)\*\*', '\033[1m\\1\033[22m', s)
@@ -82,20 +85,20 @@ def mysub(match):
 		for clause in brackets_split:
 			# print clause
 			if   clause.startswith(OR_p):
-				s = split_or_comma(clause[len(OR_p):])
+				s = split_or_comma(clause[len(OR_p):],     ACCEPT_f)
 				answer_clauses['or']     += s
 			elif clause.startswith(ACCEPT_p):
-				s = split_or_comma(clause[len(ACCEPT_p):])
+				s = split_or_comma(clause[len(ACCEPT_p):], ACCEPT_f)
 				answer_clauses['accept'] += s
 				# accept either
 			elif clause.startswith(PROMPT_p):
-				s = split_or_comma(clause[len(PROMPT_p):])
+				s = split_or_comma(clause[len(PROMPT_p):], PROMPT_f)
 				answer_clauses['prompt'] += s
 			elif clause.startswith(REJECT_p):
-				s = split_or_comma(clause[len(REJECT_p):])
+				s = split_or_comma(clause[len(REJECT_p):], REJECT_f)
 				answer_clauses['reject'] += s
 			elif clause.startswith(REJECT2_p):
-				s = split_or_comma(clause[len(REJECT2_p):])
+				s = split_or_comma(clause[len(REJECT2_p):], REJECT_f)
 				answer_clauses['reject'] += s
 			else:
 				answer_clauses[''] += clause
@@ -106,15 +109,15 @@ def mysub(match):
 	# assertions
 	try:
 		a = answer_clauses['canonical']
-		assert '<b>' in a and '<u>' in a, a
+		assert ACCEPT_f(a), a
 		for a in answer_clauses['or'] + answer_clauses['accept']:
-			assert '<b>' in a and '<u>' in a, a
+			assert ACCEPT_f(a), a
 		for a in answer_clauses['prompt']:
-			assert '<b>' not in a and '<u>' in a, a
+			assert PROMPT_f(a), a
 		for a in answer_clauses['reject']:
-			assert '<b>' not in a and '<u>' not in a and '“' in a, a
+			assert REJECT_f(a), a
 		for a in answer_clauses['note']:
-			assert not a.startswith('(“'), a
+			assert NOTE_f(a), a
 	except AssertionError as error:
 		sys.stderr.write('\033[7;31m Assertion failed: \033[0m "' + str(error.args[0]) + '"\n')
 
@@ -163,24 +166,60 @@ def split_or_comma_unbalanced(text):
 	# should serial "or" be required?
 	return re.split(r', or |, | or ', text)
 
-def split_or_comma(text):
+def split_or_comma(text, must_match):
 	parts = []
+
+	if re.search(
+		re.sub(
+			'\?P<[^>]+>',
+			'',
+			f'{IN_PLACE_OF_p}|{BY_ASKING_p}|{UNTIL_p}|{UNTIL_Y_p}|{BUT_p}|',
+		) + r'such as|specific.*like',
+		text
+	):
+		return [advanced(text)]
+
+
 	matches = re.finditer(
-		r'(?:, or | or |, )|((?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|(?!, or )(?!, (?! or ))(?!(?<!word forms) or (?!word forms)).)+)',
+		r'(?P<sep>, or | or |, )|(?P<c>(?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|(?!, or )(?!, (?! or ))(?!(?<!word forms) or (?!word forms)).)+)',
 		text
 	)
+	print ('__')
+	must_join = ''
+	last_sep = ''
 	for match in matches:
-		actual_match = match.group(1)
+		actual_match = match.group('c')
+		sep = match.group('sep')
+
+		if sep:
+			if must_join:
+				must_join += sep
+			print ('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
+
 		if actual_match:
+			must_matches = must_match(actual_match)
+			if must_matches:
+				actual_match = must_join + actual_match
+				must_join = ''
+			else:
+				must_join += actual_match
+				last_sep = ''
+			print ('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
+				must_join, must_matches, actual_match, last_sep))
+
+		if actual_match and not must_join:
 			actual_match = advanced(actual_match)
 			parts.append(actual_match)
+	if must_join:
+		must_join = advanced(must_join)
+		parts.append(must_join)
 	return parts
 
 DO_NOT_REVEAL_p = r'(?P<d>, but DO NOT REVEAL, )(?P<b>.+?)$'
 IN_PLACE_OF_p   = r'(?P<d> in place of )(?P<b>“.+?”)$'
 BY_ASKING_p     = r'(?P<d> by asking )(?P<b>.+?)$'
 UNTIL_p         = r'(?P<d> (until|after|before) (read|mention(ed)?))'
-UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> is (read|mention(ed)?))'
+UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> is (read|mention(ed)?))' # they are read, it is read
 BUT_p           = r'(?P<d> but )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?|after)$'
 MISC_p          = r'(?P<d> \(in that order\))$'
 # AND, OR
@@ -192,7 +231,7 @@ def advanced(clause):
 	clause = re.sub(UNTIL_p,         r'<span class="af-directive">\g<d></span>', clause)
 	clause = re.sub(UNTIL_Y_p,       r'<span class="af-directive">\g<d></span><span class="af-until">\g<b></span><span class="af-directive">\g<d2></span>', clause)
 	clause = re.sub(BUT_p,           r'<span class="af-directive">\g<d><span class="af-\g<b>">\g<b></span>\g<d2></span>', clause)
-	clause = re.sub(MISC_p,          r'<span class="af-directive">\g<d></span>', clause)
+	clause = re.sub(MISC_p,          r'<span class="af-directive af-misc">\g<d></span>', clause)
 	return clause
 
 def html_fancy_answerline(contents):
@@ -270,9 +309,29 @@ if fake:
 			'':       [],
 			'note':   []
 		],
-	# <u>OSIRIS-REx</u> \[or the <u>Origins, Spectral Interpretation, Resource Identification, Security, Regolith Explorer</u> spacecraft\]
-	# false positive: "accept sine of x, with any letter in place of x, such as theta"
-
+		# comma in tag
+		r'ANSWER: <b><u>abcd</u></b> \[or the <b><u>a, b, c d</u></b> e\]':
+		odict[
+			'canonical': 'ANSWER: <b><u>abcd</u></b>',
+			'or':     ['the <b><u>a, b, c d</u></b> e'],
+			'accept': [],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# see SUCH AS
+		r'ANSWER: <b><u>foo</u></b> \[accept sine of x, with any letter in place of x, such as theta\]':
+		odict[
+			'canonical': 'ANSWER: <b><u>foo</u></b>',
+			'or':     [],
+			'accept': ['sine of x, with any letter in place of x, such as theta'],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# SUCH AS
 		'ANSWER: <b><u>a</u></b> [accept word forms or equivalents such as <b><u>b</u></b> or <b><u>c</u></b> d]':
 		odict[
 			'canonical': 'ANSWER: <b><u>a</u></b>',
@@ -283,14 +342,76 @@ if fake:
 			'':       [],
 			'note':   []
 		],
-		# accept the bra times the Hamiltonian times the ket (in that order)
-		# accept expected value or EV in place of “expectation value”
-		# prompt on expectation value or expected value by asking “expectation value of what?”; 
-		# accept organic or alkyl fluorides
-		# prompt on specific dialects like <u>Moroccan</u> or <u>Egyptian</u> that do not mention <b><u>Arabic</u></b>
-		#   both for the assert
+		# not NOTE or PG
+		'ANSWER: <b><u>a</u></b> (in b)':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b> (in b)',
+			'or':     [],
+			'accept': [],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		'ANSWER: <b><u>a</u></b> [accept <b><u>a b c</u></b> (in that order)]':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b>',
+			'or':     [],
+			'accept': ['<b><u>a b c</u></b> (in that order)'],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# OR IN PLACE OF
+		'ANSWER: <b><u>a</u></b> [accept <b><u>b</u></b> or <b><u>c</u></b> in place of “a”]':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b>',
+			'or':     [],
+			'accept': ['<b><u>b</u></b> or <b><u>c</u></b> in place of “a”'],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# OR BY ASKING
+		'ANSWER: <b><u>a</u></b> [prompt on <u>b</u> or <u>c</u> by asking “a”]':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b>',
+			'or':     [],
+			'accept': [],
+			'prompt': ['<u>b</u> or <u>c</u> by asking “a”'],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# a OR b c (a c OR b c)
+		'ANSWER: <b><u>a</u></b> [accept a or b <b><u>c</u></b>; accept a, b or c <b><u>d</u></b>; accept a, b, or fail]':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b>',
+			'or':     [],
+			'accept': ['a or b <b><u>c</u></b>', 'a, b or c <b><u>d</u></b>', 'a, b, or fail'],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
+		# LIKE
+		#  TODO: both for the assert
+		'ANSWER: <b><u>a</u></b> [prompt on specific xs like <u>a</u> or <u>b</u> that do not mention <b><u>c</u></b>]':
+		odict[
+			'canonical': 'ANSWER: <b><u>a</u></b>',
+			'or':     [],
+			'accept': [],
+			'prompt': ['specific xs like <u>a</u> or <u>b</u> that do not mention <b><u>c</u></b>'],
+			'reject': [],
+			'':       [],
+			'note':   []
+		],
 		# accept heart failure with preserved or reduced ejection fraction or HFpEF or HFrEF
 		# accept end rhyme or other forms
+		# accept body of Christ after “John” is read but reject before
+		# ANSWER: anointing the statue [accept bathing or washing the statue with any of water, sandalwood, vermillion, turmeric, milk, sugarcane juice, or saffron] 
 	}
 
 	for (test, expected) in tests.items():
@@ -299,4 +420,4 @@ if fake:
 		sys.stderr.write('test:     %s\n'  % test)
 		sys.stderr.write('expected: %s\n'  % expected)
 		sys.stderr.write('actual:   %s\n'  % actual)
-		sys.stderr.write('\033[7m' + str(expected == actual) + '\033[0m\n')
+		sys.stderr.write('Test result: \033[7m' + str(expected == actual) + '\033[0m\n')
