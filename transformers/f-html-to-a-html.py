@@ -30,6 +30,7 @@ reset_color    = '\033[0m'*zz
 OR_p = 'or '
 ACCEPT_p = 'accept '
 PROMPT_p = 'prompt on '
+ANTIPROMPT_p = 'anti-prompt on ' # TODO regex: anti-?prompt
 REJECT_p = 'do not accept or prompt on '
 REJECT2_p = 'reject '
 ACCEPT_f = lambda a: '<b>' in a and '<u>' in a
@@ -71,7 +72,7 @@ def mysub(match):
 	# answerline = answerline.replace('*','')
 
 	answer_clauses = odict([])
-	for k in ['canonical','or','accept','prompt','reject','','note']:
+	for k in ['canonical','or','accept','prompt','anti-prompt','reject','','note']:
 		answer_clauses.setdefault(k, [])
 
 	sys.stderr.write('\n')
@@ -98,6 +99,9 @@ def mysub(match):
 			elif clause.startswith(PROMPT_p):
 				s = split_or_comma(clause[len(PROMPT_p):], PROMPT_f)
 				answer_clauses['prompt'] += s
+			elif clause.startswith(ANTIPROMPT_p):
+				s = split_or_comma(clause[len(ANTIPROMPT_p):], PROMPT_f)
+				answer_clauses['anti-prompt'] += s
 			elif clause.startswith(REJECT_p):
 				s = split_or_comma(clause[len(REJECT_p):], REJECT_f)
 				answer_clauses['reject'] += s
@@ -117,6 +121,8 @@ def mysub(match):
 		for a in answer_clauses['or'] + answer_clauses['accept']:
 			assert ACCEPT_f(a), a
 		for a in answer_clauses['prompt']:
+			assert PROMPT_f(a), a
+		for a in answer_clauses['anti-prompt']:
 			assert PROMPT_f(a), a
 		for a in answer_clauses['reject']:
 			assert REJECT_f(a), a
@@ -153,6 +159,8 @@ def mysub(match):
 				kk = 'ANSWER'
 			if kk == 'prompt':
 				kk = 'prompt on'
+			if kk == 'anti-prompt':
+				kk = 'anti-prompt on'
 			
 			html += '<dt class="af-{k}">{kk}:</dt>'.format(k=k, kk=kk)
 			html += '<dd class="af-{k}"><ul>\n'.format(k=k)
@@ -223,8 +231,8 @@ DO_NOT_REVEAL_p = r'(?P<d>, but DO NOT REVEAL, )(?P<b>.+?)$'
 IN_PLACE_OF_p   = r'(?P<d> in place of )(?P<b>“.+?”)$'
 BY_ASKING_p     = r'(?P<d> by asking )(?P<b>.+?)$'
 UNTIL_p         = r'(?P<d> (until|after|before) (read|mention(ed)?))'
-UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> is (read|mention(ed)?))' # they are read, it is read
-BUT_p           = r'(?P<d> but )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?|after)$'
+UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> (is|are) (read|mention(ed)?))' # they are read, it is read
+BUT_p           = r'(?P<d> (but|and) )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?|after)$'
 MISC_p          = r'(?P<d> \(in that order\))$'
 # AND, OR
 # TODO: until/after X is read: on hover, highlight part of question text

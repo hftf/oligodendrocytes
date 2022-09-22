@@ -51,7 +51,8 @@ details summary > p { display: inline; }
 	margin-left: 1em;
 }
 .answer-fancy .af-accept { color: #000000; }
-.answer-fancy .af-prompt { color: #31337f; }
+.answer-fancy .af-prompt,
+.answer-fancy .af-anti-prompt { color: #31337f; }
 .answer-fancy .af-reject { color: #ff5544; }
 .af-note   { color: #777; }
 
