@@ -37,6 +37,10 @@ PROMPT_f = lambda a: '<b>' not in a and '<u>' in a
 REJECT_f = lambda a: '<b>' not in a and '<u>' not in a and '“' in a
 NOTE_f   = lambda a: not a.startswith('(“')
 
+# TODO: <sub> <sup> in answerline. stretch of <b> but not <u> in answerline
+#  <b><i><u>C</u></i><sub>T</sub></b>
+# TODO: Hypothesis annotations on <details> hard to click
+
 ANSWERLINE = '^<p class="(?:p1 )?answer">ANSWER: (.+?)</p>'
 # ANSWERLINE = '(?<=^ANSWER: )(.+?)(?=$)'
 ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: (?P<note>\((?!“|[a-z]).+?\)))?$'
@@ -50,10 +54,10 @@ def termformat(s):
 
 	s = re.sub(r'<span class="af-reject">(.+?)</span>',     '\033[31m\\1\033[39m', s)
 
-	s = re.sub(r'<span class="af-dnreveal">(.+?)</span>',        '\033[7m\\1\033[27m', s)
-	s = re.sub(r'<span class="af-inplace">(.+?)</span>',        '\033[33m\\1\033[39m', s)
+	s = re.sub(r'<span class="af-dnreveal">(.+?)</span>',   '\033[7m\\1\033[27m', s)
+	s = re.sub(r'<span class="af-inplace">(.+?)</span>',    '\033[33m\\1\033[39m', s)
 	s = re.sub(r'<span class="af-ask">(.+?)</span>',        '\033[34m\\1\033[39m', s)
-	s = re.sub(r'<span class="af-until">(.+?)</span>',        '\033[32m\\1\033[39m', s)
+	s = re.sub(r'<span class="af-until">(.+?)</span>',      '\033[32m\\1\033[39m', s)
 	s = re.sub(r'<span class="af-directive">(.+?)</span>',  '\033[36m\\1\033[39m', s)
 	return s
 
@@ -184,7 +188,7 @@ def split_or_comma(text, must_match):
 		r'(?P<sep>, or | or |, )|(?P<c>(?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|(?!, or )(?!, (?! or ))(?!(?<!word forms) or (?!word forms)).)+)',
 		text
 	)
-	print ('__')
+	sys.stderr.write('__')
 	must_join = ''
 	last_sep = ''
 	for match in matches:
@@ -194,7 +198,7 @@ def split_or_comma(text, must_match):
 		if sep:
 			if must_join:
 				must_join += sep
-			print ('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
+			sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
 
 		if actual_match:
 			must_matches = must_match(actual_match)
@@ -204,7 +208,7 @@ def split_or_comma(text, must_match):
 			else:
 				must_join += actual_match
 				last_sep = ''
-			print ('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
+			sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
 				must_join, must_matches, actual_match, last_sep))
 
 		if actual_match and not must_join:
@@ -421,3 +425,14 @@ if fake:
 		sys.stderr.write('expected: %s\n'  % expected)
 		sys.stderr.write('actual:   %s\n'  % actual)
 		sys.stderr.write('Test result: \033[7m' + str(expected == actual) + '\033[0m\n')
+
+# equivalents, synonyms, word forms
+# ANSWER: anointing the statue [accept bathing or washing the statue with any of water, sandalwood, vermillion, turmeric, milk, sugarcane juice, or saffron]
+# reject the specific phrases “no-slip” or “no-slip condition”]
+# reject answers like “initiation to the Vodou priesthood” or “becoming a mambo” or “becoming a houngan”]
+# garlic OR onions OR leeks OR scallions OR shallots [accept any two answers]
+# Poland [or Republic of Poland or Rzeczpospolita Polska; the film in the third sentence is Ida]
+# Southern Ocean [or Antarctic Ocean until “Antarctic” is read; accept Southern Ocean Carbon and Climate Observations and Modeling; anti-prompt on Weddell Sea by asking “what larger body of water is that a part of?”]
+# Master letters [prompt on letters; prompt on, but DO NOT REVEAL, descriptions of letters written by Emily Dickinson]
+# anointing the statue [accept bathing or washing the statue with any of water, sandalwood, vermillion, turmeric, milk, sugarcane juice, or saffron]
+# Amazon Web Services [or AWS; prompt on Amazon; prompt on descriptions like Amazon cloud hosting or Amazon web hosting]
