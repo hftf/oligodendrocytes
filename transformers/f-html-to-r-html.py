@@ -193,9 +193,10 @@ def format_ipa_pg(ipa_pg):
 	# extract flag
 	match = re.match(r'^(?P<code>\w+):|', ipa_pg, re.UNICODE)
 	flag = None
-	if match.group('code'):
-		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦') % 0x20000) for l in match.group('code'))
-	return flag, ipa_pg[match.end():]
+	code = match.group('code')
+	if code:
+		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦') % 0x20000) for l in code)
+	return code, flag, ipa_pg[match.end():]
 	# TODO: don't show flag if same as last flag.
 
 def html_span_to_ruby(contents):
@@ -232,11 +233,12 @@ def html_span_to_ruby(contents):
 
 		ipa_pg = lookup_ipa_pg(a)
 		if ipa_pg:
-			flag, ipa_pg_formatted = format_ipa_pg(ipa_pg)
+			code, flag, ipa_pg_formatted = format_ipa_pg(ipa_pg)
 			flag_html = '<span class="flag">' + flag + '</span>' if flag else ''
+			# TODO if flag too close to the last PG
 			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + '</span>'
 		else:
-			flag, ipa_pg_formatted = '', ''
+			code, flag, ipa_pg_formatted = '', '', ''
 			bb = b
 
 		# for caver stuff only
@@ -275,7 +277,7 @@ def html_span_to_ruby(contents):
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
 		def s(x):
 			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
-		ruby_str_color = '"%s": %s"%s", %s%-5s %s' % (s(a), ap, s(b), bp, flag, re.sub(' ', '  ', ipa_pg_formatted))
+		ruby_str_color = '"%s": %s"%s", %s%-4s %-4s %s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted))
 
 		formattedText += (
 			prev1 +
