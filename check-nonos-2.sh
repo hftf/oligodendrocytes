@@ -39,6 +39,9 @@ check 2 md.nowrap "Bonus marker count" \
 check 2 md.nowrap "Line count" \
  Check "All files should have the same number of lines (false positives: shorter tiebreaker packets)" \
  "wc -l __"
+check 2 p.o.html "Line count" \
+ Check "Use to investigate: pr -t -m -w144 -n4 __" \
+ "wc -l __"
 
 check 2 md "Serial comma" "" "" \
  "grep --color=always -PHn ',\s+\S+[^,]\s+(and|or)\s(?!\S+\\>)' __"
@@ -122,6 +125,7 @@ check 4 p.txt "First full pronoun is too far into tossup (70 chars, ignoring PGs
 # "sed '/^Bonuses/Iq' __ | rg --color=always -P -n -io '^\d+\. (?>(?> [([](?!this|these).*?[)\]])*+(?!(?1)).){70}.*?(this|these) \S+'"
 # TODO: he him his [this
 # TODO: ignore *Note to ... .*
+# TODO awk length should not take into account PGs
 
 check 5 md.nowrap "List of all non-ASCII characters" "" "" \
  "grep -Poh '[^\\x00-\\x7F]' __ | sort | uniq | tr -d '\n'; echo"
