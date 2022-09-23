@@ -197,7 +197,7 @@ def split_or_comma(text, must_match):
 		r'(?P<sep>, or | or |, )|(?P<c>((?:<(?P<tag>[^>]+)>(?:(?!</(?P=tag)>).)*?</(?P=tag)>|“[^”]+”)|(?!, or )(?!, (?! or |etc.))(?!(?<!word forms) or (?!word forms)).)+)',
 		text
 	)
-	sys.stderr.write('__')
+	# sys.stderr.write('__')
 	must_join = ''
 	last_sep = ''
 	for match in matches:
@@ -207,7 +207,7 @@ def split_or_comma(text, must_match):
 		if sep:
 			if must_join:
 				must_join += sep
-			sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
+			# sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
 
 		if actual_match:
 			must_matches = must_match(actual_match)
@@ -217,8 +217,8 @@ def split_or_comma(text, must_match):
 			else:
 				must_join += actual_match
 				last_sep = ''
-			sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
-				must_join, must_matches, actual_match, last_sep))
+			# sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
+				# must_join, must_matches, actual_match, last_sep))
 
 		if actual_match and not must_join:
 			actual_match = advanced(actual_match)
@@ -276,6 +276,8 @@ if not fake:
 
 if fake:
 	# AND, OR
+	#    TODO: AND, OR on different lines
+	
 	# accept either underlined name. accept in either order
 	# or:
 	# 	..., equivalents, other answers, alternative names
