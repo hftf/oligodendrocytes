@@ -191,10 +191,10 @@ def format_ipa_pg(ipa_pg):
 	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
 
 	# extract flag
-	match = re.match(r'^(?P<code>[a-z]+):|', ipa_pg)
+	match = re.match(r'^(?P<code>\w+):|', ipa_pg, re.UNICODE)
 	flag = None
 	if match.group('code'):
-		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦')) for l in match.group('code'))
+		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦') % 0x20000) for l in match.group('code'))
 	return flag, ipa_pg[match.end():]
 	# TODO: don't show flag if same as last flag.
 
@@ -275,7 +275,7 @@ def html_span_to_ruby(contents):
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
 		def s(x):
 			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
-		ruby_str_color = '%s %s %-5s %s' % (s(a) + ap, s(b) + bp, flag, re.sub(' ', '  ', ipa_pg_formatted))
+		ruby_str_color = '"%s": %s"%s", %s%-5s %s' % (s(a), ap, s(b), bp, flag, re.sub(' ', '  ', ipa_pg_formatted))
 
 		formattedText += (
 			prev1 +
