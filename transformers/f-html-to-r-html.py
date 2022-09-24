@@ -206,6 +206,8 @@ def html_span_to_ruby(contents):
 
 	instances = re.finditer(PGB, contents)
 	lastMatch = 0
+	lastFlag = None
+	lastFlagPos = None
 	formattedText = ''
 
 	for match in instances:
@@ -236,6 +238,14 @@ def html_span_to_ruby(contents):
 		ipa_pg, suffix = lookup_ipa_pg(a)
 		if ipa_pg:
 			code, flag, ipa_pg_formatted = format_ipa_pg(ipa_pg)
+			if flag: 
+				if flag == lastFlag and start - lastFlagPos < 69:
+					flag = None
+					lastFlagPos = start
+				else:
+					lastFlag = flag
+					lastFlagPos = start
+
 			flag_html = '<span class="flag">' + flag + '</span>' if flag else ''
 			# TODO if flag too close to the last PG
 			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + suffix + '</span>'
