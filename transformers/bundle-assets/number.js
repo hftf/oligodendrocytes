@@ -197,6 +197,11 @@ function setHandler() {
 		}
 	}
 
+	document.getElementById('customize').addEventListener('click', function(e) {
+			document.getElementById('style-switcher').showModal();
+			e.preventDefault();
+		}, false);
+
 	var dialog = document.querySelector('dialog');
 	dialog.addEventListener('click',
 		function(event) {
@@ -207,6 +212,10 @@ function setHandler() {
 		}
 	);
 
+	// TODO (move elsewhere):
+	// 2 pgs at once
+	// localstorage
+	// ipa chart
 	arrayFrom(
 		document.querySelectorAll('.style-switcher input[type=radio]'),
 		function(a) {

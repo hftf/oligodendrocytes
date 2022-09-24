@@ -1,7 +1,5 @@
-dialog h2, dialog h3, dialog h4 {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
+dialog h2 { margin: 0.5em 0; }
+dialog section h4 { margin-top: 0; }
 dialog section {
 	display: inline-table /*TODO*/;
 	margin-right: 1.5em;
@@ -31,13 +29,10 @@ dialog button#close {
 	text-align: center;
 	min-width: 4em;
 	padding: 0.5em;
-	border: 1px solid #888;
-	background: #eee;
+	border: 1px solid #bbb;
 }
 .btn-group label input:checked + div {
-	background: #ccc;
-	border-color: #444;
-
+	background: #ddd;
 }
 .btn-group label input[type=radio], 
 .btn-group label input[type=checkbox] {

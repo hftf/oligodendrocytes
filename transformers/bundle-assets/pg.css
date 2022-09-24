@@ -38,6 +38,10 @@ main.pg-ruby {
 	font-size: 90%;
 	display: inline;
 }
+.pg-inline u rt,
+.pg-inline u rp {
+	text-decoration: underline;
+}
 
 /* ipa */
 .ipa {
