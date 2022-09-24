@@ -73,6 +73,11 @@ main.pg-ruby {
 	display: none;
 }
 
+/* font */
+.pg-minion .ipa {
+	font-family: 'Minion 3', 'Brill', serif;
+}
+
 /* hover */
 .pg-hover ruby {
 	position: relative;
