@@ -185,7 +185,7 @@ def lookup_ipa_pg(a):
 	base_suffix = re.match(r'(.*?)(’s|)$', trimmed)
 	base, suffix = base_suffix.group(1), base_suffix.group(2)
 	if base in ipa_pgs:
-		return ipa_pgs[base], ' ' + suffix
+		return ipa_pgs[base], ' ' + suffix if suffix else ''
 	else:
 		return None, ''
 def format_ipa_pg(ipa_pg):
@@ -193,7 +193,7 @@ def format_ipa_pg(ipa_pg):
 	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
 
 	# extract flag
-	match = re.match(r'^(?P<code>\w+):|', ipa_pg, re.UNICODE)
+	match = re.match(r'^(?P<code>\w+): |', ipa_pg, re.UNICODE)
 	flag = None
 	code = match.group('code')
 	if code:
@@ -246,7 +246,7 @@ def html_span_to_ruby(contents):
 					lastFlag = flag
 					lastFlagPos = start
 
-			flag_html = '<span class="flag">' + flag + '</span>' if flag else ''
+			flag_html = '<span class="flag">' + flag + ' </span>' if flag else ''
 			# TODO if flag too close to the last PG
 			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + suffix + '</span>'
 		else:
