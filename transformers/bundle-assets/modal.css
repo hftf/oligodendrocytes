@@ -1,0 +1,45 @@
+dialog h2, dialog h3, dialog h4 {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+dialog section {
+	display: inline-table /*TODO*/;
+	margin-right: 1.5em;
+}
+dialog button#close {
+	padding: 1em;
+	font-size: 140%;
+	position: absolute;
+	top: 0; right: 0;
+	background: none;
+	border: none;
+}
+.btn-group {
+	/*display: flex;*/
+	/*align-items: baseline;*/
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+}
+.btn-group label {
+	display: contents;
+}
+.btn-group label:not(:last-of-type) > div { border-right: none; }
+.btn-group label:first-of-type > div { border-radius: 0.5em 0 0 0.5em; }
+.btn-group label:last-of-type  > div { border-radius: 0 0.5em 0.5em 0; }
+.btn-group label > div {
+	cursor: pointer;
+	text-align: center;
+	min-width: 4em;
+	padding: 0.5em;
+	border: 1px solid #888;
+	background: #eee;
+}
+.btn-group label input:checked + div {
+	background: #ccc;
+	border-color: #444;
+
+}
+.btn-group label input[type=radio], 
+.btn-group label input[type=checkbox] {
+	display: none;
+}

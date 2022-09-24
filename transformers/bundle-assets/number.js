@@ -197,8 +197,18 @@ function setHandler() {
 		}
 	}
 
+	var dialog = document.querySelector('dialog');
+	dialog.addEventListener('click',
+		function(event) {
+			// this works because <dialog> immediately contains <form>,
+			// so any click in the dialog proper will at least target the form
+			if (event.target === dialog)
+				dialog.close();
+		}
+	);
+
 	arrayFrom(
-		document.querySelectorAll('.style-switcher a'),
+		document.querySelectorAll('.style-switcher input[type=radio]'),
 		function(a) {
 			a.addEventListener('click', styleSwitcher, false);
 		}
@@ -206,8 +216,24 @@ function setHandler() {
 
 	function styleSwitcher(e) {
 		main.classList.remove(this.dataset.unclass);
-		main.classList.add(this.className);
-		e.preventDefault();
+		main.classList.add(this.value);
+	}
+
+	arrayFrom(
+		document.querySelectorAll('button.af-toggle'),
+		function(a) {
+			a.addEventListener('click', toggleAllDetails, false);
+		}
+	);
+
+	function toggleAllDetails(e) {
+		var toggle = e.target.value === 'true';
+		arrayFrom(
+			document.querySelectorAll('.tu + details'),
+			function(a) {
+				a.open = toggle;
+			}
+		);
 	}
 }
 

@@ -64,6 +64,11 @@ main.pg-ruby {
 	display: none;
 }
 
+/* flags */
+.pg-flag-hide .flag {
+	display: none;
+}
+
 /* hover */
 .pg-hover ruby {
 	position: relative;

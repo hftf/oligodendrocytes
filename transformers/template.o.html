@@ -37,24 +37,76 @@
 		--><li><a href="#" id="reset">Reset</a></li><!--
 		--><li><span id="status">0 stored</span></li>
 	</ul></li><!--
-	--><li><label>Customize style</label>
-		<ul class="style-switcher">
-			<li><a href="#" class="pg-ruby" data-unclass="pg-inline" title="Ruby (supralinear annotations)">
-				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
-			</a></li><!--
-			--><li><a href="#" class="pg-inline" data-unclass="pg-ruby" title="Inline">
-				<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
-			</a></li><!--
-			--><li style="margin-left: 1.5em;"><a href="#" class="pg-respell" data-unclass="pg-ipa" title="Respelling">
-				<span class="text pg-ruby"><ruby><rb>default</rb><rp> (&#x201C;</rp><rt><span class="respell">ree-spelled</span><span class="ipa">ɹi&thinsp;spɛɫ</span></rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
-			</a></li><!--
-			--><li><a href="#" class="pg-ipa" data-unclass="pg-respell" title="IPA">
-				<span class="text pg-ruby"><ruby><rb>IPA</rb><rp> (&#x201C;</rp><rt><span class="respell">eye-P-A</span><span class="ipa">aɪ&thinsp;pi&thinsp;eɪ</span></rt><rp>&#x201D;)</rp></ruby> (experimental)</span>&nbsp;
-			</a></li>
-		</ul>
-	</li>
+	--><li><label>Interface</label><ul>
+		<li><a href="#style-switcher" onclick="document.getElementById('style-switcher').showModal();">Customize</a></li>
+	</ul></li>
 </ul>
 </nav>
+<dialog id="style-switcher" class="style-switcher">
+	<form method="dialog">
+		<h2>Customize interface</h2>
+		<button id="close" title="Close">×</button>
+		<h3>Pronunciation guides</h3>
+		<section>
+			<h4>Position</h4>
+			<div class="btn-group">
+				<label class="pg-inline" title="Inline">
+					<input type="radio" name="pg-pos" value="pg-inline" data-unclass="pg-ruby" />
+					<div>
+						<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+					</div>
+				</label>
+				<label class="pg-ruby" title="Ruby (supralinear annotations)">
+					<input type="radio" name="pg-pos" value="pg-ruby" data-unclass="pg-inline" checked="checked" />
+					<div>
+						<span class="text"><ruby><rb>word</rb><rp> (&#x201C;</rp><rt>guide</rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+					</div>
+				</label>
+			</div>
+		</section>
+		<section>
+			<h4>Orthography (experimental)</h4>
+			<div class="btn-group">
+				<label class="pg-respell">
+					<input type="radio" name="pg-orth" value="pg-respell" data-unclass="pg-ipa" checked="checked" />
+					<div>
+						<span class="text pg-ruby"><ruby><rb>respelled</rb><rp> (&#x201C;</rp><rt><span class="respell">ree-spelled</span><span class="ipa">ɹi&thinsp;spɛɫd</span></rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+					</div>
+				</label>
+				<label class="pg-ipa">
+					<input type="radio" name="pg-orth" value="pg-ipa" data-unclass="pg-respell" />
+					<div>
+						<span class="text pg-ruby"><ruby><rb>IPA</rb><rp> (&#x201C;</rp><rt><span class="respell">eye-P-A</span><span class="ipa">aɪ&thinsp;pi&thinsp;eɪ</span></rt><rp>&#x201D;)</rp></ruby> (when available)</span>&nbsp;
+					</div>
+				</label>
+			</div>
+		</section>
+		<section>
+			<h4>Flags (when IPA selected)</h4>
+			<div class="btn-group">
+				<label class="pg-ipa pg-flag-hide">
+					<input type="radio" name="pg-flags" value="pg-flag-hide" data-unclass="pg-flag-show" />
+					<div>
+						<span class="text pg-ruby"><ruby><rb>hide</rb><rp> (&#x201C;</rp><rt><span class="ipa"><span class="flag">🏁</span> haɪd</span></rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+					</div>
+				</label>
+				<label class="pg-ipa pg-flag-show">
+					<input type="radio" name="pg-flags" value="pg-flag-show" data-unclass="pg-flag-hide" checked="checked" />
+					<div>
+						<span class="text pg-ruby"><ruby><rb>show</rb><rp> (&#x201C;</rp><rt><span class="ipa"><span class="flag">🏁</span> ʃoʊ</span></rt><rp>&#x201D;)</rp></ruby></span>&nbsp;
+					</div>
+				</label>
+			</div>
+		</section>
+		<h3>Answerlines</h3>
+		<section>
+			<div class="btn-group">
+				<button class="af-toggle" value="false">Collapse all</button> &nbsp; 
+				<button class="af-toggle" value="true">Expand all</button>
+			</div>
+		</section>
+	</form>
+</dialog>
 </header>
 
 <main id="main" class="pg-ruby pg-respell">
