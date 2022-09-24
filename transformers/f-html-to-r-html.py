@@ -181,11 +181,13 @@ def rp_or(b):
 	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
 def lookup_ipa_pg(a):
-	trimmed = re.sub(u'^“|”$|’s$', '', re.sub('<[^>]+>', '', a))
-	if trimmed in ipa_pgs:
-		return ipa_pgs[trimmed]
+	trimmed = re.sub(u'^“|”$', '', re.sub('<[^>]+>', '', a))
+	base_suffix = re.match(r'(.*?)(’s|)$', trimmed)
+	base, suffix = base_suffix.group(1), base_suffix.group(2)
+	if base in ipa_pgs:
+		return ipa_pgs[base], ' ' + suffix
 	else:
-		return None
+		return None, ''
 def format_ipa_pg(ipa_pg):
 	# transform syllable breaks to thin spaces
 	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
@@ -231,12 +233,12 @@ def html_span_to_ruby(contents):
 		prev2 = prev[last_newline_pos:]
 		prev2a, a, closing_tags = real_a = LastNParser(prev2).last_n_words(b_word_count)
 
-		ipa_pg = lookup_ipa_pg(a)
+		ipa_pg, suffix = lookup_ipa_pg(a)
 		if ipa_pg:
 			code, flag, ipa_pg_formatted = format_ipa_pg(ipa_pg)
 			flag_html = '<span class="flag">' + flag + '</span>' if flag else ''
 			# TODO if flag too close to the last PG
-			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + '</span>'
+			bb = '<span class="respell">' + b + '</span><span class="ipa">' + flag_html + ipa_pg_formatted + suffix + '</span>'
 		else:
 			code, flag, ipa_pg_formatted = '', '', ''
 			bb = b
@@ -277,7 +279,7 @@ def html_span_to_ruby(contents):
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
 		def s(x):
 			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
-		ruby_str_color = '"%s": %s"%s", %s%-4s %-4s %s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted))
+		ruby_str_color = '"%s": %s"%s", %s%-4s %-4s %-40s %s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted), suffix)
 
 		formattedText += (
 			prev1 +
