@@ -45,12 +45,17 @@ main.pg-ruby {
 	font-feature-settings: 'ss06', 'ss20';
 	font-size: 120%;
 	word-spacing: 0.2em;
-	position: relative;
+	/*position: relative;*/
+	display: inline-flex;
+	align-items: center;
+	/*column-gap: 0.25em;*/
 }
 .pg-ruby .ipa .flag {
-	position: absolute;
-	left: -1.5em;
+	/*position: absolute;*/
+	/*left: -1.5em;*/
 	font-size: 85%;
+	width: 1.5em;
+	margin-left: -1.5em;
 }
 .pg-respell .ipa {
 	display: none;
