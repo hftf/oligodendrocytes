@@ -11,7 +11,7 @@ nav ul {
 	padding: 0;
 	list-style: none;
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1000px) {
 	nav ul li {
 		float: left;
 	}
@@ -24,7 +24,7 @@ nav ul {
 		clear: both;
 	}
 }
-@media screen and (max-width: 699px) {
+@media screen and (max-width: 999px) {
 	nav {
 		overflow-x: auto;
 		white-space: nowrap;
