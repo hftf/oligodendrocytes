@@ -238,7 +238,7 @@ function setHandler() {
 	function toggleAllDetails(e) {
 		var toggle = e.target.value === 'true';
 		arrayFrom(
-			document.querySelectorAll('.tu + details'),
+			document.querySelectorAll('details'),
 			function(a) {
 				a.open = toggle;
 			}
