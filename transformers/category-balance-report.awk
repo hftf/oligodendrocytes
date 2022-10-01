@@ -21,6 +21,7 @@ BEGINFILE {
 	if (!(category_number in category_names) || category != category_names[category_number][1]) {
 		category_names[category_number][length(category_names[category_number]) + 1] = category;
 	}
+	last_packet_last_number = number;
 }
 END {
 	# header
@@ -98,14 +99,52 @@ END {
 				if (number == 11) printf DELIM;
 				packets_in_number = categories[category_number][question_type][number];
 				printf "\033[48;5;%sm%-6s", 224 - 36*((number - 1) % 5), packets_in_number;
+
+				category_totals[integer] += length(packets_in_number);
+				category_groups[integer][number] += length(packets_in_number);
 			}
-			printf "\033[0m  ";
-			if (qq == 2) printf "  ";
-			printf category_names[category_number][qq];
-			if (qq == 1 && category_names[category_number][2]) printf ",";
-			if (qq == 2 && category_names[category_number][2] != category_names[category_number][3]) printf ", " category_names[category_number][3];
-			print "";
+			printf "\033[0m \033[10%s ", color(integer);
+			ss = "";
+			if (qq == 2) ss = ss "  ";
+			ss = ss category_names[category_number][qq];
+			if (qq == 1 && category_names[category_number][2]) ss = ss ",";
+			if (qq == 2 && category_names[category_number][2] != category_names[category_number][3]) ss = ss ", " category_names[category_number][3];
+			printf "%-30s \033[0m\n", ss;
 		}
+	}
+	print "";
+
+	printf "Totals    ";
+	for (i=1; i<=20; i++) {
+		if (i == 11) printf DELIM;
+		printf "%-7s", i;
+	}
+	num_categories = length(category_groups);
+	num_packets = length(packets) - (last_packet_last_number < 20);
+	num_questions_per_packet = 20;
+	print "";
+
+	for (integer in category_groups) {
+		printf "\033[10%s%-4s\033[0m %-4s ", color(integer), integer, "";
+		for (number=1; number<=20; number++) {
+			if (number == 11) printf DELIM;
+			packets_in_number = category_groups[integer][number];
+			expected = category_totals[integer] / num_questions_per_packet;
+			diff = packets_in_number - expected;
+			diff_rounded = sprintf("%d", packets_in_number - expected);
+
+			# clr = 230 + (diff_rounded > 0) - 36 * min(abs(diff_rounded), 5);
+			if (diff_rounded == 0)
+				clr = 231;
+			else if (diff_rounded > 0)
+				clr = 231 - min(abs(diff_rounded), 5);
+			else if (diff_rounded < 0)
+				clr = 231 - 6 * min(abs(diff_rounded), 5);
+			if (abs(diff_rounded) > 5)
+				clr -= 6 * (diff_rounded < 0 ? 6 : 1) * (abs(diff_rounded) - 5);
+			printf "%-2s\033[48;5;%sm%+1.1f\033[0m ", packets_in_number, clr, diff;
+		}
+		print "";
 	}
 }
 
@@ -257,13 +296,7 @@ function color(integer) {
 function abs(v) {
 	return v < 0 ? -v : v;
 }
-
-function append_if_unique(array, value) {
-    for (i = 1; i <= length(array); i++) {
-    	if (array[i] == value) {
-    		return array;
-    	}
-	}
-	array[i + 1] = value;
-    return array;
+function min(a, b) {
+	if (a < b) return a;
+	return b;
 }
