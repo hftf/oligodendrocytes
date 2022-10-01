@@ -1,6 +1,6 @@
 BEGIN {
-	FS="\t";
-	DELIM="│"
+	FS = "\t";
+	DELIM = "│"
 	PROCINFO["sorted_in"] = "@ind_str_asc"
 	split("T B", question_types, " ");
 }
@@ -9,19 +9,22 @@ BEGINFILE {
 	question_type=toupper(substr(f[1],1,1));
 }
 {
-	packet=$1;
-	number=$2;
-	category=$4;
-	category_number=slugToMainCategoryId(category);
+	packet = $1;
+	number = $2;
+	category = $4;
+	category_number = slugToMainCategoryId(category);
 
-	packets[packet][question_type][number]=category_number;
-	categories[category][question_type][packet]=number;
-	# print question_type, slugToMainCategoryId(category) "\t" category;
-	# print category, slugToMainCategoryId(category), $0;
+	packets[packet][question_type][number] = category_number;
+	categories[category_number][question_type][number] = categories[category_number][question_type][number] packet;
+	# print category, (category_number in category_names), join(category_names[category_number], 1, 3);
+	# print category != category_names[category_number][1];
+	if (!(category_number in category_names) || category != category_names[category_number][1]) {
+		category_names[category_number][length(category_names[category_number]) + 1] = category;
+	}
 }
 END {
 	# header
-	printf "\t";
+	printf "Packet    ";
 	for (i=1; i<=20; i++) {
 		if (i == 11) printf DELIM;
 		printf "%-3s", i;
@@ -39,7 +42,7 @@ END {
 
 		for (qq in question_types) {
 			q = question_type = question_types[qq];
-			printf packet " " question_type "\t";
+			printf "%-4s %-4s ", packet, question_type;
 
 			for (number=1; number<=20; number++) {
 				category_number = packets[packet][question_type][number];
@@ -47,9 +50,7 @@ END {
 				fraction = 10 * (category_number - integer);
 				superscript = fractionToSuperscript(fraction);
 
-				if (number == 11) {
-					printf DELIM;
-				}
+				if (number == 11) printf DELIM;
 				printf "\033[10%s%-3s\033[0m", color(integer), integer superscript;
 				if (!fraction)
 					superscript = "₀";
@@ -76,9 +77,36 @@ END {
 		print "";
 	}
 
-#have questions		Lit	His	Sci	Art	RM					Lit	His	Sci	Art	RM			
-#3412	3142	4312	132	12				5732413621 3425182143	2 2	2 2	2 2	1 2	1 1	1 0	1 0	0 1
-#4231	1234	2134	321	21				1423124538 2134715236	2 2	2 2	2 2	2 1	1 1	0 1	0 1	1 0
+	printf "Category  ";
+	for (i=1; i<=20; i++) {
+		if (i == 11) printf DELIM;
+		printf "%-6s", i;
+	}
+	print "";
+	for (category_number in categories) {
+		integer  = int(category_number);
+		fraction = 10 * (category_number - integer);
+		superscript = fractionToSuperscript(fraction);
+
+		for (qq in question_types) {
+			q = question_type = question_types[qq];
+
+			printf "\033[10%s%-4s\033[0m %-4s ", color(integer), integer superscript, question_type;
+			if (qq == 2) printf "\033[4m";
+
+			for (number=1; number<=20; number++) {
+				if (number == 11) printf DELIM;
+				packets_in_number = categories[category_number][question_type][number];
+				printf "\033[48;5;%sm%-6s", 224 - 36*((number - 1) % 5), packets_in_number;
+			}
+			printf "\033[0m  ";
+			if (qq == 2) printf "  ";
+			printf category_names[category_number][qq];
+			if (qq == 1 && category_names[category_number][2]) printf ",";
+			if (qq == 2 && category_names[category_number][2] != category_names[category_number][3]) printf ", " category_names[category_number][3];
+			print "";
+		}
+	}
 }
 
 function slugToMainCategoryId(slug) {
@@ -228,4 +256,14 @@ function color(integer) {
 }
 function abs(v) {
 	return v < 0 ? -v : v;
+}
+
+function append_if_unique(array, value) {
+    for (i = 1; i <= length(array); i++) {
+    	if (array[i] == value) {
+    		return array;
+    	}
+	}
+	array[i + 1] = value;
+    return array;
 }
