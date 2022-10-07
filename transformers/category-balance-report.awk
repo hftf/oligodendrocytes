@@ -51,12 +51,14 @@ END {
 				fraction = 10 * (category_number - integer);
 				superscript = fractionToSuperscript(fraction);
 
+
 				if (number == 11) printf DELIM;
 				printf "\033[10%s%-3s\033[0m", color(integer), integer superscript;
 				if (!fraction)
 					superscript = "₀";
+
 				by_cat[question_type][integer][number >= 11] = by_cat[question_type][integer][number >= 11] superscript;
-				by_half[question_type][integer][number >= 11] ++
+				by_half[question_type][integer][number >= 11] ++;
 			}
 			printf "\t";
 
@@ -117,7 +119,7 @@ END {
 	printf "Totals    ";
 	for (i=1; i<=20; i++) {
 		if (i == 11) printf DELIM;
-		printf "%-7s", i;
+		printf "%-2s____ ", i;
 	}
 	num_categories = length(category_groups);
 	num_packets = length(packets) - (last_packet_last_number < 20);
@@ -125,6 +127,7 @@ END {
 	print "";
 
 	for (integer in category_groups) {
+		left = right = 0;
 		printf "\033[10%s%-4s\033[0m %-4s ", color(integer), integer, "";
 		for (number=1; number<=20; number++) {
 			if (number == 11) printf DELIM;
@@ -132,18 +135,14 @@ END {
 			expected = category_totals[integer] / num_questions_per_packet;
 			diff = packets_in_number - expected;
 			diff_rounded = sprintf("%d", packets_in_number - expected);
+			if (number <= 10) left += diff;
+			else right += diff;
 
-			# clr = 230 + (diff_rounded > 0) - 36 * min(abs(diff_rounded), 5);
-			if (diff_rounded == 0)
-				clr = 231;
-			else if (diff_rounded > 0)
-				clr = 231 - min(abs(diff_rounded), 5);
-			else if (diff_rounded < 0)
-				clr = 231 - 6 * min(abs(diff_rounded), 5);
-			if (abs(diff_rounded) > 5)
-				clr -= 6 * (diff_rounded < 0 ? 6 : 1) * (abs(diff_rounded) - 5);
+			clr = diffColor(diff_rounded);
 			printf "%-2s\033[48;5;%sm%+1.1f\033[0m ", packets_in_number, clr, diff;
 		}
+		printf " "   "\033[48;5;%sm%+5.1f\033[0m", diffColor(left),  left;
+		printf DELIM "\033[48;5;%sm%+5.1f\033[0m", diffColor(right), right;
 		print "";
 	}
 }
@@ -292,6 +291,18 @@ function color(integer) {
 	if (integer == 1 || integer == 4 || integer == 5)
 		r = r ";97";
 	return r "m";
+}
+function diffColor(diff_rounded) {
+	# clr = 230 + (diff_rounded > 0) - 36 * min(abs(diff_rounded), 5);
+	if (diff_rounded == 0)
+		clr = 231;
+	else if (diff_rounded > 0)
+		clr = 231 - min(abs(diff_rounded), 5);
+	else if (diff_rounded < 0)
+		clr = 231 - 6 * min(abs(diff_rounded), 5);
+	if (abs(diff_rounded) > 5)
+		clr -= 6 * (diff_rounded < 0 ? 6 : 1) * (abs(diff_rounded) - 5);
+	return clr;
 }
 function abs(v) {
 	return v < 0 ? -v : v;
