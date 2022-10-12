@@ -15,7 +15,12 @@ $packet_name = $packet['name'];
 $packet_file = $packet['file'];
 $packet_password = $packet['password'];
 
-if (isset($_POST['password'])) {
+$allowed_to_forget = date('N') < 6;
+
+if (isset($_POST['forgot']) && $allowed_to_forget) {
+	header('Location: ' . $packet_file);
+}
+else if (isset($_POST['password'])) {
 	$password = $_POST['password'];
 
 	if (strtolower($password) == strtolower($packet_password)) {
@@ -35,6 +40,9 @@ else {
 <p>
 <input type="text" name="password" value="" />
 <input type="submit" name="submit" value="Submit" />
+<?php if ($allowed_to_forget) { ?>
+<input type="submit" name="forgot" value="I forgot the packet password (and today is a weekday)" />
+<?php } ?>
 </p>
 </form>
 </body>
