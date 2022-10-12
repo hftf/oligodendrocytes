@@ -2,6 +2,12 @@ PREFIX=$1
 BUNDLE=$2
 EDITION=$3
 
+DATE=`date "+%F"`
+if [[ "$DATE" > "$EDITION" ]]; then
+	echo "Are you sure you want to overwrite the $EDITION bundle? Today is $DATE."
+	exit
+fi
+
 shopt -s extglob
 
 # create web packets bundle folder structure
