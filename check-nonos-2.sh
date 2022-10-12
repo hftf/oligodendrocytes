@@ -133,6 +133,9 @@ check 5 md.nowrap "List of all non-ASCII characters" "" "" \
 check 5 md "List instances of most non-ASCII characters" "" "" \
  "rg --color=always '[^\\x00-\\x7F\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\xFF ​–—‘’“”…]' __"
 
+check 5 answers "List instances of most non-ASCII characters in answerlines" Check "If lunr-unicode-normalizer translates them correctly" \
+ "rg --color=always '[^\\x00-\\x7F\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\xFF ​–—‘’“”…]' __"
+
 
 # check 5 log "Obsolete LaTeX checks" "" "" \
 #  "grep --color -EHnA4 'Missing|erfull' __"
