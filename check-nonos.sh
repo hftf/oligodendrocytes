@@ -10,8 +10,8 @@ GREP_COLOR='1;4;31;103'
 NONOS1="or ten point| each, [^BPn]| each;|etc[^a-z.]|[^a-z]i\.? ?e\.|[^a-z]e\.? ?g\."
 NONOS2="ANSWER:\S|ANSWER[^:]|[Aa]nswer:|ANWER|ASNWER|accpet|prmopt|propmt|(?<!or )(prompt on|do not accept) (\*|“|\")|not reveal|, (prompt(?!ing)|accept|do not prompt)|anti(-| |)prompt|NOT | NOT|before it is read|before mention|until mention|foremention|accept either|accept also|also accept|some questions|[\[ ]Edited|accept of|prompt or|, (prompt|accept| do not accept)| (alone|by itself|by themselves)\]|prompt on just|either order|(either|any) (underlined ?)(name|part|portion)|accept answer|in place of (?!“)|(accept|or) equivalent\b|, (but|and) (accept|prompt) (before|after)|(before|after) “|answers like"
 NONOS3="\.[A-Z]| [A-Z]{,3}\. [A-Z]|[0-9]-[0-9]|\. \**[a-z]|([^,”] f|[^.!*\"”] F)or 10 points| points:|10 points [^e]|for 10 points each:|For 10 points each[^:]|10 point[^s]|points each,\s*$|(?#remove).\[10\]|10 points ?(-|–|—)|, for 10 points,"
-NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|unnamed|[^0-9][.!?] [0-9]|^[0-9]+\.\S| ​|(?#remove)[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
-NONOS5="[^0-9]--|––|\.\.| \.|…[!?.]?\S| ,|”’|‘“|[^([ *]“|\S\(“|“ |‘ | ’[^0-9]| ‘[0-9]+s|[a-z]‘s\b| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”*]|;[a-z]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\\*\*\*\)|\\\\(?!~)[^*\n$<>.\[\]]|\\[[APOD]|	|^ | $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*|\[(s|ing|ed)\]"
+NONOS4="teenth|tieth|logical equiv|obvious equiv|lenient|unnamed|[^0-9][.!?] [0-9]|^[0-9]+\.\S| ​|​|(?#remove)[~^]|­|•|\\$|\\#|[\[\(]\s|\s[\]\)]|s’\s"
+NONOS5="[^0-9]--|––|\.\.| \.| … |…[!?.]?\S| ,|”’|‘“|[^([ *]“|\S\(“|“ |‘ | ’[^0-9]| ‘[0-9]+s|[a-z]‘s\b| ”|’\.|[^!]’,|”\.|”\w|[^!]”,|,[^ ’”*0-9]|’\s?”|;[’”*]|;[a-z]| |\s\s|·|ʻ|ʼ|ʿ|ʾ|'|\"|\.\*\* \(|[\.,] \*\*\(|\\\\\*\*\*\)|\\\\(?!~)[^*\n$<>.\[\]]|\\[[APOD]|	|^ | $| \(|  |  |\s\*+$|[^.”]\)$|\*\* \*\*|\[(s|ing|ed)\]"
 NONOS6="\(\\\\\*\)($|[^*])|\*\\\\<|\\\\>\*|\\\\<\w\w+\.|(?#remove) \\\\<|]\*+$"
 NONOS="$NONOS1|$NONOS2|$NONOS3|$NONOS4|$NONOS5|$NONOS6"
 
