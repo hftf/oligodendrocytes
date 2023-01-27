@@ -40,10 +40,12 @@ else {
 <p>
 <input type="text" name="password" value="" />
 <input type="submit" name="submit" value="Submit" />
-<?php if ($allowed_to_forget) { ?>
-<input type="submit" name="forgot" value="I forgot the packet password (and today is a weekday)" />
-<?php } ?>
 </p>
+<?php if ($allowed_to_forget) { ?>
+<p>
+<input type="submit" name="forgot" value="I forgot the packet password (and I am not moderating a tournament right now as today is a weekday)" />
+</p>
+<?php } ?>
 </form>
 </body>
 </html>
