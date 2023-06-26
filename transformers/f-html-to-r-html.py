@@ -289,7 +289,7 @@ def html_span_to_ruby(contents):
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
 		def s(x):
 			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
-		ruby_str_color = '"%s": %s"%s", %s%-4s %-4s %-40s %s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted), suffix)
+		ruby_str_color = '"%s": %s\t"%s", %s\t%-4s\t%-4s\t%-40s\t%s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted), suffix)
 
 		formattedText += (
 			prev1 +
