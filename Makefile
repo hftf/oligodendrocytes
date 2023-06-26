@@ -118,6 +118,9 @@ PANDOC:=pandoc
 %.o.html: %.p.o.html
 	cp "$<" "$@"
 
+%.t.md: %.docx
+	$(PANDOC) -o "$@" "$<" -f docx+empty_paragraphs -t markdown-bracketed_spans-native_spans-smart
+
 %.md: %.o.html
 	$(PANDOC) -o "$@" "$<" -f html -t markdown-bracketed_spans-native_spans-smart
 
