@@ -44,7 +44,7 @@ NOTE_f   = lambda a: not a.startswith('(“')
 
 ANSWERLINE = '^<p class="(?:p1 )?answer">ANSWER: (.+?)</p>'
 # ANSWERLINE = '(?<=^ANSWER: )(.+?)(?=$)'
-ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: (?P<note>\((?!“|[a-z]).+?\)))?$'
+ANSWERLINE3 = r'^(?P<canonical>.+?)(?: \\?\[(?P<brackets>(?:[^\\\]]|\\[^\]])+)\\?\])?(?: (?P<note>\((?!“</rp>|[a-z]).+?\)))?$'
 
 def termformat(s):
 	s = re.sub(r'\*\*(.+?)\*\*', '\033[1m\\1\033[22m', s)
@@ -126,8 +126,8 @@ def mysub(match):
 			assert PROMPT_f(a), a
 		for a in answer_clauses['reject']:
 			assert REJECT_f(a), a
-		for a in answer_clauses['note']:
-			assert NOTE_f(a), a
+		if answer_clauses['note']:
+			assert NOTE_f(answer_clauses['note']), answer_clauses['note']
 	except AssertionError as error:
 		sys.stderr.write('\033[7;31m Assertion failed: \033[0m "' + str(error.args[0]) + '"\n')
 
@@ -312,6 +312,17 @@ if fake:
 			'reject': [],
 			'':       [],
 			'note':   []
+		],
+		# note
+		'ANSWER: <b><u>word</u></b> (“Word” means thing in French.)':
+		odict[
+			'canonical': 'ANSWER: <b><u>word</u></b>',
+			'or':     [],
+			'accept': [],
+			'prompt': [],
+			'reject': [],
+			'':       [],
+			'note':   ['(“Word” means thing in French.)']
 		],
 		# PROMPT
 		r'ANSWER: <b><u>gs</u></b> \[prompt on <u>lf</u>, <u>ls</u>, <u>st</u>s, or <u>sr</u>s\]':
