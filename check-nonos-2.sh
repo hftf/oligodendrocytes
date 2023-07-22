@@ -26,7 +26,7 @@ check 2 answers "Count of unique authors" "" "" \
  "cat __ | cut -f3 | sort | uniq -c | sort -nrk1"
 
 check 2 answers "Long answers" "" "" \
- "awk 'BEGIN { FS=OFS=\"\t\" } { for (i=5; i<=NF; i++) if (length(\$i) >= 30) print \$1,gensub(/^.+\\/(.+)\\..+$/,\"\\\\1\",\"g\",FILENAME),\$2,length(\$i),\$i}' __"
+ "gawk 'BEGIN { FS=OFS=\"\t\" } { for (i=5; i<=NF; i++) if (length(\$i) >= 30) print \$1,gensub(/^.+\\/(.+)\\..+$/,\"\\\\1\",\"g\",FILENAME),\$2,length(\$i),\$i}' __"
 check 2 answers "Special characters in parsed tags or answers" \
  Check "If should be removed" \
  "rg --heading --color=always '[\\\\()\\[\\]#_*^~]' __"
@@ -44,7 +44,7 @@ check 2 p.o.html "Line count" \
  "wc -l __"
 
 check 2 md "Serial comma" "" "" \
- "grep --color=always -PHn ',\s+\S+[^,]\s+(and|or)\s(?!\S+\\>)' __"
+ "grep --color=always -PHn '(?<!10 points),\s+\S+[^,]\s+(and|or)\s(?!\S+\\>)' __"
 
 check 3 md "Unnecessary moderator notes (${UL}moderator${NL})" \
  Check "If the question can be improved another way" \

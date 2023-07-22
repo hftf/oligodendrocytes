@@ -53,6 +53,7 @@ def termformat(s):
 	s = re.sub(r'<i>(.+?)</i>',  '\033[3m\\1\033[23m', s)
 	s = re.sub(r'<u>(.+?)</u>',  '\033[4m\\1\033[24m', s)
 
+	s = re.sub(r'<span class="af-accept">(.+?)</span>',     '\033[0m\\1\033[39m', s)
 	s = re.sub(r'<span class="af-reject">(.+?)</span>',     '\033[31m\\1\033[39m', s)
 
 	s = re.sub(r'<span class="af-dnreveal">(.+?)</span>',   '\033[7m\\1\033[27m', s)
@@ -186,7 +187,7 @@ def split_or_comma(text, must_match):
 			'\?P<[^>]+>',
 			'',
 			f'{IN_PLACE_OF_p}|{BY_ASKING_p}|{UNTIL_p}|{UNTIL_Y_p}|{BUT_p}|',
-		) + r'such as|specific.*like',
+		) + r'such as|specific.*like|(answers|anything) (like|indicating|mentioning|describing|about)|(synonyms|descriptions|equivalents) of|word forms|synonyms|or similar|equivalents',
 		text
 	):
 		return [advanced(text)]
@@ -210,6 +211,9 @@ def split_or_comma(text, must_match):
 			# sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
 
 		if actual_match:
+			if actual_match.endswith(',”'):
+				actual_match = actual_match[:-2] + actual_match[-1:]
+
 			must_matches = must_match(actual_match)
 			if must_matches:
 				actual_match = must_join + actual_match
@@ -230,11 +234,11 @@ def split_or_comma(text, must_match):
 
 DO_NOT_REVEAL_p = r'(?P<d>, but DO NOT REVEAL, )(?P<b>.+?)$'
 IN_PLACE_OF_p   = r'(?P<d> in place of )(?P<b>“.+?”)$'
-BY_ASKING_p     = r'(?P<d> by asking )(?P<b>.+?)$'
+BY_ASKING_p     = r'(?P<d> (by asking|with) )(?P<b>“.+?”)'
 UNTIL_p         = r'(?P<d> (until|after|before) (read|mention(ed)?))'
 UNTIL_Y_p       = r'(?P<d> (until|after|before) )(?P<b>.+?)(?P<d2> (is|are) (read|mention(ed)?))' # they are read, it is read
-BUT_p           = r'(?P<d> (but|and) )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?|after)$'
-MISC_p          = r'(?P<d> \(in that order\))$'
+BUT_p           = r'(?P<d> (but|and) )(?P<b>accept|prompt|reject)(?P<d2> before(hand)?| after(wards?)?)$' # does not handle "accept bar but (prompt on|reject) baz"
+MISC_p          = r'(?P<d> \(in (that|any) order\))$'
 # AND, OR
 # TODO: until/after X is read: on hover, highlight part of question text
 def advanced(clause):
