@@ -208,7 +208,8 @@ def split_or_comma(text, must_match):
 		if sep:
 			if must_join:
 				must_join += sep
-			# sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), must_join, '', '', last_sep))
+			# sys.stderr.write('>%-72s |%-20s %-8s |%-40s %-8s\n' % (match.groupdict(), 
+				# must_join, '', '', last_sep))
 
 		if actual_match:
 			if actual_match.endswith(',”'):
@@ -221,7 +222,7 @@ def split_or_comma(text, must_match):
 			else:
 				must_join += actual_match
 				last_sep = ''
-			# sys.stderr.write('%-62s %-20s %-8s %-40s %-8s' % (match.groupdict(), 
+			# sys.stderr.write('<%-72s |%-20s %-8s |%-40s %-8s\n' % (match.groupdict(), 
 				# must_join, must_matches, actual_match, last_sep))
 
 		if actual_match and not must_join:
@@ -462,3 +463,9 @@ if fake:
 # Master letters [prompt on letters; prompt on, but DO NOT REVEAL, descriptions of letters written by Emily Dickinson]
 # anointing the statue [accept bathing or washing the statue with any of water, sandalwood, vermillion, turmeric, milk, sugarcane juice, or saffron]
 # Amazon Web Services [or AWS; prompt on Amazon; prompt on descriptions like Amazon cloud hosting or Amazon web hosting]
+# prompt on foo until read with “can you be less specific?”
+# prompt on foo but reject “bar” or “baz”
+# accept 500 Year Itch, “500 Years of Resistance,” or “The Quincentenary Non-Celebration” <- comma before quote
+# prompt on Amish, Mennonites, or Anabaptists until “hex” is read with “what broader cultural group are they part of?” but reject afterwards
+# answer mentioning Simlish, Vonlenska, or Hopelandic until “Sims,” “Vonlenska,” or “Hopelandic” are read, respectively
+# accept the Borders but prompt on the border
