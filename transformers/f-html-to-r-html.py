@@ -193,7 +193,7 @@ def format_ipa_pg(ipa_pg):
 	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
 
 	# extract flag
-	match = re.match(r'^(?P<code>\w+): |', ipa_pg, re.UNICODE)
+	match = re.match(r'^(?P<code>[\w\U00010000-\U000E0000]+): |', ipa_pg, re.UNICODE)
 	flag = None
 	code = match.group('code')
 	if code:
