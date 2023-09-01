@@ -1,5 +1,9 @@
 function initialScrolls() {
-	scr = bon = bonuses.offsetTop - main.offsetTop; // TODO getElementById
+	try {
+		scr = bon = bonuses.offsetTop - main.offsetTop; // TODO getElementById
+	} catch {
+		scr = bon = 0;
+	}
 }
 function swap() {
 	tmp = window.pageYOffset;
