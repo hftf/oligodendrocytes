@@ -145,6 +145,7 @@ ANSWER: <span class="s1"><b><i>Laocoön</i></b></span><i> (“lay-AH-koh-on”) 
 <i>aristeia</i>s (“ARR-ih-STEE-ahs”)
 Bussy-Rabutin (“boo-see-rah-boo-tahn”)
 Δ<sup>-</sup> (“delta-minus”), and Ω<sup>-</sup> (“omega-minus”)
+Basin &amp; Range Cooperative protects this thing. In 2020, the country of Niue (“n’YOO-ay”)
 '''
 
 zz=1
@@ -289,7 +290,7 @@ def html_span_to_ruby(contents):
 		#ruby_str_color = ''.join([clr+txt for clr,txt in ruby_tuples])
 		def s(x):
 			return re.sub(r'<[^>]+>|’s$', ruby_tag_color + r'\g<0>' + reset_color, x)
-		ruby_str_color = '"%s": %s\t"%s", %s\t%-4s\t%-4s\t%-40s\t%s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted), suffix)
+		ruby_str_color = '"%s": %s\t"%s", %s\t%-4s\t%-4s\t%-34s\t%s' % (s(a), ap, s(b), bp, code, flag, re.sub(' ', '  ', ipa_pg_formatted), suffix)
 
 		formattedText += (
 			prev1 +

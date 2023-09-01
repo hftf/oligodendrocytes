@@ -35,7 +35,7 @@ class UnbalancedError(Exception):
 
 class LastNParser(HTMLParser):
 	def __init__(self, contents):
-		super().__init__(convert_charrefs=True)
+		super().__init__(convert_charrefs=False)
 
 		self.contents = contents
 		self.end = len(contents)
@@ -116,7 +116,9 @@ if 1 and __name__ == '__main__':
 		u'-1 0</b> 1 2',
 		u'-1 0 <b>1 2',
 		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>word',
-		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>'
+		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>',
+		u'Basin &amp; Range Niue (“n’YOO-ay”)',
+		u'foo &amp; bar &amp; baz'
 	]
 	for test in tests:
 		parser = LastNParser(test)
