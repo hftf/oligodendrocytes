@@ -34,7 +34,7 @@ ANTIPROMPT_p = 'anti-prompt on' # TODO regex: anti-?prompt
 REJECT_p = 'do not accept or prompt on'
 REJECT2_p = 'reject'
 ACCEPT_f = lambda a: '<b>' in a and '<u>' in a
-PROMPT_f = lambda a: '<b>' not in a and '<u>' in a
+PROMPT_f = lambda a: '<b>' not in a and ('<u>' in a or 'partial' in a)
 REJECT_f = lambda a: '<b>' not in a and '<u>' not in a and '“' in a
 NOTE_f   = lambda a: not a.startswith('(“')
 
