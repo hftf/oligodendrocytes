@@ -110,6 +110,7 @@ def mysub(match):
 				s = split_or_comma(clause[len(REJECT2_p):].lstrip(), REJECT_f)
 				answer_clauses['reject'] += s
 			else:
+				sys.stderr.write('\033[7;31m Unknown clause type: \033[0m "' + clause + '"\n')
 				answer_clauses[''] += clause
 			# if any in result of split_or_comma is '' or contains one of the prefixes
 	if note:
@@ -131,6 +132,7 @@ def mysub(match):
 			assert NOTE_f(answer_clauses['note']), answer_clauses['note']
 	except AssertionError as error:
 		sys.stderr.write('\033[7;31m Assertion failed: \033[0m "' + str(error.args[0]) + '"\n')
+		sys.stderr.write('\033[7;31m Whole answerline: \033[0m "' + answerline + '"\n')
 
 
 	i = 0
@@ -469,3 +471,6 @@ if fake:
 # prompt on Amish, Mennonites, or Anabaptists until “hex” is read with “what broader cultural group are they part of?” but reject afterwards
 # answer mentioning Simlish, Vonlenska, or Hopelandic until “Sims,” “Vonlenska,” or “Hopelandic” are read, respectively
 # accept the Borders but prompt on the border
+# benzynes [accept arynes, reject “benzene”]
+# <b><u>position</u></b> AND <b><u>momentum</u></b> [or generalized <b><u>coordinate</u></b>s AND generalized <b><u>momenta</u></b>; prompt on <i><u>x</u></i> or <i><u>q</u></i> for <b><u>position</u></b> and <i><u>p</u></i> for <b><u>momentum</u></b> until read]
+# chariot racing teams [accept horse racing teams; answers involving the supporters of chariot racing teams]
