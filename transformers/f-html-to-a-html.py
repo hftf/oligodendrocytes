@@ -87,7 +87,7 @@ def mysub(match):
 
 	answer_clauses['canonical'] = canonical
 	if brackets:
-		brackets_split = re.split(r'; ', brackets)
+		brackets_split = re.split(r'(?<!&apos)(?<!&amp)(?<!&lt|&gt); ', brackets)
 		for clause in brackets_split:
 			# print clause
 			if   clause.startswith(OR_p):
