@@ -25,7 +25,7 @@ import re
 
 # Further documentation: https://minkowski.space/quizbowl/pronouncing-dictionary/writing-pgs.html#special
 
-SPACES = u'[  –‒]+'
+SPACES = u'(?!^)[  –‒]+(?!$)'
 
 class UnbalancedError(Exception):
 	pass
