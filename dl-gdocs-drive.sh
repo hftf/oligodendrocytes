@@ -11,6 +11,8 @@ PACKET_FILENAME_TO_SLUG_START="$3"
 PACKET_FILENAME_TO_SLUG_LENGTH="$4"
 EXTENSION="$5"
 
+# TODO figure out how to make packets folder not automatically appear in root dir of oligodendrocytes
+
 if [ -z "$GDOCS_FOLDER_ID" ]; then
     echo "Need Google Drive folder ID."
     echo "(As of 2022-09-01, folder ID is needed instead of name.)"
