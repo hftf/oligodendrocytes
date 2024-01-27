@@ -67,7 +67,7 @@ check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 	./$< $(PACKETS_DIR) | cat -n
 # checkpgs:
 checkcats: answers
-	awk -f transformers/category-balance-report.awk $(PACKETS_DIR)*.answers
+	gawk -f transformers/category-balance-report.awk $(PACKETS_DIR)*.answers
 
 
 reset:

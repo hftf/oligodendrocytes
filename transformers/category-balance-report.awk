@@ -222,11 +222,13 @@ function slugToMainCategoryId(slug) {
 		case "Sculpture":
 		case "Painting/Sculpture":
 		case "Painting and Sculpture":
+		case "Painting & Sculpture":
 			return 4.1;
 		case "Music":
 		case "Classical Music":
 		case "Classical Music/Opera":
 		case "Classical Music and Opera":
+		case "Classical Music & Opera":
 			return 4.2;
 		case "Opera":
 		case "Other Art":
@@ -267,6 +269,7 @@ function slugToMainCategoryId(slug) {
 		case "Other Social Science":
 			return 7;
 
+		case "Other":
 		case "Other Academic":
 		case "Current Events":
 		case "General Knowledge":
