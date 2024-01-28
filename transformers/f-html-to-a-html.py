@@ -130,6 +130,7 @@ def mysub(match):
 			assert REJECT_f(a), a
 		if answer_clauses['note']:
 			assert NOTE_f(answer_clauses['note']), answer_clauses['note']
+		# TODO assert that what follows "in place of" does not contain bold/underline
 	except AssertionError as error:
 		sys.stderr.write('\033[7;31m Assertion failed: \033[0m "' + str(error.args[0]) + '"\n')
 		sys.stderr.write('\033[7;31m Whole answerline: \033[0m "' + answerline + '"\n')
