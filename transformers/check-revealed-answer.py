@@ -62,7 +62,7 @@ def check_revealed_answer(contents):
 			highlighted_text = re.sub(required_words_regex, color1, current_question_text)
 			highlighted_answer = re.sub(
 				f'\\b(until|after|before|read|mention(ed)?) ?',
-				'\033[103m\g<0>\033[0m',
+				'\033[104m\g<0>\033[0m',
 				re.sub(required_words_regex, color2, span['answer']))
 
 			sys.stderr.write(highlighted_text)

@@ -1,6 +1,6 @@
 .SUFFIXES:
 .PHONY: meta all formats most \
-	check check2 check3 \
+	check check2 check3 checkcats checkrevealed \
 	answers words zips bundle upload
 .PRECIOUS: %.native %.md %.md.nowrap %.o.html \
 	%.p.o.html %.p.f.html %.p.txt \
@@ -68,7 +68,8 @@ check3: check-nonos-textutil.sh $(call FORMATS,t.o.html)
 # checkpgs:
 checkcats: answers
 	gawk -f transformers/category-balance-report.awk $(PACKETS_DIR)*.answers
-
+checkrevealed: $(call FORMATS,f.html)
+	$(foreach p,$(call FORMATS,f.html),./transformers/check-revealed-answer.py "$p";)
 
 reset:
 	./dl-gdocs-drive.sh $(PACKETS_DIR) $(DL_GDOCS_ARGS) docx
