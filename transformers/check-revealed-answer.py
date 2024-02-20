@@ -4,6 +4,7 @@
 import sys
 import re
 import io
+import lemminflect
 
 # START_OF_QUESTION_OR_PART = r'^\s*(?:\d+\.)?\s*'
 QUESTION_regex = r'<p class="'
@@ -13,6 +14,18 @@ TOSSUPS_regex = r'Tossups'
 STOPWORDS = re.compile(r'(?i)^(a|the|an|in|on|to|for|de|of|and|is|was|were|are|or|but|by|not|i|from|that|this|with)$')
 # TODO does not catch inflected forms because I'm using \b
 # e.g. echinodermata echinoderms
+
+def get_inflected_forms_regex(word):
+	# remove suffixes like ’s:
+	word = re.sub(r'(’s?|[,.;:!?])$', '', word)
+	# lemmatize the word:
+	for upos in ['NOUN', 'VERB', 'ADV', 'ADJ']:
+		lemma = lemminflect.getLemma(word, upos)
+		inflections = lemminflect.getAllInflections(lemma[0])
+		print (lemma, inflections)
+		for values in inflections.values():
+			for v in values:
+				yield re.escape(v)
 
 def check_revealed_answer(contents):
 	# find start and end positions of all matches for ANSWER_regex
@@ -47,11 +60,15 @@ def find_required_words(answer):
 		removed_tags = re.sub(r'<.*?>', '', match.group(1))
 		for required_word in removed_tags.split():
 			if not STOPWORDS.match(required_word):
-				yield fr'\b{required_word}\b'
+				yield required_word
 
 def required_words_as_regex(required_set):
-	required_words = required_set
-	return '|'.join(required_words)
+	for required_word in required_set:
+		inflections = sorted(list(set(get_inflected_forms_regex(required_word))))
+		print(required_word, inflections)
+
+	required_boundaries = map(lambda required_word: f'\b{required_word}\b', required_set)
+	return '|'.join(required_boundaries)
 
 def split_into_text_and_answers(contents):
 	split = []
