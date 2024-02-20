@@ -15,6 +15,8 @@ STOPWORDS = re.compile(r'(?i)^(|a|the|an|in|on|to|for|de|of|and|is|was|were|are|
 # TODO does not catch inflected forms because I'm using \b
 # e.g. echinodermata echinoderms
 
+GLOBAL_SET = set()
+
 def get_inflected_forms_regex(word):
 	# remove suffixes like ’s:
 	word = re.sub(r'(’s?|[,.;:!?])$', '', word)
@@ -56,11 +58,12 @@ def check_revealed_answer(contents):
 
 		match = re.search(required_words_regex, current_question_text)
 		if match:
-			highlighted_text = re.sub(required_words_regex, '\033[102m\g<0>\033[0m', current_question_text)
+			GLOBAL_SET = set()
+			highlighted_text = re.sub(required_words_regex, color1, current_question_text)
 			highlighted_answer = re.sub(
 				f'(until|after|before|read|mention(ed)?) ?',
 				'\033[103m\g<0>\033[0m',
-				re.sub(required_words_regex, '\033[107m\g<0>\033[0m', span['answer']))
+				re.sub(required_words_regex, color2, span['answer']))
 
 			sys.stderr.write(highlighted_text)
 			sys.stderr.write(highlighted_answer)
@@ -94,6 +97,26 @@ def split_into_text_and_answers(contents):
 		pos = match.end()
 	return split
 
+def color1(text):
+	text_hash = hash(text.group(0).lower())
+	GLOBAL_SET.add(text_hash)
+
+	h = str(text_hash % 230 + 1)
+	subscript = ''.join([chr(0x2080 + int(i)) for i in str(h)])
+
+	subscript_str = f'\033[48;5;{h}m{subscript}'
+	return subscript_str + '\033[0;4;102m' + text.group(0) + '\033[0m'
+
+def color2(text):
+	text_hash = hash(text.group(0).lower())
+
+	if text_hash in GLOBAL_SET:
+		h = str(text_hash % 230 + 1)
+		subscript = ''.join([chr(0x2080 + int(i)) for i in str(h)])
+		subscript_str = f'\033[48;5;{h}m{subscript}'
+		return subscript_str + '\033[0;4;102m' + text.group(0) + '\033[0m'
+	else:
+		return text.group(0)
 
 # fake = False
 # try:
