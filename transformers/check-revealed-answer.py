@@ -28,7 +28,7 @@ def get_inflected_forms_regex(word):
 		# print (lemma, inflections)
 		for values in inflections.values():
 			for v in values:
-				yield re.escape(v)
+				yield v
 
 def check_revealed_answer(contents):
 	# find start and end positions of all matches for ANSWER_regex
@@ -61,7 +61,7 @@ def check_revealed_answer(contents):
 			GLOBAL_SET = set()
 			highlighted_text = re.sub(required_words_regex, color1, current_question_text)
 			highlighted_answer = re.sub(
-				f'(until|after|before|read|mention(ed)?) ?',
+				f'\\b(until|after|before|read|mention(ed)?) ?',
 				'\033[103m\g<0>\033[0m',
 				re.sub(required_words_regex, color2, span['answer']))
 
@@ -79,7 +79,8 @@ def find_required_words(answer):
 						yield inflected_word
 
 def required_words_as_regex(required_set):
-	return r'(?i)\b(' + '|'.join(required_set) + r')'
+	escaped = map(re.escape, required_set)
+	return r'(?i)(?<!<)(?<!</)\b(' + '|'.join(escaped) + r')\b'
 
 def split_into_text_and_answers(contents):
 	split = []
