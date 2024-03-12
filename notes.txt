@@ -44,6 +44,7 @@ answerline fancy segments
 	do not accept:
 	by asking:
 	(Extra note.)
+	see more added to f-html-to-a-html.py
 Set name, packet name, UI version number, in fixed header
 >>>>>>>>  packet title in fixed header
 >>>>>>>>>>>> packet.php , not exposed w.html
@@ -53,6 +54,16 @@ answers.sh : nbsp to sp
 
 open-data/annotated-packets p[class], s.s1 -> u
 
+online packets should have checksum, and locally store it along with buzzpoints - packet may have changed
+- the least destructive solution is probably to compare checksums. if it doesn't match, ask if user wants to
+  - copy the original buzz points as is, or
+  - attempt to continue (i think you can lose some buzz points if a question gets shorter)
+- or expiration date
+- lose-lose tradeoff: new url (packets-[date]) is prob best solution, but makes other things less convenient
+- could be bad for small updates during a tournament. tossups mostly unaffected, some words may be offset by 1
+
+import buzzpoints into online packet (paste into textbox, click import, words become highlighted)
+- could be useful if mods switch halfway (in emergency) etc
 
 # scoresheet
 
