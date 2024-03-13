@@ -1,11 +1,20 @@
 <<<?xml version="1.0" encoding="UTF-8" ?>>>
 
 # Copy this file to your tournament folder.
-# Currently, the only settings used are:
+
+# The only settings used by the current flow are:
+#   set/metadata/year
+#   set/metadata/name
+#     used in html <title>
+#   set/metadata/bundle-name
+#   set/metadata/edition
+#      used for bundle and upload
 #   set/io/in/source-ext
-#   set/io/in/gdocs-folder-name
+#   set/io/in/gdocs-folder-id
 #   set/io/in/packet-filename-to-slug/start
 #   set/io/in/packet-filename-to-slug/length
+#     parameters for Google Docs downloader
+# (see transformers/settings-to-vars.pxsl for strings to grep)
 
 ### Toggle comments to use xsl
 # set -xmlns:xsl=http://www.w3.org/1999/XSL/Transform
@@ -14,14 +23,14 @@ set
     name <<Tournament name>>
     year <<2015>>
 
-    ### Other metadata
+    bundle-name <<2015-tournament>>
+    edition <<2015-05-01>>
+
+    ### Other metadata (obsolete)
     date <<May 1, 2015>>
     location <<foo>>
 
     subtitle <<The subtitle can be plain text>>
-
-    bundle-name <<2015-tournament>>
-    edition <<2015-05-01>>
 
     ### Uncomment to use xsl
     # subtitle
@@ -30,8 +39,6 @@ set
 
   io
     in
-      order <<order.txt>>
-
       ### Uncomment if not using Google Docs
       # source-ext <<.md>>
 
@@ -46,6 +53,9 @@ set
       packet-filename-to-slug
         start <<0>>
         length <<2>>
+
+      ### Everything below this point is obsolete
+      order <<order.txt>>
 
       prefixes
         ### Uncomment to strip string prefixes from packet header
