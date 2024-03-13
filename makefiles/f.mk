@@ -10,7 +10,7 @@
 %.r.html: %.f.html transformers/f-html-to-r-html.py transformers/htmlparser.py $(wildcard $(PACKETS_DIR)/ipa_pgs.json)
 	$(word 2,$^) "$<" > "$@"
 
-HTMLS:=$(call FORMATS,w.html)
+HTMLS:=$(call FORMATS,a.html)
 htmls: $(HTMLS)
 
 # TODO depends on node
