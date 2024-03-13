@@ -21,11 +21,11 @@ import re
 # NBSP  in orthographic (2 words),  SPACE in phonetic (2 words): 	 St. John (“SIN jun”), Eamon de Valera (“EH-min deh vuh-LEH-ruh”)
 # NNBSP in orthographic (1 word) ,  HYPH  in phonetic (1 word):  	 St. John (“SIN-jun”), Beaux Arts (“boh-ZARR”)
 # NDASH in orthographic (2 words),  SPACE in phonetic (2 words): 	 Foo–Barr (“foo bar”)
-# “I”   as orthographic (1 word),   NBSP  in phonetic (1 word):  	 Edward I (“the first”), Guigues IV (“GEEG the fourth”), Renaud-Barrault (“ruh-NO bah-RO”)
+# “I”   as orthographic (1 word) ,  NBSP  in phonetic (1 word):  	 Edward I (“the first”), Guigues IV (“GEEG the fourth”), Renaud-Barrault (“ruh-NO bah-RO”)
 
 # Further documentation: https://minkowski.space/quizbowl/pronouncing-dictionary/writing-pgs.html#special
 
-SPACES = u'(?!^)[  –‒]+(?!$)'
+SPACES = u'[  –‒]+'
 
 class UnbalancedError(Exception):
 	pass
