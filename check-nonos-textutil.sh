@@ -13,4 +13,4 @@ check 1 t.o.html "Extra CSS classes" "" "" \
  "rg --heading --color=always -P -C1 '[\".](s[2-9]|p[4-9]|Apple-(?!converted-space))' __"
 
 check 1 t.o.html "Extra CSS classes" "" "" \
-  "for i in __; do echo -e \"\\n$REV\$i$REG\"; awk '/<style/ {a=1} /<\/style/ {a=0} a' \"\$i\" | grep -vf tournaments/nasat18/ok-styles.txt | rg -Po '[^.]+(?= \{)' | tr '\n' '|' | xargs -I '{}' rg --color=always -C2 '[.\"]({}%@)' \"\$i\"; done"
+  "for i in __; do echo -e \"\\n$REV\$i$REG\"; awk '/<style/ {a=1} /<\/style/ {a=0} a' \"\$i\" | grep -vf transformers/ok-styles.txt | rg -Po '[^.]+(?= \{)' | tr '\n' '|' | xargs -I '{}' rg --color=always -C2 '[.\"]({}%@)' \"\$i\"; done"
