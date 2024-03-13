@@ -107,24 +107,41 @@ if 1 and __name__ == '__main__':
 	colorCmd = '\033[107;4m'*zz
 	resetCmd = '\033[0m'*zz
 
-	# parser = LastNParser('One morning, when <i>Gregor Samsa</i>')
-	test = u'Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10'
-	test = u'power after overcoming Xiàng Yǔ’s</b> <span class="s2"><b>[shyong yoo’s]</b></span> <b>state of (*)</b> Chu.'
-	tests = [
-		u'-1 0 1</i> 2</b>',
-		u'-1 0 1</b> 2',
-		u'-1 0</b> 1 2',
-		u'-1 0 <b>1 2',
-		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>word',
-		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>',
-		u'Basin &amp; Range Niue (“n’YOO-ay”)',
-		u'foo &amp; bar &amp; baz'
-	]
-	for test in tests:
+	tests = {
+		u'One morning, when <i>Gregor Samsa</i>': (5, [0, 4, 13, 18, 28]),
+		u'Luis Buñuel, <i>L’Âge d’Or</i> (“lodge dor”). For 10': (8, [0, 5, 13, 22, 31, 39, 46, 50]),
+		u'power after overcoming Xiàng Yǔ’s</b> <span class="s2"><b>[shyong yoo’s]</b></span> <b>state of (*)</b> Chu.': (11, [0, 6, 12, 23, 29, 38, 66, 84, 93, 96, 104]),
+		u'-1 0 1</i> 2</b>': (4, [0, 3, 5, 11]),
+		u'-1 0 1</b> 2': (4, [0, 3, 5, 11]),
+		u'-1 0</b> 1 2': (4, [0, 3, 9, 11]),
+		u'-1 0 <b>1 2':  (4, [8, 8, 8, 10]),
+		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>word': (3, [57, 57, 57]),
+		u'ANSWER: <span class="s1"><b><i>Laocoön</i></b></span> <i>': (3, [0, 0, 0]),
+		u'Basin &amp; Range Niue (“n’YOO-ay”)': (5, [0, 6, 12, 18, 23]),
+		u'foo &amp; bar &amp; baz': (5, [0, 4, 10, 14, 20]),
+		u'I– (“I-minus”) with en-dash': (5, [0, 0, 3, 15, 20]),
+		u'I− (“I-minus”) with minus symbol': (4, [0, 3, 15, 20, 26]),
+		u'<p class="answer">ANSWER: <i>L’<b><u>Enfant</u></b></i>': (2, [18, 26]),
+		u'foo of <i>bar</i> (“baz”)': (4, [0, 4, 7, 18]),
+		u'<p>ANSWER: <strong><u>foo</u></strong> <strong><u>bar</u></strong>': (3, [3, 11, 39]),
+		u'life of Foo (*)</b> Bar': (5, [0, 5, 8, 12, 20]),
+	}
+	for test, expected in tests.items():
 		parser = LastNParser(test)
-		for i in range(3):
+		poses = expected[1] + [len(test)]
+		for i in range(expected[0] + 1):
 			x,y,z = parser.last_n_words(i)
 			print()
 			print(i, colorCmd + x + resetCmd)
 			print(i, ' '*len(x) + colorCmd + y + resetCmd)
 			print(i, ' '*len(x+y) + colorCmd + z + resetCmd)
+
+			pos = poses[-1 - i]
+
+			same = test[pos:] == y+z
+			try:
+				assert same
+			except AssertionError as error:
+				print(same, pos, f'"{test[pos:]}"', f'"{y+z}"')
+				raise error
+			
