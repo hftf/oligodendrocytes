@@ -9,8 +9,7 @@ Will likely be superseded by a script (see `compile.sh`)
 
 ### Install dependencies
 
-1. Install pandoc, pxslcc, saxon, and drive. See reqs.md for details.
-qpdf, gnu coreutils? gsed brew install gnu-sed, ack, textutil (docx -> html, docx -> txt), python (unicodecsv, lxml, unidecode, slugify, python-levenshtein), node.js (fibrio: npm install)
+1. See reqs.md for details.
 
 ### Add a tournament
 

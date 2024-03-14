@@ -4,12 +4,12 @@
 import sys
 import re
 import io
-from unidecode import unidecode
-from collections import OrderedDict
+# from unidecode import unidecode
+# from collections import OrderedDict
 from odictliteral import odict
-import pprint
+# import pprint
 
-import codecs
+# import codecs
 sys.stdout.reconfigure(encoding='utf8')
 sys.stderr.reconfigure(encoding='utf8')
 

@@ -10,14 +10,14 @@
 import sys
 import re
 import io
-from unidecode import unidecode
+# from unidecode import unidecode
 from htmlparser import LastNParser
 import json
 
 # import Levenshtein
 # from caverphone import caverphone
 
-import codecs
+# import codecs
 sys.stdout.reconfigure(encoding='utf8')
 sys.stderr.reconfigure(encoding='utf8')
 
