@@ -19,6 +19,12 @@ function label() {
 function loadScroll() {
 	initialScrolls();
 
+	if (typeof bonuses === 'undefined') {
+		toggle.style.display = 'none';
+		line.style.display = 'none';
+		return;
+	}
+
 	// button: set click handler, initial label
 	toggle.onclick = swap;
 
