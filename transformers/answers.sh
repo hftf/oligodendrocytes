@@ -22,12 +22,12 @@ LIMIT=""
 # 2a sgi         $'$2\t$1'
 # 2a regionals18 --output=$'\t$1' '\\<(.*)\\>'
 
-C_1a_Q_NUM() { rg -H --no-heading -or='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\\?\. ' $LIMIT "$@"; }
-C_1b_P_LET() { rg    -or=$'$1\t$2' '/([^\W_]+)[^\s/:]+:(?:\d+:)?(\d+)$'            ; }
-C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            "$@"; }
-#C_2a_ACTAG() { rg -I -or=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
+C_1a_Q_NUM() { rg --sort=path -H --no-heading -or='$1'      '^(?:\xe2\x80\x8b|\W*)(\d+)\\?\. ' $LIMIT "$@"; }
+C_1b_P_LET() { rg --sort=path    -or=$'$1\t$2' '/([^\W_]+)[^\s/:]+:(?:\d+:)?(\d+)$'            ; }
+C_2a_ACTAG() { rg --sort=path -I -or=$'$1\t$2' '\\?<(?:(.*?), )?(.*?)\\?>'            "$@"; }
+#C_2a_ACTAG() { rg --sort=path -I -or=$'$1\t$2' '\\?<()(.*?)\\?>'            "$@"; } # for ACF (no authors, tags contain commas)
 R_3a_ANSLN='^ ?ANSWER: (.*?)(?: \\<| \\?\[|$)'
-C_3a_ANSLN() { rg -I -or='$1'      "$R_3a_ANSLN"                          "$@"; }
+C_3a_ANSLN() { rg --sort=path -I -or='$1'      "$R_3a_ANSLN"                          "$@"; }
 C_3b_CLEAN() { sed -E -e 's/ (\*\*)?\([^)]([^()]|\([^)]+\))+\)(\*\*)?//g' -e 's/(\*\*)?\([^)][^)]+\)(\*\*)? //g' | perl -pe 's/(?<!\\)\*//g;' -pe 's/\\\*/\*/g' ;}
 # C_4a_CLEAN() { cat; } # sed -E    's/ (\*\*)?\([^)]+\)(\*\*)?//' ;} # need (?!\t) ?
 # TODO 3b [^)]{2,}
@@ -44,7 +44,7 @@ C_2a_ACTAG ${PREFIX}*${EXT}.bon > ${PREFIX}bonus.answers.2
 
 # extract answerlines (bonus answerlines are concatenated into 3 columns)
 echo -e "\nNumber of answerlines found:"
-grep --color -E -c "$R_3a_ANSLN" ${PREFIX}*${EXT} 2>&1
+grep --color -P -c "$R_3a_ANSLN" ${PREFIX}*${EXT} 2>&1
 C_3a_ANSLN ${PREFIX}*${EXT}.tos | C_3b_CLEAN                       > ${PREFIX}tossup.answers.3
 C_3a_ANSLN ${PREFIX}*${EXT}.bon | C_3b_CLEAN | paste -d '\t' - - - > ${PREFIX}bonus.answers.3
 
