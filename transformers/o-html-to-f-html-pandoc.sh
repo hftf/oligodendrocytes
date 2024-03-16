@@ -17,6 +17,6 @@ pandoc "$1" -f html+empty_paragraphs -t html+empty_paragraphs \
 	     -p -e 's/strong>/b>/g;' \
 	     -p -e 's/em>/i>/g;' |
 	gsed -E -e 's/<p>ANSWER/<p class="answer">ANSWER/g' \
-	        -e '1,/>(.* )?Bonuses/I s/<p>([A-Za-z0-9]+\. )/<p class="tu">\1/g' \
-	        -e '/>(.* )?Bonuses/I,$ s/<p>([A-Za-z0-9]+\. )/<p class="bonus">\1/g' \
+	        -e '1,/>(.* )?Bonuses/I s/<p>((<(b|strong)>)?[A-Za-z0-9]+\. )/<p class="tu">\1/g' \
+	        -e '/>(.* )?Bonuses/I,$ s/<p>((<(b|strong)>)?[A-Za-z0-9]+\. )/<p class="bonus">\1/g' \
 	        -e 's/>Bonuses<\/p/ id="bonuses"&/I'
