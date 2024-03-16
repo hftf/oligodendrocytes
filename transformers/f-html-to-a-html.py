@@ -187,7 +187,7 @@ def split_or_comma(text, must_match):
 
 	if re.search(
 		re.sub(
-			'\?P<[^>]+>',
+			r'\?P<[^>]+>',
 			'',
 			f'{IN_PLACE_OF_p}|{BY_ASKING_p}|{UNTIL_p}|{UNTIL_Y_p}|{BUT_p}|',
 		) + r'such as|specific.*like|(answers|anything) (like|indicating|mentioning|describing|about)|(synonyms|descriptions|equivalents) of|word forms|synonyms|or similar|equivalents',

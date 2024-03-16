@@ -51,60 +51,60 @@ if 0:
 	use_tags = True
 	use_paren_quote = False
 
-EXTRA_TAGS   = '(?:<\/?b>|)'
-PG_TAG_S     = '<span\ class=\"s\d\">'
-PG_TAG_E     = '<\/span>'
-SPACE        = u'[  ]'
+EXTRA_TAGS   = r'(?:<\/?b>|)'
+PG_TAG_S     = r'<span\ class=\"s\d\">'
+PG_TAG_E     = r'<\/span>'
+SPACE        = r'[  ]'
 SPACES       = SPACE + '+'
 SPACEM       = SPACE + '*'
-SPACE_NONBSP = u'[ ]'
+SPACE_NONBSP = r'[ ]'
 SPACES_NONBSP= SPACE_NONBSP + '+'
 
 if use_paren_quote:
-	QUOTE_S = u'“'
-	QUOTE_E = u'”'
-	PG_BRACKET_S = u'[\(]' + QUOTE_S
-	PG_BRACKET_E = QUOTE_E + u'[\)]'
-	PG_MIDDLE    = u'[^\)]+'
+	QUOTE_S = r'“'
+	QUOTE_E = r'”'
+	PG_BRACKET_S = r'[(]' + QUOTE_S
+	PG_BRACKET_E = QUOTE_E + r'[\)]'
+	PG_MIDDLE    = r'[^\)]+'
 else:
-	QUOTE_S = u''
-	QUOTE_E = u''
-	PG_BRACKET_S = '[\(\[]'
-	PG_BRACKET_E = '[\)\]]'
-	PG_MIDDLE    = '[^\)\]]+'
+	QUOTE_S = r''
+	QUOTE_E = r''
+	PG_BRACKET_S = r'[\(\[]'
+	PG_BRACKET_E = r'[\)\]]'
+	PG_MIDDLE    = r'[^\)\]]+'
 
-PG_OR = QUOTE_E + u' or ' + QUOTE_S
-PG_BRACKET_INSTRUCTION = '[\[\(]' + u'(?P<in>emphasize[^\]\)]*|pause|read slowly[^\]\)]*)' + '[\]\)]'
+PG_OR = QUOTE_E + r' or ' + QUOTE_S
+PG_BRACKET_INSTRUCTION = r'[\[\(]' + r'(?P<in>emphasize[^\]\)]*|pause|read slowly[^\]\)]*)' + r'[\]\)]'
 
 if use_tags:
-	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
+	PG_SB = r'(?P<ss>' + SPACES       + ')' + \
 	                     PG_TAG_S + EXTRA_TAGS + \
 	         '(?P<sb>' + PG_BRACKET_S + ')'
-	PG_M  = u'(?P<m>'  + PG_MIDDLE    + ')'
-	PG_EB = u'(?P<eb>' + PG_BRACKET_E + ')' + \
+	PG_M  = r'(?P<m>'  + PG_MIDDLE    + ')'
+	PG_EB = r'(?P<eb>' + PG_BRACKET_E + ')' + \
 	                     EXTRA_TAGS + PG_TAG_E + \
 	         '(?P<es>' + SPACEM       + ')'
 
 	PGB = PG_SB + PG_M + PG_EB
 
-	PG_BRACKET_INSTRUCTION = PG_TAG_S + EXTRA_TAGS + PG_BRACKET_INSTRUCTION + EXTRA_TAGS + PG_TAG_E + '\s'
+	PG_BRACKET_INSTRUCTION = PG_TAG_S + EXTRA_TAGS + PG_BRACKET_INSTRUCTION + EXTRA_TAGS + PG_TAG_E + r'\s'
 
 else:
-	PG_SB = u'(?P<ss>' + SPACES       + ')' + \
+	PG_SB = r'(?P<ss>' + SPACES       + ')' + \
 	         '(?P<sb>' + PG_BRACKET_S + ')'
-	PG_M  = u'(?P<m>'  + PG_MIDDLE    + ')'
-	PG_EB = u'(?P<eb>' + PG_BRACKET_E + ')' + \
+	PG_M  = r'(?P<m>'  + PG_MIDDLE    + ')'
+	PG_EB = r'(?P<eb>' + PG_BRACKET_E + ')' + \
 	         '(?P<es>' + SPACEM       + ')'
 
 	PGB = PG_SB + PG_M + PG_EB
 
-	PG_BRACKET_INSTRUCTION = PG_BRACKET_INSTRUCTION + '\s'
+	PG_BRACKET_INSTRUCTION = PG_BRACKET_INSTRUCTION + r'\s'
 
 
 # TODO eventually boundary symbols like “”‘’ can be left out of rb
 # TODO remove </b> <b> at end
 
-fake_contents = u'''--
+fake_contents = r'''--
 test aaa     <span class="s1"><b>[bbb]</b></span>      test
 test aaa</b> <span class="s1"><b>[bbb]</b></span>   <b>test
 test aaa</i> <span class="s1"><b>[bbb]</b></span>   <i>test
@@ -158,10 +158,10 @@ space_color    = '\033[103;4m'*zz
 reset_color    = '\033[0m'*zz
 
 def wrap_caps(b):
-	return re.sub('[A-Z]{2,}', '<span class="pg-stress">\g<0></span>', b)
+	return re.sub('[A-Z]{2,}', r'<span class="pg-stress">\g<0></span>', b)
 
 def middot(b):
-	return re.sub('-', u'·', b)
+	return re.sub('-', r'·', b)
 
 def word_count(b):
 	b_first_or_pos = re.search(PG_OR, b)
@@ -171,7 +171,7 @@ def word_count(b):
 	return space_count
 
 def bracket_instruction(b):
-	return re.sub(PG_BRACKET_INSTRUCTION, u'<small class="bracket-instruction">(\g<in>)</small> ', b)
+	return re.sub(PG_BRACKET_INSTRUCTION, r'<small class="bracket-instruction">(\g<in>)</small> ', b)
 
 def rp_or(b):
 	return re.sub(PG_OR, ' <span class="pg-or">or</span> ', b)
@@ -184,7 +184,7 @@ def rp_or(b):
 	# return re.sub(PG_OR, '</rt><rp>\g<0></rp><rt>', b)
 
 def lookup_ipa_pg(a):
-	trimmed = re.sub(u'^“|”$', '', re.sub('<[^>]+>', '', a))
+	trimmed = re.sub(r'^“|”$', '', re.sub('<[^>]+>', '', a))
 	base_suffix = re.match(r'(.*?)(’s|)$', trimmed)
 	base, suffix = base_suffix.group(1), base_suffix.group(2)
 	if base in ipa_pgs:
@@ -193,14 +193,14 @@ def lookup_ipa_pg(a):
 		return None, ''
 def format_ipa_pg(ipa_pg):
 	# transform syllable breaks to thin spaces
-	ipa_pg = ipa_pg.replace('.', u' ') # also (?!\.)(?=ˈ)
+	ipa_pg = ipa_pg.replace('.', r' ') # also (?!\.)(?=ˈ)
 
 	# extract flag
 	match = re.match(r'^(?P<code>[\w\U00010000-\U000E0000]+): |', ipa_pg, re.UNICODE)
 	flag = None
 	code = match.group('code')
 	if code:
-		flag = ''.join(chr(ord(l) - ord('a') + ord(u'🇦') % 0x20000) for l in code)
+		flag = ''.join(chr(ord(l) - ord('a') + ord(r'🇦') % 0x20000) for l in code)
 	return code, flag, ipa_pg[match.end():]
 	# TODO: don't show flag if same as last flag.
 
