@@ -5,7 +5,7 @@ Ophir's Library Implementing GOogle DocumENt Downloader to Re-Organize and Conve
 
 ## Instructions (how to)
 
-Will likely be superseded by a script (see `compile.sh`)
+Will hopefully be superseded by a script soon (see `compile.sh`)
 
 ### Install dependencies
 
@@ -25,12 +25,15 @@ Will likely be superseded by a script (see `compile.sh`)
 
 1. Run `make reset` to download the packets from Google Docs (requires `drive`).
    * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
+   * Due to recent changes on Google's end, `drive` no longer works.
 2. Run `make htmls` to generate the web interface for each packet.
    * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
-     * `md`, `md.nowrap`, `txt`, etc.
+     * `md`, `md.nowrap`, `txt`, `o.html`, `f.html`, `r.html`, `w.html`, `a.html`, etc.
    * Or run in parallel: `make -j4 most; make formats EXT=r.html; make htmls`.
-3. Run `make check`, `make check2`, and `make check3` to check for problems.
+3. To check for problems, run `make check`, `make check2`, and `make check3`.
    * If there are problems, revise and return to step 2.
+   * Run `make checkcats` for a category balance report to find feng shui issues.
+   * Run `make checkrevealed` to find potential answers revealed in question text.
 
 ### Deploy the tournament
 
@@ -42,6 +45,7 @@ Will likely be superseded by a script (see `compile.sh`)
    * Copy the word count metadata from the pop-up prompts and concatenate.
    * Paste the word count metadata into the data spreadsheet.
 3. Run `make zips` to create the zips of the original packets for use as a backup.
+   * Obsolete and untested.
 4. Run `make bundle` to compile the packets and assets into a bundle.
    * Note: `fonts.css` is not included.
 5. Run `make upload` to upload a bundle to a web server.
