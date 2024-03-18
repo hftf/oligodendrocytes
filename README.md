@@ -48,7 +48,9 @@ Will hopefully be superseded by a script soon (see `compile.sh`)
    * Obsolete and untested.
 4. Run `make bundle` to compile the packets and assets into a bundle.
    * Note: `fonts.css` is not included.
+   * Create <code>tournaments/_name_/passwords.csv</code> with header `id,password,file,name` and a row for each packet like `A,agonyclite,A.a.html,Packet A`. This is used for rudimentary server-side password protection; nothing is encrypted or obfuscated.
 5. Run `make upload` to upload a bundle to a web server.
+   * Important: Only upload to a location protected by a master password. For Apache servers, you can set up `.htaccess` and `.htpasswd`.
 
 ## Project status
 
@@ -155,8 +157,10 @@ This project is currently not freely licensed (although you may inspect the sour
 Contact me for information about licensing.
 
 There is a trade-off in that permissive licensing
-helps prevent inefficient reinventing of the wheel, but doesn't necessarily lead to any progress in the tech.
-Thus it may be prudent to encourage people to make something better rather than merely rely on previous makeshift work.
+helps prevent inefficient reinventing of the wheel,
+but doesn't necessarily lead to any progress in the tech.
+Thus it may be prudent to encourage people to make something better
+rather than merely rely on previous makeshift work.
 
 ## Name
 
@@ -165,7 +169,7 @@ a word chosen for its fitting letters and not for a relevant meaning –
 ever the popular trope.
 But, if biologists are interested in an anatomical analogy, then here is a folk etymology:
 
-As far as I understand, oligodendrocytes are cells
+As far as I understand, [oligodendrocytes](https://en.wikipedia.org/wiki/Oligodendrocyte) are cells
 that support the axons of neurons in the central nervous system.
 They have a nucleus with a few protuberances radiating outwards.
 You may imagine this shape as representing a central
