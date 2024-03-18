@@ -25,7 +25,7 @@ Will hopefully be superseded by a script soon (see `compile.sh`)
 
 1. Run `make reset` to download the packets from Google Docs (requires `drive`).
    * Or, place `.docx` files in <code>tournaments/_name_/packets/</code>.
-   * Due to recent changes on Google's end, `drive` no longer works.
+   * Due to recent changes on Google's end, `drive` may no longer work.
 2. Run `make htmls` to generate the web interface for each packet.
    * Or <code>make formats EXT=_format_</code>, where <code>_format_</code> can be:
      * `md`, `md.nowrap`, `txt`, `o.html`, `f.html`, `r.html`, `w.html`, `a.html`, etc.
@@ -129,3 +129,21 @@ W=words adds tags around each word in tossups
 
 This project is currently not freely licensed (although you may inspect the source code).
 Contact me for information about licensing.
+
+There is a trade-off in that permissive licensing
+helps prevent inefficient reinventing of the wheel, but doesn't necessarily lead to any progress in the tech.
+Thus it may be prudent to encourage people to make something better rather than merely rely on previous makeshift work.
+
+## Name
+
+This project's name is a contrived backronym –
+a word chosen for its fitting letters and not for a relevant meaning –
+ever the popular trope.
+But, if biologists are interested in an anatomical analogy, then here is a folk etymology:
+
+As far as I understand, oligodendrocytes are cells
+that support the axons of neurons in the central nervous system.
+They have a nucleus with a few protuberances radiating outwards.
+You may imagine this shape as representing a central
+[single source of truth](https://en.wikipedia.org/wiki/Single_source_of_truth) document
+with branches for converting into different formats.
