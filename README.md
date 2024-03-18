@@ -118,22 +118,36 @@ while perhaps coming at the expense of strict semantic or error-guarding needs.
 I do think some improvements to readability and typography are worth it,
 especially when they can be incorporated in HTML,
 but they have very low priority,
-and I believe everything involving LaTeX and PDF is a messy waste of time.
+and I believe everything involving LaTeX and PDF is a messy waste of time for quizbowl's needs.
 
-flow.tikz diagram here
+I probably also should have been using a virtual machine or a docker container,
+but I never really expected anyone else to use this
+and I still don't know how to use those.
+
+## Pipeline diagrams
+TODO
+
+<!-- flow.tikz diagram here
 
 > transformers
 > SOURCE_EXT docx default
 > chamfered = dependency of make check
+-->
 
-O=original
-F=formatted, wraps with a template with a header and footer
-R=ruby, parses finds PGs (pronunciation guides) and converts to ruby
-W=words adds tags around each word in tossups
+### Glossary of file extensions
 
-I probably should have been using a virtual machine or a docker container,
-but I never really expected anyone else to use this
-and I still don't know how to use those.
+<dl>
+<dt>O
+<dd>original, after Docx to HTML conversion
+<dt>F
+<dd>formatted, wraps packet with a header and footer
+<dt>R
+<dd>ruby, finds PGs (pronunciation guides) and wraps in <code>&lt;ruby></code> tags
+<dt>W
+<dd>words, wraps each word in tossups with <code>&lt;m></code> tag
+<dt>A
+<dd>annotated, parses answerline directives for fancy display
+</dl>
 
 ## License
 
