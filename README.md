@@ -16,7 +16,7 @@ Will hopefully be superseded by a script soon (see `compile.sh`)
 1. Create the folder <code>tournaments/_name_/</code>.
 2. Create the file <code>tournaments/_name_/settings.pxml</code>.
    * See <code>tournaments/sample/settings.pxml</code> for an example.
-3. Replace the contents of `tournaments/current.txt` with <code>_name_</code>.
+3. Create `tournaments/current.txt` with <code>_name_</code> as its contents.
 4. Run `make meta` to generate these files:
    * <code>tournaments/_name_/settings.xml</code>
    * <code>tournaments/_name_/vars.mk</code>
